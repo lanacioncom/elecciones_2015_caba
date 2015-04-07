@@ -1,0 +1,12 @@
+ID	Formula
+---------------------------------------------------------------------------------------------------
+1	BONACCI, JOSE ALEJANDRO                           - VILLENA, JOSE EDUARDO
+2	CARRIO, ELISA MARIA EVELINA                       - PEREZ, JOSE ADRIAN
+3	PASTORE, SERGIO DARIO                             - RODRIGUEZ, GILDA MARCELA
+4	FERNANDEZ DE KIRCHNER, CRISTINA                   - BOUDOU, AMADO
+5	DUHALDE, EDUARDO                                  - DAS NEVES, MARIO
+6	RODRIGUEZ SAA, ALBERTO JOSE                       - VERNET, JOSE MARIA
+7	BINNER, HERMES JUAN                               - MORANDINI, NORMA ELENA
+8	WERMUS, JOSE SAUL (ALTAMIRA JORGE)                - CASTILLO, CHRISTIAN CARLOS HERNAN
+9	ARGUMEDO, ALCIRA SUSANA                           - CARDELLI, JORGE JUSTO
+10	ALFONSIN, RICARDO LUIS                            - GONZALEZ FRAGA, JAVIER ANTONIO

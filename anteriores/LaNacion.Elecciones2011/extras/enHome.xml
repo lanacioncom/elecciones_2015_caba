@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<elecciones>
+  <lugar id="2" nombre="Bs.As." provincia_id="2" tipo="4">
+    <formula id="1" nombre="FPV" candidato="CFK" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="64.00" />
+    <formula id="2" nombre="UDS" candidato="RA" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="54.00" />
+    <formula id="3" nombre="UP1" candidato="ED" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="44.00" />
+    <formula id="4" nombre="UP" candidato="HB" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="34.00" />
+    <formula id="5" nombre="El mismo partido que Carrio" candidato="El candidato de Carrio en prov" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="14.00"  />
+    <formula id="6" nombre="FPV" candidato="CFK" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="4.00" />
+
+    <totales mesasEscrutadas="50.30" concurrencia="70.58"/>
+
+  </lugar>
+  <lugar id="99"  nombre="Total País" provincia_id="99" tipo="1">
+    <formula id="1" nombre="FPV" candidato="CFK" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="63.00" />
+    <formula id="2" nombre="UDS" candidato="RA" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="53.00" />
+    <formula id="3" nombre="UP1" candidato="ED" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="43.00" />
+    <formula id="4" nombre="UP" candidato="HB" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="33.00" />
+    <formula id="5" nombre="FPV" candidato="CFK" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="13.00" />
+    <formula id="6" nombre="FPV" candidato="CFK" title="XXXXXXX" class="XXXXXXXX" img="/_ui/desktop/imgs/varios/elecciones-primarias/XXXXXXXXXXXXXX.png" p="3.00" />
+
+    <totales mesasEscrutadas="50.30" concurrencia="70.58"/>
+
+  </lugar>
+</elecciones>
