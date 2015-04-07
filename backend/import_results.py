@@ -4,7 +4,7 @@ import csvkit
 from models import RESULTS_DATA
 from models import FORMULAS_CREATE
 
-DATA_DIR = 'data'
+DATA_DIR = 'examples/source_data'
 
 
 def drop_tables():

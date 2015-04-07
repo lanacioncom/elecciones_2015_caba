@@ -5,8 +5,7 @@ import io, json
 from models import RESULTS_DATA
 from models import FORMULAS_CREATE
 
-DATA_DIR = 'data'
-OUTPUT_DIR = 'output'
+OUTPUT_DIR = 'examples/output_data'
 
 def export_partidos():
     '''Show data'''
