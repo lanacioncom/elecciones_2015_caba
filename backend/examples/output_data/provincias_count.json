@@ -1,0 +1,21 @@
+{
+    "count": -1, 
+    "results": [
+        {
+            "provincia_id": "02", 
+            "c": 10
+        }, 
+        {
+            "provincia_id": "18", 
+            "c": 5
+        }, 
+        {
+            "provincia_id": "88", 
+            "c": 10
+        }, 
+        {
+            "provincia_id": "99", 
+            "c": 10
+        }
+    ]
+}
