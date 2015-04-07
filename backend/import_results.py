@@ -27,13 +27,13 @@ def load_results():
     with open('%s/formulas.csv' % (DATA_DIR),'r') as f:
         table_formulas = db['formulas']
         reader = csvkit.py2.CSVKitDictReader(f,delimiter=';',encoding='utf-8')
-        data = [row for row in reader]
+        data = list(reader)
         table_formulas.insert_many(data)
 
     with open('%s/listas.csv' % (DATA_DIR),'r') as f:
         table_formulas = db['listas']
         reader = csvkit.py2.CSVKitDictReader(f,delimiter=';',encoding='cp1252')
-        data = [row for row in reader]
+        data = list(reader)
         table_formulas.insert_many(data)
 
 def run():

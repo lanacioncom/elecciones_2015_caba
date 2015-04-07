@@ -21,9 +21,6 @@ def clean_data_dictionary():
         local('rm -rf {deploy_path}'.format(**env))
         local('mkdir {deploy_path}'.format(**env))
 
-def clean_results():
-    local('pelican -s pelicanconf.py')
-
 def import_results():
     with shell_env(DATABASE_URL='sqlite:///%s' % (DB_NAME)):
         local('python import_results.py')
