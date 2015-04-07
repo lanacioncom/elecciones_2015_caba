@@ -3,7 +3,7 @@
 
 import json
 
-EXAMPLE_DIR = 'example_data'
+EXAMPLE_DIR = 'examples/json'
 
 class ExportData(object):
 	"""docstring for ExportData"""
@@ -66,7 +66,7 @@ data = dict(
 		),
 	)
 
-f = open('%s/data.json' % (EXAMPLE_DIR), 'wb')
+f = open('%s/results_example.json' % (EXAMPLE_DIR), 'wb')
 f.write(json.dumps(data))
 f.close()
 # print json.dumps(data) 
