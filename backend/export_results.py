@@ -66,7 +66,7 @@ data = dict(
 		),
 	)
 
+
 f = open('%s/results_example.json' % (EXAMPLE_DIR), 'wb')
 f.write(json.dumps(data))
 f.close()
-# print json.dumps(data) 

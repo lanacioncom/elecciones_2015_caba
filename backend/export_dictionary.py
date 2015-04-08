@@ -13,7 +13,13 @@ reader = csv.DictReader(f, delimiter=',')
 
 
 fo = open('%s/dict_candidatos.json' % (EXAMPLE_DIR), 'wb')
-fo.write(json.dumps(list(reader)))
+candidatos = dict()
+
+for i, r in enumerate(reader):
+	candidatos[i] = r
+
+
+fo.write(json.dumps(candidatos))
 
 fo.close()
 f.close()
