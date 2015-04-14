@@ -1,0 +1,19 @@
+{
+  "name": "elecciones_2015_caba",
+  "version": "0.0.0",
+  "homepage": "https://github.com/lanacioncom/elecciones_2015_caba",
+  "authors": [
+    "cristian Bertelegni <cristianbertelegni@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3"
+  }
+}

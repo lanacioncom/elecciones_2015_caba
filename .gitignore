@@ -1,2 +1,4 @@
 *.sublime-project
 *.sublime-workspace
+webapp/libs/
+node_modules
