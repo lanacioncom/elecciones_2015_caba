@@ -1,4 +1,6 @@
 *.sublime-project
 *.sublime-workspace
+keys_ftp.js
 webapp/libs/
 node_modules
+build

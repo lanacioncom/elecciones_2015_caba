@@ -1,0 +1,63 @@
+/*temporales*/
+header, section { max-width: 645px;}
+body { padding-top: 20px}
+/*//temporales*/
+
+/*helpers*/
+[hidden] {display: none !important;}
+.bk_pro {background: #FEDB30; }
+.bk_fpv  {background: #1796D7; }
+.bk_eco  {background: #7CC374; }
+.bk_izquierda  {background: #F4987E; }
+.bk_fte_renovador  {background: #B185B7;}
+.bk_otros  {background: #B3B3B3;}
+.bullet { display: inline-block; width: 10px; height: 10px;}
+.box { border: solid 1px #ddd; display: inline-block; padding: 5px}
+.arrow {position: relative;}
+.arrow:after {
+	content: ""; display: inline-block;
+	position: absolute; right: -20px; top: 36%;
+	width: 0; height: 0; border-top: 5px solid transparent; border-left: 5px solid #000; border-bottom: 5px solid transparent;
+}
+
+.clearfix{display: block;}
+.clearfix:after{content: ""; display: block; clear: both;}
+
+body { font-size: 13px; color: #000; font-family: arial;}
+
+/*header*/
+header { overflow: hidden; border-bottom: solid 1px #000; padding-bottom: 15px; margin-bottom: 15px;}
+h1 {font-family: 'TheSans', arial; font-size: 2em; color:#29ABE2; display: inline-block;}
+h1 span{color:#0071BC; }
+h2	{color: #000; display: inline-block; font-family: 'TheSans', arial; font-size: 2em; padding:  0 10px; margin: 0 10px; border: solid 1px #000; border-top: none; border-bottom: none;}
+
+ul#ref {width: 300px; float: right; font-size: 11px; font-family: 'TheSans'}
+ul#ref li { float: left; width: 100px; margin-bottom: 3px; }
+
+
+section { padding: 0 5px; }
+
+/*filtros*/
+section#filtros { }
+#filtros h3, div#selected { float: left; display: inline-block; } 
+h3, h4 { font-size: 1.5em}
+h4 { font-size: 1.4em}
+div#selected { width: 24%; margin-left: 35px; padding: 6px 0; height: 1.5em; position: relative;}
+div#selected.arrow:after {right: -10px;}
+div#selected hr { margin-top: .75em }
+div#selected h4 { padding: 6px 5px; display: inline-block; position: absolute; top: 1px; left: 0; background: #ccc; text-transform: uppercase; border-right: solid 5px #fff; }
+div#selected h4 a { color: #000; margin-left: 10px; text-decoration: none; text-transform: lowercase; font-weight: bold; position: relative; top: -2px}
+
+select#opts { width: 40%; float: right; font-size: 1.3em; padding: 5px 0; background: #fff; border: solid 1px #ddd;}
+
+/*mapa*/
+
+#mapa_cont, #data { height: 400px;}
+
+#mapa_cont { width: 55%; height: 400px; overflow: hidden; float: left;}
+#mapa_cont svg {width: 100%; height: 100%; }
+#mapa_cont svg #mapa { transform:translateX(-120px) translateY(-20px) scale(.8); }
+#mapa_cont svg path {stroke:white;}
+#c12 { fill:red; //comuna 12 en rojo }
+
+#data { border: solid 1px #ccc;}

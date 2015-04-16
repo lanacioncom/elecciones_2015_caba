@@ -2,8 +2,66 @@
 <html>
 <head>
 	<title></title>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<!-- build:css -->
+	<link rel="stylesheet" type="text/css" href="css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<!-- endbuild -->
 </head>
 <body>
+<header>
+	<h1>Primarias <span>2015</span></h1>
+	<h2>CABA</h2>
+	<ul id="ref">
+		<li><span class="bullet bk_pro">&nbsp;</span> Pro</li>
+		<li><span class="bullet bk_eco">&nbsp;</span> ECO</li>
+		<li><span class="bullet bk_fte_renovador">&nbsp;</span> Fte. Renovador</li>
+		<li><span class="bullet bk_fpv">&nbsp;</span> FPV</li>
+		<li><span class="bullet bk_izquierda">&nbsp;</span> Izquierda</li>
+		<li><span class="bullet bk_otros">&nbsp;</span> Otros</li>
+	</ul>
+</header>
+<!-- filtros -->
+<section id="filtros" class="clearfix">
+<h3 class="box arrow">Resultado electoral</h3>
+<div id="selected" class="arrow">
+	<hr />
+	<h4>Comuna 4 <a href="#">x</a></h4>
+</div>
 
+<select id="opts" class="">
+	<option value="fuerza">Por fuerza política</option>
+	<optgroup label="Por interna">
+		<option value="pro">Pro</option>
+		<option value="pro">FPV</option>
+		<option value="pro">ECO</option>
+		<option value="pro">Izquierda</option>
+		<option value="pro">Fte. Renovador</option>
+		<option value="pro">Otros</option>
+	</optgroup>
+</select>
+</section>
+
+<section class="clearfix">
+	<article id="mapa_cont"></article>
+	<article id="data">
+		<ul>
+			<li>
+				<h5>Pro <span>60000 votos</span></h5>
+				<div class="cont_barra">
+					<div class="barra pro" style="width:90%"> <!-- clase barra + style de partido --> </div class="porc">60%<div></div>
+				</div>
+			</li>
+		</ul>
+
+	</article>
+</section>
+
+<!-- build:js -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/scripts.js"></script>
+<!-- endbuild -->
 </body>
 </html>

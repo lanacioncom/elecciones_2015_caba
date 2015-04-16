@@ -1,0 +1,7 @@
+// keys acces to ftp
+module.exports = {
+            host: 'my_host.com',
+            user: 'user',
+            pass: 'pass',
+            remotePath: '/'
+        }
