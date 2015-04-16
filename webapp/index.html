@@ -28,11 +28,11 @@
 <h3 class="box arrow">Resultado electoral</h3>
 <div id="selected" class="arrow">
 	<hr />
-	<h4>Comuna 4 <a href="#">x</a></h4>
+	<h4 onclick="display_none(this); return false;">Comuna 4 <a href="#">x</a></h4>
 </div>
 
 <select id="opts" class="">
-	<option value="fuerza">Por fuerza política</option>
+	<option value="x_fuerza">Por fuerza política</option>
 	<optgroup label="Por interna">
 		<option value="pro">Pro</option>
 		<option value="pro">FPV</option>
@@ -46,7 +46,60 @@
 
 <section id="cont_data" class="clearfix">
 	<article id="mapa_cont"></article>
+	
+
+
 	<article id="results">
+	<!-- Tab: resultados por interna -->
+	<div id="x_interna">
+		<ul id="list_interna">
+			<li class="active">
+			<div class="bg_li clearfix">
+				<input type="radio">
+				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
+				<h5>Mariano Recalde <span>CFK</span></h5>
+				<div class="cont_barra">
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_pro" style="width:98%">
+						<div class="porc">88%</div>
+					</div>
+					<div class="cant_v">2345 votos</div>
+				</div>
+			</div>
+			</li>
+			<li class="">
+			<div class="bg_li clearfix">
+				<input type="radio">
+				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
+				<h5>Mariano Recalde <span>CFK</span></h5>
+				<div class="cont_barra">
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_pro" style="width:98%">
+						<div class="porc">88%</div>
+					</div>
+					<div class="cant_v">2345 votos</div>
+				</div>
+			</div>
+			</li>
+			<li class="">
+			<div class="bg_li clearfix">
+				<input type="radio">
+				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
+				<h5>Mariano Recalde <span>CFK</span></h5>
+				<div class="cont_barra">
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_pro" style="width:98%">
+						<div class="porc">88%</div>
+					</div>
+					<div class="cant_v">2345 votos</div>
+				</div>
+			</div>
+			</li>
+		</ul>
+	</div>
+	<!-- Tab: resultados por paratidos -->
+	<div id="x_fuerza">
+		
 		<div class="help_text">
 			<span>1,5%</span>
 			<p>porcentaje que deben superar los partidos para acceder a la elección general</p>
@@ -101,6 +154,7 @@
 
 		<div id="line"></div>
 
+	</div>
 	</article>
 </section>
 
