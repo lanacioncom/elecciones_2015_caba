@@ -44,17 +44,62 @@
 </select>
 </section>
 
-<section class="clearfix">
+<section id="cont_data" class="clearfix">
 	<article id="mapa_cont"></article>
-	<article id="data">
-		<ul>
+	<article id="results">
+		<div class="help_text">
+			<span>1,5%</span>
+			<p>porcentaje que deben superar los partidos para acceder a la elección general</p>
+		</div>
+		<ul id="list">
 			<li>
 				<h5>Pro <span>60000 votos</span></h5>
 				<div class="cont_barra">
-					<div class="barra pro" style="width:90%"> <!-- clase barra + style de partido --> </div class="porc">60%<div></div>
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_pro" style="width:88%">
+						<div class="porc">88%</div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<h5>FPV <span>40000 votos</span></h5>
+				<div class="cont_barra">
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_fpv" style="width:60%">
+						<div class="porc">60%</div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<h5>ECO <span>30000 votos</span></h5>
+				<div class="cont_barra">
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_eco" style="width:33%">
+						<div class="porc">33%</div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<h5>Izquierda <span>5000 votos</span></h5>
+				<div class="cont_barra">
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_izquierda" style="width:15%">
+						<div class="porc">15%</div>
+					</div>
+				</div>
+			</li>
+			<li class="no_pasa">
+				<h5>Fte. Renovador <span>300 votos</span></h5>
+				<div class="cont_barra">
+					<!-- clase barra + style de partido-->
+					<div class="barra bk_fte_renovador" style="width:1.1%">
+						<div class="porc">1.1%</div>
+					</div>
 				</div>
 			</li>
 		</ul>
+
+		<div id="line"></div>
 
 	</article>
 </section>
