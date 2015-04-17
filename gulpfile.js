@@ -17,6 +17,9 @@ var t = new Date().getTime(),
 	js_vendor = 'js/vendor.min.js',
 	css_file_min = 'all.min.css';
 
+
+
+
 // build tasks
 gulp.task('minify-css', function () {
 	gulp.src(['css/reset.css', 'css/fonts.css', 'css/styles.css'], { cwd: 'webapp' })
@@ -25,12 +28,21 @@ gulp.task('minify-css', function () {
     .pipe(gulp.dest('build/css'));
 });
 
-gulp.task('js', function () {
-	gulp.src('js/scripts.js', { cwd: 'webapp' })
-		.pipe(sourcemaps.init())
+// test JS
+gulp.task('test_js', function(){
+	return gulp.src('js/scripts.js', { cwd: 'webapp' })
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
-		.pipe(jshint.reporter(stylish))
+		.pipe(jshint.reporter(stylish));
+});
+
+gulp.task('js', ['test_js'], function () {
+	gulp.src('js/scripts.js', { cwd: 'webapp' })
+		.pipe(sourcemaps.init())
+		// .pipe(jshint())
+		// .pipe(jshint())
+		// .pipe(jshint.reporter('default'))
+		// .pipe(jshint.reporter(stylish))
 		.pipe(uglify())
 		.pipe(concat(js_all))
 		.pipe(sourcemaps.write('./'))
