@@ -6,7 +6,8 @@
 import json, random
 from operator import itemgetter, attrgetter, methodcaller
 
-EXAMPLE_DIR = 'examples/json'
+# EXAMPLE_DIR = 'examples/json'
+EXAMPLE_DIR = '../webapp/data'
 
 # class ExportData(object):
 # 	"""docstring for ExportData"""

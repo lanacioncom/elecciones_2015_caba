@@ -10,7 +10,7 @@
 	});
 
 	$('select#opts').change(function(e){
-		change_dropdown($(this).val());
+		app.change_dropdown($(this).val());
 	});
 
 })();
@@ -37,4 +37,4 @@ var app = (function(document, $){
 		change_dropdown: _change_dropdown,
 		none: _none
 	};
-})(document, Jquery);
+})(document, jQuery);
