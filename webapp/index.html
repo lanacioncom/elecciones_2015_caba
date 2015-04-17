@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Elecciones 2015 - lanacion.com</title>
 	<meta charset="UTF-8">
-	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"> 
 	<!-- build:css -->
 	<link rel="stylesheet" type="text/css" href="css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
@@ -11,21 +12,29 @@
 	<!-- endbuild -->
 </head>
 <body>
+
+
 <header>
-	<h1>Primarias <span>2015</span></h1>
-	<h2>CABA</h2>
+	<div class="titulos">
+		<h1>Primarias <span>2015</span></h1>
+		<h2>CABA</h2>
+	</div>
+	
+	<div class="ayuda" id="ayud1">FILTRAR POR INTERNA</div>
 	<ul id="ref">
 		<li><span class="bullet bk_pro">&nbsp;</span> Pro</li>
 		<li><span class="bullet bk_eco">&nbsp;</span> ECO</li>
-		<li><span class="bullet bk_fte_renovador">&nbsp;</span> Fte. Renovador</li>
+		<li id="refFte"><span class="bullet bk_fte_renovador">&nbsp;</span> Fte. Renovador</li>
 		<li><span class="bullet bk_fpv">&nbsp;</span> FPV</li>
-		<li><span class="bullet bk_izquierda">&nbsp;</span> Izquierda</li>
+		<li ><span class="bullet bk_izquierda">&nbsp;</span> Izquierda</li>
 		<li><span class="bullet bk_otros">&nbsp;</span> Otros</li>
 	</ul>
 </header>
+
+
 <!-- filtros -->
 <section id="filtros" class="clearfix">
-<h3 class="box arrow">Resultado electoral</h3>
+<h3 class="box arrow">RESULTADO ELECTORAL</h3>
 <div id="selected" class="arrow">
 	<hr />
 	<h4 onclick="display_none(this); return false;">Comuna 4 <a href="#">x</a></h4>
@@ -161,6 +170,7 @@
 <!-- build:js -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/scripts.js"></script>
+
 <!-- endbuild -->
 </body>
 </html>

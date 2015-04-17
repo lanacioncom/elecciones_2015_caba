@@ -2,7 +2,7 @@
 header, section { max-width: 990px;}
 /*header, section { max-width: 645px;}*/
 #x_interna { display: none;}
-body { padding-top: 20px}
+
 /*//temporales*/
 
 
@@ -23,8 +23,15 @@ body { padding-top: 20px}
 
 /*helpers*/
 [hidden] {display: none !important;}
-.bullet { display: inline-block; width: 10px; height: 10px;}
-.box { border: solid 1px #ddd; display: inline-block; padding: 5px}
+.bullet { display: inline-block; width: 18px; height: 18px;}
+
+.box { 
+	background-color: #ebebeb; 
+	display: inline-block; 
+	padding: 5px 10px; 
+	padding-right: 20px;
+}
+
 .arrow {position: relative;}
 .arrow:after {
 	content: ""; display: inline-block;
@@ -35,26 +42,104 @@ body { padding-top: 20px}
 .clearfix{display: block;}
 .clearfix:after{content: ""; display: block; clear: both;}
 
-body { font-size: 13px; color: #000; font-family: arial;}
+body {
+	margin:0px; 
+	font-size: 13px; 
+	color: #000; 
+	font-family: arial;
+}
 
 /*header*/
-header { overflow: hidden; border-bottom: solid 1px #000; padding-bottom: 15px; margin-bottom: 15px;}
-h1 {font-family: 'TheSans', arial; font-size: 2em; color:#29ABE2; display: inline-block;}
-h1 span{color:#0071BC; }
-h2	{color: #000; display: inline-block; font-family: 'TheSansSemi'; font-size: 2em; padding:  0 10px; margin: 0 10px; border: solid 1px #000; border-top: none; border-bottom: none;}
+header { 
+	height: 40px;
+	border-bottom: solid 1px #dadada; 
+	padding: 15px 0px; 
+	margin-bottom: 15px;
+}
 
-ul#ref {width: 260px; float: right; font-size: 11px; font-family: 'TheSans'}
-ul#ref li { float: left; width: 85px; margin-bottom: 3px; }
+div.titulos{
+	width: 320px;
+	display: inline-block;
+	font-size: 15px
+}
+
+h1 {
+	font-family: 'TheSansSemi', arial, Helvetica, sans-serif; 
+	font-size: 34px; 
+	color:#29ABE2; 
+	display: inline-block;
+	letter-spacing: -1px;
+}
+
+h1 span{
+	color:#0071BC; 
+}
+
+h2	{
+	color: #000; 
+	display: inline-block; 
+	font-family: 'TheSansSemi'; 
+	font-size: 31px; 
+	padding:  0 10px; 
+	margin: 0 10px; 
+	border: solid 1px #BBBBBB; 
+	border-top: none; 
+	border-bottom: none;
+}
+
+/*/////////////////// referencias ///////////////////////////*/
+
+div.ayuda{
+	width: 94px;
+	height: 70px;
+	float: right;
+	font-family: 'TheSansSemi'; 
+	font-size: 15px;
+	padding-left: 90px;
+	background-image:url(../img/sprite.png);
+	background-repeat: no-repeat;
+	background-position: 17px 8px;
+  	background-size: 119%;
+
+}
+
+ul#ref {
+	width: 39%; 
+	float: right; 
+	font-size: 15px; 
+	font-family: 'TheSansSemi';
+	display: inline-block; 
+}
+
+ul#ref li { 
+	float: left; 
+	width: 85px; 
+	margin-bottom: 4px;
+	display: inline-block;
+	margin-right:7px; 
+	line-height: 1.2;
+}
+
+ul#ref li#refFte{
+	width: 130px;
+}
 
 
 section { padding: 0 5px; }
 
-/*filtros*/
+
+/*/////////////////// FILTROS ///////////////////////////*/
+
 section#filtros { }
 #filtros h3, div#selected { float: left; display: inline-block; } 
-h3, h4 { font-size: 1.5em}
+
+h3, h4 { 
+	font-size: 21px;  
+	font-family: 'TheSansSemi'
+}
+
 h4 { font-size: 1.4em}
-div#selected { width: 24%; width: calc(59% - 230px);  margin-left: 35px; padding: 6px 0; height: 1.5em; position: relative;}
+div#selected { width: 20%; width: calc(59% - 300px);  margin-left: 35px; padding: 6px 0; height: 1.5em; position: relative;}
 div#selected.arrow:after {right: -10px;}
 div#selected hr { margin-top: .75em }
 div#selected h4 { padding: 6px 5px; display: inline-block; position: absolute; top: 1px; left: 0; background: #ddd; text-transform: uppercase; border-right: solid 5px #fff; }
@@ -116,11 +201,73 @@ section#cont_data {margin-top: 20px;}
 	ul#list_interna .cont_barra .cant_v {margin-top: 10px; color: #666;}
 
 
-@media (max-width: 900px) {
-#mapa_cont { height: 450 }
-#mapa_cont svg #mapa { transform:translateX(-10px) translateY(0px) scale(.8); }
+@media (max-width: 850px) {
+
+	div.titulos{
+  		width: 250px;
+  	}
+
+
+
+	h1 {
+  		font-size: 27px;
+  	}
+
+  	h2{
+  		font-size: 19px;
+  	}
+
+  	ul#ref {
+  		width: 48.5%;
+  		font-size: 13px;
+  		margin-right: 16%;
+  	}
+
+  	.ayuda{
+  		position: absolute;
+  		top:15px;
+  		right: 5px;
+  	}
+
+
+	#mapa_cont { height: 450 }
+	#mapa_cont svg #mapa { transform:translateX(-10px) translateY(0px) scale(.8); }
+
+
 }
 
-@media (max-width: 600px) {
-  
+@media (max-width: 700px) {
+
+  	header{
+  		height: auto;
+  		padding: 6px 0px;
+  	}
+
+  	h1 {
+  		font-size: 22px;
+  	}
+
+  	h2{
+  		font-size: 20px;
+  	}
+
+  	ul#ref {
+	  width: 98%;
+	  margin: 15px 0px;
+	  margin-bottom: 6px;
+	  display: block;
+
+	}
+
+	.ayuda{
+		display: none;
+	}
+
+}
+
+
+@media (max-width: 450px) {
+	ul#ref {
+		display: none;
+	}
 }
