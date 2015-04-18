@@ -44,11 +44,11 @@
 	<option value="x_fuerza">Por fuerza política</option>
 	<optgroup label="Por interna">
 		<option value="pro">Pro</option>
-		<option value="pro">FPV</option>
-		<option value="pro">ECO</option>
-		<option value="pro">Izquierda</option>
-		<option value="pro">Fte. Renovador</option>
-		<option value="pro">Otros</option>
+		<option value="fpv">FPV</option>
+		<option value="eco">ECO</option>
+		<option value="izquierda">Izquierda</option>
+		<option value="fte">Fte. Renovador</option>
+		<option value="otros">Otros</option>
 	</optgroup>
 </select>
 </section>
@@ -64,7 +64,7 @@
 		<ul id="list_interna">
 			<li class="active">
 			<div class="bg_li clearfix">
-				<input type="radio">
+				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde <span>CFK</span></h5>
 				<div class="cont_barra">
@@ -78,7 +78,7 @@
 			</li>
 			<li class="">
 			<div class="bg_li clearfix">
-				<input type="radio">
+				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde <span>CFK</span></h5>
 				<div class="cont_barra">
@@ -92,7 +92,7 @@
 			</li>
 			<li class="">
 			<div class="bg_li clearfix">
-				<input type="radio">
+				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde <span>CFK</span></h5>
 				<div class="cont_barra">
@@ -169,6 +169,7 @@
 
 <!-- build:js -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/elecciones_app.js"></script>
 <script type="text/javascript" src="js/scripts.js"></script>
 
 <!-- endbuild -->
