@@ -3,8 +3,7 @@ var PermanentLinkJS = function() {
 
 	var query = {};
 
-	function reset(){ return (query = {}); }
-
+	function reset(){ return (query = {}); 
 	function set(key, val) {
 		if (typeof key == 'object'){
 			try{
@@ -75,7 +74,11 @@ var ElecionesApp = function(){
 	// set self class var
 	var s = this;
 
-	function clik_candidatos()
+	function clik_candidatos_radio(){
+		/*
+			click para el radio candidatos en el lista de internas
+		*/
+	}
 
 
 	(function init(){
