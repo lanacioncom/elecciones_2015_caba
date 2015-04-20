@@ -302,23 +302,25 @@ section#cont_data {
 }
 
 .help_text {
-	color: #999
+	color: #999;
+	width:80%;
 }
 .help_text p {
-	font-size: .80em;
+	font-size: .85em;
 	line-height: 1.2em
 }
+	
 .help_text span {
 	float: left;
 	display: inline-block;
-	font: bold 14px arial;
+	font: 14px arial;
 	padding: 3px 5px;
 	border: 1px solid #000;
-	color: #999;
-	margin-right: 5px;
+	color: #000000;
+	margin-right: 6px;
 	background: #fff;
 	z-index: 1;
-	margin-left: 1.5%;
+	margin-left: 2%;
 	position: relative;
 }
 .help_text span:before, .help_text span:after {
