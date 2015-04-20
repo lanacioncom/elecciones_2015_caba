@@ -241,9 +241,62 @@ div.ayuda {
 
 
 section {
+	
 	padding: 0 5px;
 }
 
+/*/////////////////// TOOLTIP ///////////////////////////*/
+	
+	.tooltip {
+		top:250px;
+		left:150px;
+		background:#FFFFFF;
+		position:absolute;
+		width: 180px;
+		border: #ccc solid 1px;
+		padding: 10px 12px 5px 10px;
+		font-family:Arial, Helvetica, sans-serif;
+	}
+	
+	.tooltip h4 {
+		padding-bottom: 5px;		 
+	}
+
+	.tooltip p {
+		font-size: 12px;
+		color:#999999;
+		padding-bottom: 8px;
+	}
+	
+	.tooltip .fuerza {
+		height:37px;
+		border-top: 1px dotted #999999;
+		padding: 9px 12px 6px 0px;
+	}
+	
+	.tooltip .candidato {
+		width:100%;
+		font-family: "TheSansSemi", Arial, Helvetica, sans-serif;
+		font-size:16px;
+		float:left;
+		padding-bottom:5px;
+	}		
+	
+	.tooltip .candidatoBarra {
+		height: 11px;
+		width:100%;
+		max-width:117px;
+		float:left;
+		margin-right:10px;
+	}
+	
+	.tooltip .candidatoPorcentaje {
+		font-size:14px;
+		float:left;
+		
+	}	
+		
+		
 /*/////////////////// FILTROS ///////////////////////////*/
 
 section#filtros {
@@ -358,24 +411,31 @@ section#cont_data {
 
 
 #results {
-	border-left: solid 1px #ccc;
+	border-left: solid 1px #dadada;
 	width: 40%;
 	float: right;
 	position: relative;
+	max-height: 585px;
 }
 #results div#line {
-	width: 0px;
+	width: 7px;
 	height: 100%;
 	height: calc(100% - 44px);
-	border-left: 1.5px dotted #000;
+	border-right: 1.5px dotted #000;
 	position: absolute;
-	top: 40px;
-	left: 1.5%
+	top: 41px;
+	left: 0px;
+	background: rgba(255, 255, 255, 0.59);
+}
+
+#x_fuerza{
+	position: relative;
 }
 
 .help_text {
-	color: #999;
 	width:80%;
+	color: #999;
+	margin-bottom: 15px;
 }
 .help_text p {
 	font-size: .85em;
@@ -394,6 +454,7 @@ section#cont_data {
 	z-index: 1;
 	margin-left: 2%;
 	position: relative;
+	font-weight: bold;
 }
 .help_text span:before, .help_text span:after {
 	content: "";
@@ -414,25 +475,27 @@ section#cont_data {
 }
 
 #results ul#list {
-	display: inline-block;
-  width: 100%;
+  display: inline-block;
+  width: 98%;
+  height: 560px;
+  overflow: auto;
 }
 
 #results ul li {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #dadada;
 	padding: 15px 0;
 }
 #results ul li h5 {
-	font: 1.5em 'TheSansBold', arial;
+	font: 20px 'TheSansBold', arial;
 	padding: 0 0 10px 15px;
 }
 #results ul li h5 span {
-	font: normal .6em arial;
-	color: #666
+	font: normal 12px arial;
+	color: #808080
 }
 #results ul .cont_barra {
 	width: 85%;
-	width: calc(100% - 40px); /*background: rgba(200, 200, 200, .1);*/
+	width: calc(100% - 20px); /*background: rgba(200, 200, 200, .1);*/
 }
 .cont_barra .barra {
 	width: 100%;
@@ -442,7 +505,7 @@ section#cont_data {
 .cont_barra .barra .porc {
 	position: absolute;
 	top: 1px;
-	right: -45px;
+	right: -54px;
 	font: bold 20px arial;
 }
 /*no pasa*/
