@@ -158,7 +158,7 @@ section#cont_data {margin-top: 20px;}
 
 #mapa_cont svg path:hover {fill-opacity:0.9;}
 #mapa_cont svg path {fill:#FEDB30;}
-#mapa_cont svg path#c2, #mapa_cont svg path#c3, #mapa_cont svg path#c11 { fill:#1796D7; }
+#mapa_cont svg #c2, #mapa_cont svg #c3, #mapa_cont svg #c11 { fill:#1796D7; }
 
 #results { border-left: solid 1px #ccc; width: 40%; float: right; position: relative;}
 #results div#line { width: 0px; height: 100%; height: calc(100% - 44px); border-left: 1.5px dotted #000; position: absolute; top: 40px; left: 1.5% }
@@ -191,8 +191,10 @@ section#cont_data {margin-top: 20px;}
 	ul#list_interna { padding-left: 10px;}
 	ul#list_interna li {padding-bottom: 3px;}
 	ul#list_interna li div.bg_li { padding: 5px 0; }
+	/*ul#list_interna li.active div.bg_li { background: #F0F0F0; }*/
 	ul#list_interna li.active div.bg_li { background: #F0F0F0; }
 	ul#list_interna li input { float: left; position: relative; top: 20px; margin-right: 5px }
+	/*ul#list_interna li input:checked { height: 50px }*/
 	ul#list_interna li img { float: left; width: 55px; height: 55px; border-radius: 50%;}
 	ul#list_interna li h5 { font-family: 'TheSansSemiLight'; display: inline-block; width: 125px; float: left; line-height: 1; font-size: 1.4em;}
 	ul#list_interna li.active h5 { font-family: 'TheSansBold';}
