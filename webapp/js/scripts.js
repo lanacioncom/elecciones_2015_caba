@@ -13,4 +13,12 @@ var app;
 		app.change_dropdown($(this).val());
 	});
 
+
+	/*compartir*/
+	function myPopup(url) {
+   	 	window.open( url, "Compartir", "status = yes, height = 360, width = 500, resizable = yes, left = "+(ancho/2+250)+", top =" +(alto/2-150) );
+    	return false;
+	}
+	
+
 })();
