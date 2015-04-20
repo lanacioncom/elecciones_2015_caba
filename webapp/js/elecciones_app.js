@@ -3,11 +3,26 @@ var PermanentLinkJS = function() {
 
 	var query = {};
 
-	function reset(){ query = {}; }
+	function reset(){ return (query = {}); }
 
 	function set(key, val) {
-		query[key] = val;
-		set_path();
+		if (typeof key == 'object'){
+			try{
+				for (var k in key){
+					query[k] = key[k];	
+				}
+			}catch(err){
+				console.error("Error set query: %s", err.message);
+			}
+		}else{
+			try{
+				query[key] = val;
+				set_hash();
+			}catch(err){
+				console.error("Error set query: %s", err.message);
+			}
+		}
+		return query;
 	}
 	
 	function get_parameters(str) {
@@ -15,13 +30,14 @@ var PermanentLinkJS = function() {
 		return str.replace("#", "").split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this;}.bind({}))[0];
 	}
 
-	function set_from_lotacion(){
-		query = get_parameters();
+	function set_from_location(){
+		return (query = get_parameters());
 	}
 
 	function kill(k){ 
 		delete query[k]; 
-		set_path();
+		set_hash();
+		return query;
 	}
 
 	function to_string(o){
@@ -32,9 +48,13 @@ var PermanentLinkJS = function() {
 		return s.join("&");
 	}
 
-	function set_path(q) {
-		q = q || query;
-		location.hash = to_string(q);
+	function set_hash(q) {
+		q = typeof q == "string" ? q : to_string(q || query);
+		try{
+			return (location.hash = q);
+		}catch(err){
+			console.error("Error set_hash: %s", err.message);
+		}
 	}
 
 	this.get_query = function() { return query; };
@@ -42,22 +62,34 @@ var PermanentLinkJS = function() {
 	this.reset = reset;
 	this.get_parameters = get_parameters;
 	this.to_string = to_string;
-	this.set_path = set_path;
+	this.set_hash = set_hash;
 	this.set = set;
 	this.kill = kill;
-	this.set_from_lotacion = set_from_lotacion;
+	this.set_from_location = set_from_location;
 };
 
 
 // Elecciones class
 var ElecionesApp = function(){
 	"use strict";
-	
+	// set self class var
 	var s = this;
+
+	function clik_candidatos_radio(){
+		/*
+			click para el radio candidatos en el lista de internas
+		*/
+	}
+
 
 	(function init(){
 			// bind events
-			s.$radio = $('input[type="radio"]'); 
+			var candidato_btn = $('input[type="radio"]');
+			candidato_btn.on('click.select_condidato', function(el){
+				var $el = $(this);
+				$('li.active:has(input)').removeClass('active');
+				$el.closest('li').addClass('active');
+			});
 	
 	})();
 
