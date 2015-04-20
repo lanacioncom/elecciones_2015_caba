@@ -423,7 +423,7 @@ section#cont_data {
 
 #results ul#list {
   display: inline-block;
-  width: 100%;
+  width: 98%;
   height: 560px;
   overflow: auto;
 }

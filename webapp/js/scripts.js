@@ -18,4 +18,15 @@ $(function(){
    	 	window.open( url, "Compartir", "status = yes, height = 360, width = 500, resizable = yes, left = "+(ancho/2+250)+", top =" +(alto/2-150) );
     	return false;
 	}
+
+	/* // scroll // */
+
+	  $("#list").niceScroll({
+	        cursorcolor:"#d7d7d7",
+	        cursorborder:"0px solid #fff",
+	        cursorwidth: "7px",
+	        autohidemode:false,
+	        hidecursordelay:0
+	  }); 
+
 });
