@@ -358,24 +358,31 @@ section#cont_data {
 
 
 #results {
-	border-left: solid 1px #ccc;
+	border-left: solid 1px #dadada;
 	width: 40%;
 	float: right;
 	position: relative;
+	max-height: 585px;
 }
 #results div#line {
-	width: 0px;
+	width: 7px;
 	height: 100%;
 	height: calc(100% - 44px);
-	border-left: 1.5px dotted #000;
+	border-right: 1.5px dotted #000;
 	position: absolute;
-	top: 40px;
-	left: 1.5%
+	top: 41px;
+	left: 0px;
+	background: rgba(255, 255, 255, 0.59);
+}
+
+#x_fuerza{
+	position: relative;
 }
 
 .help_text {
-	color: #999;
 	width:80%;
+	color: #999;
+	margin-bottom: 15px;
 }
 .help_text p {
 	font-size: .85em;
@@ -394,6 +401,7 @@ section#cont_data {
 	z-index: 1;
 	margin-left: 2%;
 	position: relative;
+	font-weight: bold;
 }
 .help_text span:before, .help_text span:after {
 	content: "";
@@ -414,25 +422,27 @@ section#cont_data {
 }
 
 #results ul#list {
-	display: inline-block;
+  display: inline-block;
   width: 100%;
+  height: 560px;
+  overflow: auto;
 }
 
 #results ul li {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #dadada;
 	padding: 15px 0;
 }
 #results ul li h5 {
-	font: 1.5em 'TheSansBold', arial;
+	font: 20px 'TheSansBold', arial;
 	padding: 0 0 10px 15px;
 }
 #results ul li h5 span {
-	font: normal .6em arial;
-	color: #666
+	font: normal 12px arial;
+	color: #808080
 }
 #results ul .cont_barra {
 	width: 85%;
-	width: calc(100% - 40px); /*background: rgba(200, 200, 200, .1);*/
+	width: calc(100% - 20px); /*background: rgba(200, 200, 200, .1);*/
 }
 .cont_barra .barra {
 	width: 100%;
@@ -442,7 +452,7 @@ section#cont_data {
 .cont_barra .barra .porc {
 	position: absolute;
 	top: 1px;
-	right: -45px;
+	right: -54px;
 	font: bold 20px arial;
 }
 /*no pasa*/
