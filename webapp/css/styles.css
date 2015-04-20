@@ -55,6 +55,7 @@ header, section {
 	display: inline-block;
 	width: 18px;
 	height: 18px;
+	border-radius: 2px;
 }
 
 .box {
@@ -75,7 +76,7 @@ header, section {
 	content: "";
 	display: inline-block;
 	position: absolute;
-	right: -20px;
+	right: -15px;
 	top: 36%;
 	width: 0;
 	height: 0;
@@ -154,10 +155,10 @@ ul#ref {
 ul#ref li {
 	float: left;
 	width: 85px;
-	margin-bottom: 4px;
+	margin-bottom: 2px;
 	display: inline-block;
 	margin-right: 7px;
-	line-height: 1.2;
+	line-height: 1.5;
 }
 
 ul#ref li#refFte {
@@ -246,6 +247,7 @@ section {
 /*/////////////////// FILTROS ///////////////////////////*/
 
 section#filtros {
+	position: relative;
 }
 
 #filtros h3, div#selected {
@@ -261,8 +263,8 @@ h3, h4 {
 
 div#selected {
 	width: 20%;
-	width: calc(62% - 300px);
-	margin-left: 35px;
+	width: calc(74% - 300px);
+	margin-left: 25px;
 	padding: 6px 0;
 	height: 1.5em;
 	position: relative;
@@ -276,7 +278,7 @@ div#selected hr {
 
 div#selected h4 {
 	color:black;
-	padding: 7px 20px 7px 12px;
+	padding: 7px 20px 7px 9px;
 	display: flex;
 	position: absolute;
 	top: 1px;
@@ -314,6 +316,7 @@ select#opts {
 	padding: 5px 0;
 	background: #fff;
 	border: solid 1px #dadada;
+	border-radius:3px;
 }
 
 /*mapa*/
@@ -321,7 +324,7 @@ section#cont_data {
 	margin-top: 20px;
 }
 #mapa_cont, #results {
-	min-height: 450px;
+	/*min-height: 450px;*/
 }
 
 #mapa_cont {
@@ -410,7 +413,10 @@ section#cont_data {
 }
 
 #results ul#list {
+	display: inline-block;
+  width: 100%;
 }
+
 #results ul li {
 	border-bottom: 1px solid #ccc;
 	padding: 15px 0;
@@ -556,13 +562,18 @@ ul#list_interna .cont_barra .cant_v {
 	#mapa_cont {
 		height: 450px;
 	}
-	#mapa_cont svg #mapa {
+
+	/*#mapa_cont svg #mapa {
 		transform: translateX(-10px) translateY(0px) scale(.8);
+	}*/
+
+	.help_text {
+	  width: 96%;
 	}
 
 }
 
-@media (max-width: 700px) {
+@media (max-width: 750px) {
 
 	header {
 		padding: 6px 0px;
@@ -582,6 +593,10 @@ ul#list_interna .cont_barra .cant_v {
 	    padding: 0px 10px;
 	}
 
+	div#selected {
+	  width: calc(80% - 300px);
+	}
+
 	ul#ref {
 		width: 100%;
 		margin: 15px 0px;
@@ -599,19 +614,76 @@ ul#list_interna .cont_barra .cant_v {
 	  font-size: 13px;
 	}
 
-	div#selected{
-		width: calc(70% - 300px);
+	div#selected h4 {
+  		padding: 7px 15px 7px 9px;
+  	}
 
-
-	}
-
-
+  	.help_text p {
+  		float: left;
+  		width: 68%;
+  	}
 	
 
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
 	ul#ref {
 		display: none;
 	}
+
+
+	#filtros h3{
+		width: 30%;
+		position: absolute;
+		top:320px;
+		left:15px;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	div#selected{
+		width: 40%;
+		position: absolute;
+		top:320px;
+		left:42%;
+		
+	}
+
+	h4{
+		width: 100%;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	div#selected hr {
+	  display: none;
+	}
+
+	div#selected.arrow:after {
+	  display: none;
+	}
+
+	select#opts {
+  		width: 95%;
+  		position: absolute;
+  		top:0px;
+  		left: 2%;
+  		font-size: 13px;
+  	}
+
+  	#mapa_cont, #results {
+  		width: 100%;
+  		margin-top: 30px;
+  	}
+
+  	#mapa_cont{
+  		height: 290px;
+  	}
+
+  	.help_text {
+  		display: none;
+  	}
+ 
+
+
 }

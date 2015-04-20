@@ -5,7 +5,7 @@ var app;
 	app = new ElecionesApp();
 	console.log(app);
 	// load mapa
-	$.get("img/mapaBA_SVG.txt", function(mapa){
+	$.get("img/caba_ilus.txt", function(mapa){
 		$("#mapa_cont").html(mapa);
 	});
 
