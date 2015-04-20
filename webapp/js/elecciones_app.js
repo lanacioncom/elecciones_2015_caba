@@ -3,7 +3,8 @@ var PermanentLinkJS = function() {
 
 	var query = {};
 
-	function reset(){ return (query = {}); 
+	function reset(){ return (query = {}); }
+
 	function set(key, val) {
 		if (typeof key == 'object'){
 			try{
@@ -29,7 +30,7 @@ var PermanentLinkJS = function() {
 		return str.replace("#", "").split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this;}.bind({}))[0];
 	}
 
-	function set_from_lotacion(){
+	function set_from_location(){
 		return (query = get_parameters());
 	}
 
@@ -64,7 +65,7 @@ var PermanentLinkJS = function() {
 	this.set_hash = set_hash;
 	this.set = set;
 	this.kill = kill;
-	this.set_from_lotacion = set_from_lotacion;
+	this.set_from_location = set_from_location;
 };
 
 
