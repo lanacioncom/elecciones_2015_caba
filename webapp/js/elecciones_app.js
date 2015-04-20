@@ -81,6 +81,11 @@ var ElecionesApp = function(){
 		*/
 	}
 
+	function select_comuna(id){
+		var com_name = "Comuna "+id.replace(/c/i, "");
+		$("#selected h4").html(com_name).fadeIn();
+		s.q.set("comuna", id);
+	}
 
 	(function init(){
 			// bind events
@@ -89,6 +94,18 @@ var ElecionesApp = function(){
 				var $el = $(this);
 				$('li.active:has(input)').removeClass('active');
 				$el.closest('li').addClass('active');
+			});
+
+			// change dropdown
+			$('select#opts').change(function(e){
+				s.change_dropdown($(this).val());
+			});
+
+
+			// click mapa
+
+			$('polygon').on('click.on_comuna', function(e){
+				select_comuna(this.id);
 			});
 	
 	})();
