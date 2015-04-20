@@ -337,21 +337,22 @@ section#cont_data {
 #mapa_cont svg #mapa {
 	transform: translateX(5%) translateY(0px) scale(1);
 }
-#mapa_cont svg path {
+#mapa_cont svg path, polygon {
 	stroke: white;
 	stroke-width: 1.2px;
 	cursor: pointer;
-}
-
-#mapa_cont svg path:hover {
-	fill-opacity: 0.9;
-}
-#mapa_cont svg path {
 	fill: #FEDB30;
 }
-#mapa_cont svg path#c2, #mapa_cont svg path#c3, #mapa_cont svg path#c11 {
+
+#mapa_cont svg path:hover, polygon:hover {
+	fill-opacity: 0.9;
+}
+
+#mapa_cont svg #c2, #mapa_cont svg #c3, #mapa_cont svg #c11 {
 	fill: #1796D7;
 }
+
+
 
 #results {
 	border-left: solid 1px #ccc;
