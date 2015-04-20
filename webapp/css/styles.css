@@ -59,13 +59,13 @@ header, section {
 
 .box {
 	color:#999999;
-	background-color: #FFFFFF;
+	background-color: #f7f7f7;
 	display: inline-block;
 	padding: 9px 14px 6px 12px;
-	border: solid 1px #ccc;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	border: solid 1px #dadada;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .arrow {
@@ -102,16 +102,18 @@ body {
 
 /*header*/
 header {
-	height: 40px;
 	border-bottom: dotted 1px #dadada;
 	padding: 15px 0px;
 	margin-bottom: 15px;
+	height: 40px;
+	position: relative;
 }
 
 div.titulos {
 	width: 320px;
-	display: inline-block;
-	font-size: 15px
+	float: left;
+	font-size: 15px;
+	overflow: hidden;
 }
 
 h1 {
@@ -131,34 +133,22 @@ h2 {
 	display: inline-block;
 	font-family: 'TheSansSemi';
 	font-size: 31px;
-	padding: 0 10px;
+	padding: 6px 10px;
 	margin: 0 10px;
 	border: solid 1px #BBBBBB;
 	border-top: none;
 	border-bottom: none;
 }
 
-/*/////////////////// referencias ///////////////////////////*/
 
-div.ayuda {
-	width: 94px;
-	height: 70px;
-	float: right;
-	font-family: 'TheSansSemi';
-	font-size: 15px;
-	padding-left: 90px;
-	background-image: url(../img/sprite.png);
-	background-repeat: no-repeat;
-	background-position: 17px 8px;
-	background-size: 119%;
-}
+/*/////////////////// REFERENCIAS ///////////////////////////*/
 
 ul#ref {
 	width: 39%;
-	float: right;
 	font-size: 15px;
 	font-family: 'TheSansSemi';
-	display: inline-block;
+	float: left;
+	margin-left: 25px;
 }
 
 ul#ref li {
@@ -174,6 +164,81 @@ ul#ref li#refFte {
 	width: 130px;
 }
 
+
+/*//////////// COMPARTIR /////////////////*/
+
+header div.compartir{
+	width: 120px;
+	height: 28px;
+ 	float: right;
+}
+
+
+header div.compartir a.btn{
+	width: 27px;
+	height: 27px;
+	float: right;
+	margin-left: 2px;
+	margin-top: 5px;
+	background-repeat: no-repeat;
+	background-image:url(../img/compartir.png); 
+	-webkit-transition: background-position .2s;
+	-moz-transition: background-position .2s; 
+	-o-transition: background-position .2s; 
+    transition: background-position .2s;
+}
+
+header div.compartir a#facebook{
+	background-position: 2px 0px;
+}
+
+header div.compartir a#facebook:hover{
+	background-position: 2px -28px;
+}
+
+header div.compartir a#twit{
+	background-position: -25px 0px;
+}
+
+header div.compartir a#twit:hover{
+	background-position: -25px -28px;
+}
+
+header div.compartir a#google{
+	background-position: -51px 0px;
+}
+
+header div.compartir a#google:hover{
+	background-position: -51px -28px;
+}
+
+header div.compartir a#mail{
+	background-position: -77px 0px;
+}
+
+header div.compartir a#mail:hover{
+	background-position: -77px -28px;
+}
+
+/*/////////////////// ayuda ///////////////////////////*/
+
+div.ayuda {
+	width: 94px;
+	height: 70px;
+	position: absolute;
+	top:20px;
+	right:110px;
+	font-family: 'TheSansSemi';
+	font-size: 15px;
+	padding-left: 90px;
+	background-image: url(../img/sprite.png);
+	background-repeat: no-repeat;
+	background-position: 17px 8px;
+	background-size: 119%;
+}
+
+
+
 section {
 	padding: 0 5px;
 }
@@ -182,22 +247,21 @@ section {
 
 section#filtros {
 }
+
 #filtros h3, div#selected {
 	float: left;
 	display: inline-block;
 }
 
 h3, h4 {
-	font-size: 1.2em;
+	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-h4 {
-	font-size: 1.2em
-}
+
 div#selected {
 	width: 20%;
-	width: calc(59% - 300px);
+	width: calc(62% - 300px);
 	margin-left: 35px;
 	padding: 6px 0;
 	height: 1.5em;
@@ -212,21 +276,25 @@ div#selected hr {
 
 div#selected h4 {
 	color:black;
-	padding: 9px 14px 6px 12px;
-	display: inline-block;
+	padding: 7px 20px 7px 12px;
+	display: flex;
 	position: absolute;
 	top: 1px;
 	left: 0;
 	background: #FFFFFF;
 	text-transform: uppercase;
-	border: solid 1px #ccc;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	border: solid 1px #dadada;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-image: url(../img/fle.png);
+	background-position: right;
+	background-repeat: no-repeat;
+	cursor: pointer;
 }
 
 div#selected h4:after{
-	content: url(../img/cerrar.png);
+	
 		
 }	
 div#selected h4 a {
@@ -245,7 +313,7 @@ select#opts {
 	font-size: 1.3em;
 	padding: 5px 0;
 	background: #fff;
-	border: solid 1px #ddd;
+	border: solid 1px #dadada;
 }
 
 /*mapa*/
@@ -458,6 +526,10 @@ ul#list_interna .cont_barra .cant_v {
 		width: 250px;
 	}
 
+	header{
+		height: 32px;
+	}
+
 	h1 {
 		font-size: 27px;
 	}
@@ -469,17 +541,20 @@ ul#list_interna .cont_barra .cant_v {
 	ul#ref {
 		width: 48.5%;
 		font-size: 13px;
-		margin-right: 16%;
+		margin-top: -3px;
 	}
 
-	.ayuda {
-		position: absolute;
-		top: 15px;
-		right: 5px;
+	div.ayuda {
+		top: 11px;
+  		right: 5px;
+	}
+
+	div.compartir{
+		display: none;
 	}
 
 	#mapa_cont {
-		height: 450
+		height: 450px;
 	}
 	#mapa_cont svg #mapa {
 		transform: translateX(-10px) translateY(0px) scale(.8);
@@ -490,8 +565,12 @@ ul#list_interna .cont_barra .cant_v {
 @media (max-width: 700px) {
 
 	header {
-		height: auto;
 		padding: 6px 0px;
+		height: 25px;
+	}
+
+	div.titulos{
+		display: inline-block;
 	}
 
 	h1 {
@@ -500,22 +579,38 @@ ul#list_interna .cont_barra .cant_v {
 
 	h2 {
 		font-size: 20px;
+	    padding: 0px 10px;
 	}
 
 	ul#ref {
-		width: 98%;
+		width: 100%;
 		margin: 15px 0px;
-		margin-bottom: 6px;
-		display: block;
+		padding: 8px 0px;
+		margin-bottom: 10px;
+		display: inline-block;
+		border-bottom:1px solid #dadada;
 	}
 
-	.ayuda {
+	div.ayuda {
 		display: none;
 	}
 
+	h3, h4 {
+	  font-size: 13px;
+	}
+
+	div#selected{
+		width: calc(70% - 300px);
+
+
+	}
+
+
+	
+
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
 	ul#ref {
 		display: none;
 	}
