@@ -1,6 +1,6 @@
 // scripts app
 var app;
-(function(){
+$(function(){
 	"use strict";
 	app = new ElecionesApp();
 	console.log(app);
@@ -13,4 +13,4 @@ var app;
 		app.change_dropdown($(this).val());
 	});
 
-})();
+});
