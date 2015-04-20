@@ -11,13 +11,12 @@ var gulp = require('gulp'),
 	stylish = require('jshint-stylish'),
 	gutil = require('gulp-util'),
 	ftp = require('gulp-ftp');
+    merge = require('merge-stream');
 
 var t = new Date().getTime(),
 	js_all = 'js/all.min.js',
 	js_vendor = 'js/vendor.min.js',
 	css_file_min = 'all.min.css';
-
-
 
 
 // build tasks
@@ -37,21 +36,23 @@ gulp.task('test_js', function(){
 });
 
 gulp.task('js', ['test_js'], function () {
-	gulp.src('js/scripts.js, js/elecciones_app.js', { cwd: 'webapp' })
+	var all = gulp.src(['js/scripts.js', 'js/elecciones_app.js'] , { cwd: 'webapp' })
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(concat(js_all))
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('build'));
 	
-	gulp.src([
+	var vendor = gulp.src([
 		'js/jquery.min.js', 
 		], { cwd: 'webapp' })
 		.pipe(sourcemaps.init())
       	.pipe(uglify())
       	.pipe(concat(js_vendor))
-		.pipe(sourcemaps.write())
+		.pipe(sourcemaps.write('./'))
       	.pipe(gulp.dest('build'));
+
+    return merge(all,vendor);
 	
 });
 
@@ -69,8 +70,8 @@ gulp.task('copy', function () {
 	gulp.src('img/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/img'));
 
-	gulp.src('data', { cwd: 'webapp' })
-		.pipe(gulp.dest('build'));
+	gulp.src('data/*', { cwd: 'webapp' })
+		.pipe(gulp.dest('build/data'));
 
 });
 
@@ -98,7 +99,7 @@ gulp.task('server', ['connect', 'watch']);
 
 gulp.task('server_pro', function() {
   connect.server({
-    root: 'build',
+    root: 'build'
   });
 });
 
