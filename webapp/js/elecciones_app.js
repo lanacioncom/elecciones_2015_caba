@@ -15,7 +15,7 @@ var PermanentLinkJS = function() {
 		return str.replace("#", "").split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this;}.bind({}))[0];
 	}
 
-	function set_from_lotacion(){
+	function set_from_location(){
 		query = get_parameters();
 	}
 
@@ -45,7 +45,7 @@ var PermanentLinkJS = function() {
 	this.set_path = set_path;
 	this.set = set;
 	this.kill = kill;
-	this.set_from_lotacion = set_from_lotacion;
+	this.set_from_location = set_from_location;
 };
 
 
