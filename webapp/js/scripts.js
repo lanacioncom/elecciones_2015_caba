@@ -1,7 +1,7 @@
 // scripts app
 var app;
-var ancho = $(window).width();
 
+var ancho = $(window).width();
 var isMobile = { //valida si es un dispositivo movil
     Android: function() {
         return navigator.userAgent.match(/Android/i);
@@ -29,9 +29,9 @@ $(function(){
 	$.get("img/caba_ilus.txt", function(mapa){
 		$("#mapa_cont").html(mapa + '<div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
 		
-		tooltip();
+		// tooltip();
 
-		//app = new ElecionesApp();
+		app = new ElecionesApp();
 		//console.log(app);
 	
 	});
