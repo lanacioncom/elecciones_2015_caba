@@ -154,6 +154,7 @@ ul#ref {
 	font-family: 'TheSansSemiLight';
 	float: left;
 	margin-left: 16px;
+	display: none;
 }
 
 ul#ref li {
@@ -524,8 +525,8 @@ div.loader{
 
 
 #results ul li h5 {
-	font: 17px 'TheSansBold', arial;
-	padding: 0 0 10px 15px;
+	font: 17px 'TheSans', arial;
+	padding: 8px 0 10px 15px;
 }
 #results ul li h5 span {
 	font: normal 12px arial;
@@ -591,17 +592,18 @@ li.no_pasa .cont_barra .barra .porc:after {
 ul#list_interna {
 	width: 98%;
 	padding-left: 10px;
-	height: 570px;
+	height: 530px;
 	overflow: auto;
 }
 ul#list_interna li {
 	padding-bottom: 3px;
 }
 ul#list_interna li div.bg_li {
-	padding-top: 15px;
+	padding: 15px 0px
 }
 ul#list_interna li.active div.bg_li {
-	background: #F0F0F0;
+	background: #F7F7F7;
+	border-radius: 3px;
 }
 ul#list_interna li input {
 	float: left;
@@ -694,9 +696,11 @@ ul#list_interna .cont_barra .cant_v {
 	header {
 		padding: 6px 0px;
 		height: 25px;
+		border:0px;
 	}
 
 	div.titulos{
+		margin-left: 5px;
 		display: inline-block;
 	}
 
@@ -714,17 +718,19 @@ ul#list_interna .cont_barra .cant_v {
 	}
 
 	ul#ref {
-		width: 100%;
-		margin: 15px 0px;
+		width: 98.5%;
+  		margin: 5px 5px;
 		padding: 8px 0px;
 		margin-bottom: 10px;
 		display: inline-block;
-		border-bottom:1px solid #dadada;
+		border-bottom:1px dotted #808080;
 	}
 
-	div.ayuda {
-		display: none;
+	ul#ref li {
+	  float: left;
+	  width: 60px
 	}
+
 
 	header div.compartir {
 	  float: none;
@@ -745,6 +751,10 @@ ul#list_interna .cont_barra .cant_v {
   		float: left;
   		width: 68%;
   	}
+
+  	div.ayuda {
+		top: 17px;
+	}
 
   	div.ayuda3 {
 	  width: 43%;
@@ -776,22 +786,26 @@ ul#list_interna .cont_barra .cant_v {
 		display: none;
 	}
 
+	header {
+	  border-bottom:0px;
+	}
+
 
 	#filtros h3{
 		width: 30%;
 		position: absolute;
-		top:300px;
-		left:15px;
-		font-size: 12px;
+		top:265px;
+		left:6px;
+		font-size: 11px;
 		text-align: center;
+		padding: 7px 2px 7px 2px;
 	}
 
 	div#selected{
-		width: 40%;
+		width: 46%;
 		position: absolute;
-		top:300px;
-		left:42%;
-		
+		top: 264px;
+  		left: 36%;
 	}
 
 	h4{
@@ -812,21 +826,23 @@ ul#list_interna .cont_barra .cant_v {
 	  padding: 7px 4px 7px 9px;
 	}
 
+	div.ayuda{
+		display: none;
+	}
+
 	select#opts {
-  		width: 95%;
+  		width: 97%;
   		position: absolute;
-  		top:0px;
-  		left: 2%;
+  		top:-15px;
+  		left: 5px;
   		font-size: 13px;
+
   	}
 
   	#mapa_cont{
   		width: 100%;
-  		margin-top: 30px;
-  	}
-
-  	 #mapa_cont{
-  		height: 270px;
+  		margin-top: 13px;
+  		height: 245px;
   	}
 
   	.help_text {
@@ -835,8 +851,8 @@ ul#list_interna .cont_barra .cant_v {
 
   	div.ayuda3 {
   	  width: 38%;
-  	  bottom: 22px;
-  	  font-size: 12px;
+  	  bottom: 10px;
+  	  font-size: 11px;
   	  font-family: Arial;
   	}
 
@@ -846,10 +862,10 @@ ul#list_interna .cont_barra .cant_v {
 	}
 
   	#results {
-  		width: 94%;
-  		margin-top: 30px;
+  		width: 97%;
+  		margin-top: 35px;
 		border: 0px;
-		margin-right: 2%;
+		margin-right: 5px;
 		background-color: #fff;
 	}
 

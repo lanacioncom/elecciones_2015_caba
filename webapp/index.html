@@ -16,7 +16,7 @@
 
 <header>
 	<div class="titulos">
-		<h1>Primarias <span>2015</span></h1>
+		<h1>Primarias <span></span></h1>
 		<h2>CABA</h2>
 	</div>
 	
@@ -50,15 +50,14 @@
 	</div>
 
 	<select id="opts" class="">
-		<option value="x_fuerza">Por fuerza política</option>
-		<optgroup label="Por interna">
-			<option value="pro">Pro</option>
-			<option value="fpv">FPV</option>
-			<option value="eco">ECO</option>
-			<option value="mst">MST</option>
-			<option value="bien_comun">Bien Común</option>
-			<option value="surgen">Surgen</option>
-		</optgroup>
+		<option value="x_fuerza">Todas las fuerzas políticas</option>
+		<option value="pro">Pro (interna)</option>
+		<option value="fpv">FPV (interna)</option>
+		<option value="eco">ECO (interna)</option>
+		<option value="mst">MST (interna)</option>
+		<option value="bien_comun">Bien Común (interna)</option>
+		<option value="surgen">Surgen (interna)</option>
+		<option value="unicas">Listás únicas</option>
 	</select>
 </section>
 
@@ -90,12 +89,17 @@
 	<article id="results">
 	<!-- Tab: resultados por interna -->
 	<div id="x_interna">
+		<div class="help_text">
+			<span>1,5%</span>
+			<p>CORTE: Porcentaje que deben superar los partidos para acceder a la elección general</p>
+		</div>
+
 		<ul id="list_interna">
 			<li class="candidato active">
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
-				<h5>Mariano Recalde <span>Adelante Santa Fe (SOCIALISMO)</span></h5>
+				<h5>Horacio R. Larreta</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro" style="width:98%">
@@ -109,7 +113,7 @@
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
-				<h5>Mariano Recalde <span>Firmeza para avanzar (UCR)</span></h5>
+				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro" style="width:98%">
@@ -123,7 +127,7 @@
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
-				<h5>Mariano Recalde <span>Juntos Podemos</span></h5>
+				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro" style="width:98%">
@@ -137,7 +141,7 @@
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
-				<h5>Mariano Recalde <span>Hay Equipo</span></h5>
+				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro" style="width:98%">
@@ -151,7 +155,7 @@
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
-				<h5>Mariano Recalde <span>CFK</span></h5>
+				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro" style="width:98%">
@@ -165,7 +169,7 @@
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
-				<h5>Mariano Recalde <span>CFK</span></h5>
+				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro" style="width:98%">
@@ -179,7 +183,7 @@
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
-				<h5>Mariano Recalde <span>CFK</span></h5>
+				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro" style="width:98%">
