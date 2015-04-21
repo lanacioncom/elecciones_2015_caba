@@ -23,8 +23,6 @@ var isMobile = { //valida si es un dispositivo movil
     }
 };
 
-
-
 $(function(){
 	"use strict";
 	// load mapa
