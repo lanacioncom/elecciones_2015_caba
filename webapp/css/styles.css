@@ -483,10 +483,10 @@ section#cont_data {
 
 #results ul li {
 	border-bottom: 1px solid #dadada;
-	padding: 15px 0;
+	padding: 13px 0;
 }
 #results ul li h5 {
-	font: 20px 'TheSansBold', arial;
+	font: 16px 'TheSansSemi', arial;
 	padding: 0 0 10px 15px;
 }
 #results ul li h5 span {
@@ -505,8 +505,8 @@ section#cont_data {
 .cont_barra .barra .porc {
 	position: absolute;
 	top: 1px;
-	right: -54px;
-	font: bold 20px arial;
+	right: -43px;
+	font: 18px arial;
 }
 /*no pasa*/
 li.no_pasa {
