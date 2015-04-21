@@ -32,17 +32,9 @@ $(function(){
 		// tooltip();
 
 		app = new ElecionesApp();
-		//console.log(app);
+		console.log(app);
 	
 	});
-
-
-	if(ancho < 750 && ancho > 640){
-		$(".compartir").show();
-	}else{
-		$(".compartir").hide();
-	}
-
 
 
 	 /* // scroll // */
@@ -100,7 +92,9 @@ function tooltip(){
          	var itemX = e.pageX - 200;
          }
 
-         if(e.pageY > 450){
+         if(e.pageY > 350 && ancho < 750){
+           var itemY = e.pageY - 260;
+         }else if(e.pageY > 450){
            var itemY = e.pageY - 260;
          }else{
            var itemY = e.pageY + 30;
