@@ -53,7 +53,7 @@ header, section {
 }
 .bullet {
 	display: inline-block;
-	width: 18px;
+	width: 3px;
 	height: 18px;
 	border-radius: 2px;
 }
@@ -139,6 +139,7 @@ h2 {
 	border: solid 1px #BBBBBB;
 	border-top: none;
 	border-bottom: none;
+	border-right: none;
 }
 
 
@@ -146,10 +147,10 @@ h2 {
 
 ul#ref {
 	width: 39%;
-	font-size: 15px;
-	font-family: 'TheSansSemi';
+	font-size: 14px;
+	font-family: 'TheSansSemiLight';
 	float: left;
-	margin-left: 25px;
+	margin-left: 16px;
 }
 
 ul#ref li {
