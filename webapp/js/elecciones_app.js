@@ -74,11 +74,13 @@ var PermanentLinkJS = function() {
 
 
 // Elecciones class
-var ElecionesApp = function(list_partidos){
+var ElecionesApp = function(list_partidos, results){
 	"use strict";
 	// set self class var
 	var s = this;
 	s.list_partidos = list_partidos;
+	s.r_general = results.general;
+	// s.r_internas = results.inernas;
 
 	function set_data_active(str){
 		$("#selected h4").html(str).fadeIn();
@@ -90,6 +92,9 @@ var ElecionesApp = function(list_partidos){
 		s.q.set("comuna", id);
 	}
 
+	function draw_list_res_partidos(data){
+		s.ul_res_x_partidos.html(s.tmpl_li_partido(data));
+	}
 
 	(function init(){
 			// bind events
@@ -100,6 +105,7 @@ var ElecionesApp = function(list_partidos){
 				$el.closest('li').addClass('active');
 
 				set_data_active(this.value);
+				s.q.set("candidato", this.value);
 
 			});
 
@@ -108,10 +114,16 @@ var ElecionesApp = function(list_partidos){
 				s.change_dropdown($(this).val());
 			});
 
+			
 			// template para el select de internas
 			s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
 			$("#opts").html( s.tmpl_opts(s.list_partidos) );
 			
+			
+			// template para listado de resultados por partido
+			s.ul_res_x_partidos = $("#list"); // contenedor ul para los partidos (barras)  
+			s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
+			draw_list_res_partidos(s.r_general.total);
 
 			// click mapa
 			$('polygon').on('click.on_comuna', function(e){
@@ -127,6 +139,24 @@ var ElecionesApp = function(list_partidos){
 ElecionesApp.prototype.reset = function (){
 	// resetea el los filtros
 	$("#selected h4").html("").fadeOut();
+};
+
+ElecionesApp.prototype.barios_x_com = {
+	'c1':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c2':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c3':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c4':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c5':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c6':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c7':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c8':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c9':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c10':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c11':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c12':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c13':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c14':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c15':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar."
 };
 
 

@@ -17,6 +17,13 @@ Handlebars.registerHelper('ifNotCond', function(v1, v2, options) {
   return options.inverse(this);
 });
 
+Handlebars.registerHelper('isLessThan', function(v1, v2, options) {
+  if(+v1 < +v2) {
+	return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 
 Handlebars.registerHelper( "lower", function ( _str ){
 	return  _str.toLowerCase();

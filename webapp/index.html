@@ -74,14 +74,14 @@
 	<article id="mapa_cont"><div class="loader"></div></article>
 	
 	<!-- tooltip -->
-	<div class="tooltip">
-	<h4>COMUNA 1</h4>
-	<p>Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.</p>
-	<div class="fuerza">
-		<div class="candidato">Pro</div>
-		<div class="candidatoBarra bk_pro"></div>
-		<div class="candidatoPorcentaje">45,5%</div>
-	</div>
+	<div class="tooltip" id="tooltip">
+		<h4>COMUNA 1</h4>
+		<p>Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.</p>
+		<div class="fuerza">
+			<div class="candidato">Pro</div>
+			<div class="candidatoBarra bk_pro"></div>
+			<div class="candidatoPorcentaje">45,5%</div>
+		</div>
 		<div class="fuerza">
 			<div class="candidato">FPV</div>
 			<div class="candidatoBarra bk_fpv"></div>
@@ -211,15 +211,19 @@
 			<p>CORTE: Porcentaje que deben superar los partidos para acceder a la elección general</p>
 		</div>
 		<ul id="list">
-			<li>
-				<h5>Pro <span>60000 votos</span></h5>
+		<script type="text/template" id="tmpl_li_partido">
+			{{#each this}}
+			<li class="{{#isLessThan porcentaje 1.5}}no_pasa{{/isLessThan}}">
+				<h5>{{id}} Pro <span>{{votos}} votos</span></h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:88%">
-						<div class="porc">88%</div>
+					<div class="barra bk_pro {{id}}" style="width:{{porcentaje}}%;">
+						<div class="porc">{{porcentaje}}%</div>
 					</div>
 				</div>
 			</li>
+			{{/each}}
+		</script>
 			<li>
 				<h5>FPV <span>40000 votos</span></h5>
 				<div class="cont_barra">

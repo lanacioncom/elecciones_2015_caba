@@ -30,11 +30,14 @@ $(function(){
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
 		$.get("data/list_partidos.json", function(list_partidos){
-		
-			$("#mapa_cont").html(mapa + '<div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
 			
-			app = new ElecionesApp(list_partidos);
-			// console.log(app);
+			$.get("data/results_example.json", function(results){
+
+				$("#mapa_cont").html(mapa + '<div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
+				// init app
+				app = new ElecionesApp(list_partidos, results);
+				
+			});
 		});
 		// tooltip(); lo llama elecciones_app.js
 	
