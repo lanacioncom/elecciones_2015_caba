@@ -8,6 +8,15 @@ from time import sleep
 
 BASE_URL = 'http://elecciones.santafe.gov.ar/departamento'
 
+def calculate_percentage():
+    pass
+
+def clean_received_data():
+    pass
+
+def generate_output():
+    pass
+
 def run():
     config.init()
     logging.info("Contacting API endpoint")
