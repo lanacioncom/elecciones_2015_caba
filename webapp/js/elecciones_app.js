@@ -164,26 +164,6 @@ ElecionesApp.prototype.reset = function (){
 	this.q.kill("comuna");
 };
 
-ElecionesApp.prototype.barios_x_com = {
-	'c1':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c2':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c3':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c4':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c5':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c6':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c7':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c8':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c9':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c10':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c11':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c12':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c13':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c14':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c15':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar."
-};
-
-
-
 ElecionesApp.prototype.draw_ul_list = function(data){
 	if(!data){
 		data = this.r_general.total;
@@ -232,3 +212,22 @@ ElecionesApp.prototype.change_dropdown = function(val){
 };
 
 ElecionesApp.prototype.q = new PermanentLinkJS();
+
+
+ElecionesApp.prototype.barios_x_com = {
+	'c1':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c2':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c3':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c4':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c5':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c6':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c7':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c8':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c9':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c10':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c11':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c12':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c13':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c14':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c15':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar."
+};
