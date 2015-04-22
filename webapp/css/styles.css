@@ -48,6 +48,137 @@ header, section {
 	color: #B3B3B3;
 }
 
+
+/* foto candidatos */
+
+.michetti {
+	background-position: -5px -1px;
+}
+
+.larreta {
+	background-position: -5px -60px;
+}
+
+.recalde {
+	background-position: -5px -118px;
+}
+
+.cerruti {
+	background-position: -5px -176px;
+}
+
+.lopez {
+	background-position: -5px -235px;
+}
+
+.ibarra {
+	background-position: -5px -291px;
+}
+
+.heller {
+	background-position: -5px -349px;
+}
+
+.oviedo {
+	background-position: -5px -406px;
+}
+
+.ramos {
+	background-position: -5px -464px;
+}
+
+.lousteau {
+	background-position: -5px -522px;
+}
+
+.ocania {
+	background-position: -5px -580px;
+}
+
+.borthagaray {
+	background-position: -5px -640px;
+}
+
+.nielsen {
+	background-position: -5px -695px;
+}
+
+.tumini {
+	background-position: -5px -754px;
+}
+
+.abrevaya {
+	background-position: -5px -811px;
+}
+
+.bidonde {
+	background-position: -5px -869px;
+}
+
+.garcia {
+	background-position: -5px -923px;
+}
+
+.lopes {
+	background-position: -5px -983px;
+}
+
+.torres {
+	background-position: -5px -1042px;
+}
+
+.zamora {
+	background-position: -5px -1101px;
+}
+
+.lozano {
+	background-position: -5px -1157px;
+}
+
+.bregman {
+	background-position: -5px -1214px;
+}
+
+.castanieira {
+	background-position: -5px -1273px;
+}
+
+.tenaglia {
+	background-position: -5px -1331px;
+}
+
+.ferreyra {
+	background-position: -5px -1386px;
+}
+
+.vera {
+	background-position: -5px -1447px;
+}
+
+.fabre {
+	background-position: -5px -1505px;
+}
+
+.vasena {
+	background-position: -5px -1561px;
+}
+
+.piragini {
+	background-position: -5px -1619px;
+}
+
+.cutzarida {
+	background-position: -5px -1676px;
+}
+
+
+
+
+
+
+
+
+
 /*helpers*/
 [hidden] {
 	display: none !important;
@@ -469,6 +600,7 @@ div.loader{
 	color: #999;
 	margin-bottom: 15px;
 }
+
 .help_text p {
 	font-size: .85em;
 	line-height: 1.2em
@@ -506,9 +638,36 @@ div.loader{
 	bottom: -7px;
 }
 
+.porc_text{
+	width: 95%;
+	height: 30px;
+	border-bottom: 1px solid #dadada;
+	margin-left: 10px;
+}
+
+.porc_text div.porc_partido {
+	font-size: 18px;
+  	color: #000;
+   float: left;
+
+}
+
+.porc_text div.porc_partido span {
+	color:#0facdd;
+	font-weight: bold;
+}
+
+.porc_text div.cant_v {
+	width: 100px;
+	font-size: 12px;
+	color: #999;
+	float: left;
+	margin:3px 10px;
+}
+
 #results ul#list {
   display: inline-block;
-  width: 99%;
+  width: 100%;
   height: 465px;
   overflow: auto;
 }
@@ -593,7 +752,7 @@ li.no_pasa .cont_barra .barra .porc:after {
 
 /* internas */
 ul#list_interna {
-	width: 99%;
+	width: 96%;
 	padding-left: 10px;
 	height: 460px;
 	overflow: auto;
@@ -614,12 +773,15 @@ ul#list_interna li input {
 	top: 20px;
 	margin-right: 5px
 }
-ul#list_interna li img {
+ul#list_interna li div.foto {
 	float: left;
 	width: 55px;
 	height: 55px;
 	border-radius: 50%;
+	background-image: url(../img/Sprite_anexoCABA.png);
+	background-repeat: no-repeat;
 }
+
 ul#list_interna li h5 {
 	font-family: 'TheSansSemiLight';
 	display: inline-block;
@@ -643,8 +805,13 @@ ul#list_interna .cont_barra {
 	margin-top: 5px
 }
 ul#list_interna .cont_barra .cant_v {
-	margin-top: 10px;
+	margin-top: 7px;
 	color: #666;
+}
+
+ul#list_interna li div.cant_v {
+	margin-top: 10px;
+	  color:#808080;
 }
 
 @media (max-width: 850px) {
@@ -707,7 +874,14 @@ ul#list_interna .cont_barra .cant_v {
 	  padding: 10px 0;
 	}
 
-	
+	ul#list_interna li div.cant_v {
+	  color:#808080;
+	  text-indent: 15px;
+	}
+
+	.cont_barra .barra {
+		margin-top: 9px;
+	}
 
 }
 
@@ -804,11 +978,11 @@ ul#list_interna .cont_barra .cant_v {
 
 	#results ul .cont_barra {
 	  width: calc(100% - 70px);
-	  margin-top: 10px;
+	  margin-top: 2px;
 	}
 
 	ul#list_interna li h5 {
-	  width: 130px;
+	  width: 57%;
 	}
 
 	ul#list_interna li div.bg_li {
@@ -816,10 +990,22 @@ ul#list_interna .cont_barra .cant_v {
 	  padding-bottom:2px;
 	}
 
+	.porc_text div.porc_partido {
+	  font-size: 15px;
+	}
+
+
+
+	  
+
 
 }
 
 @media (max-width: 640px) {
+	section#cont_data {
+	  margin-top: 6px;
+	}
+
 	ul#ref {
 		display: none;
 	}
@@ -833,7 +1019,7 @@ ul#list_interna .cont_barra .cant_v {
 	#filtros h3{
 		width: 30%;
 		position: absolute;
-		top:295px;
+		top:286px;
 		left:6px;
 		font-size: 11px;
 		text-align: center;
@@ -843,7 +1029,7 @@ ul#list_interna .cont_barra .cant_v {
 	div#selected{
 		width: 46%;
 		position: absolute;
-		top: 293px;
+		top: 283px;
   		left: 36%;
 	}
 
@@ -909,14 +1095,12 @@ ul#list_interna .cont_barra .cant_v {
 
 	#results ul li {
 	  padding: 9px 0;
+	  padding-bottom: 15px;
 	}
 
-	#results ul li h5 {
-	  padding: 0 0 10px 0px;
-	}
 
 	.cont_barra .barra .porc {
-	  top: -5px;
+	  top: -7px;
 	}
  
 	#results div#line {
@@ -924,7 +1108,7 @@ ul#list_interna .cont_barra .cant_v {
 	}
 
 	.cont_barra .barra {
-	  height: 12px;
+	  height: 7px;
 	}
 
 	#results ul .cont_barra {
@@ -941,11 +1125,21 @@ ul#list_interna .cont_barra .cant_v {
 	 padding-left: 0px;
 	}
 
-	ul#list_interna li h5 {
-	  width: 65%;
+	#results ul li h5 {
+	  padding: 0 0 10px 0px;
 	}
 
-	ul#list_interna li img {
+	ul#list_interna li h5 {
+	  width: auto;
+	  margin-right: 10px;
+	}
+
+	ul#list_interna li div.cant_v {
+	  color:#808080;
+	  margin: 4px 10px;
+	}
+
+	ul#list_interna li div.foto {
 		display: none;
 	}
 
@@ -953,6 +1147,17 @@ ul#list_interna .cont_barra .cant_v {
 		display: none;
 	}
 
+	ul#list_interna .cont_barra .cant_v {
+	  margin-top: 5px;
+	}
+
+	ul#list_interna {
+	  width: 100%;
+	}
+
+	.porc_text{
+	  display: none;
+	}
 
 
 

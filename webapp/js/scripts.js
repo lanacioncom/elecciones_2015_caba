@@ -35,11 +35,14 @@ $(function(){
 			
 			app = new ElecionesApp(list_partidos);
 
+			/* /// select 2 ///*/
 			$("#opts").select2({
 		        minimumResultsForSearch: Infinity,
 		        val: "x_fuerza"
 		   });
+
 			// console.log(app);
+
 		});
 		// tooltip(); lo llama elecciones_app.js
 	
@@ -56,10 +59,7 @@ $(function(){
 	        hidecursordelay:0
 	  });
 
-	  /* /// select 2 ///*/
-
-
-
+	 
 	  
 		/*compartir*/
 		function myPopup(url) {
@@ -108,7 +108,7 @@ function tooltip(){
 
          if(e.pageY > 350 && ancho < 750){
 			itemY = e.pageY - 260;
-         }else if(e.pageY > 450){
+         }else if(e.pageY > 350){
 			itemY = e.pageY - 260;
          }else{
 			itemY = e.pageY + 30;
