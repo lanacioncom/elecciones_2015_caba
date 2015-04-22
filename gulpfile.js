@@ -21,7 +21,7 @@ var t = new Date().getTime(),
 
 // build tasks
 gulp.task('minify-css', function () {
-	gulp.src(['css/reset.css', 'css/fonts.css', 'css/styles.css'], { cwd: 'webapp' })
+	gulp.src(['css/reset.css', 'css/fonts.css', 'css/select2.css', 'css/styles.css'], { cwd: 'webapp' })
     .pipe(minifyCSS())
     .pipe(concat(css_file_min))
     .pipe(gulp.dest('build/css'));
@@ -45,6 +45,7 @@ gulp.task('js', ['test_js'], function () {
 	
 	var vendor = gulp.src([
 		'js/jquery.min.js', 
+		'js/select2/select2.min.js', 
 		'js/handlebars.min.js', 
 		'js/handlebars_helpers.js', 
 		'js/jquery.nicescroll.min.js', 
@@ -73,8 +74,11 @@ gulp.task('copy', function () {
 	var img = gulp.src('img/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/img'));
 
-	var data = gulp.src('data/*', { cwd: 'webapp' })
-		.pipe(gulp.dest('build/data'));
+	var css_img = gulp.src(['css/*.png', 'css/*.gif'], { cwd: 'webapp' })
+		.pipe(gulp.dest('build/css'));
+
+	// var data = gulp.src('data/*', { cwd: 'webapp' })
+	// 	.pipe(gulp.dest('build/data'));
 
 });
 

@@ -564,7 +564,11 @@ div.loader{
 	fill: #1796D7;
 }
 
-
+svg .comuna_active_path { 	
+	stroke: black;
+	stroke-width: 1px;
+	cursor: default;
+}
 
 #results {
 	border-left: solid 1px #dadada;

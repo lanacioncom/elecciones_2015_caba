@@ -5,7 +5,11 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"> 
-	<link rel="stylesheet" href="css/all.min.css?1429663940139">
+	<link rel="stylesheet" href="css/all.min.css?1429737843476">
+
+
+	
+
 </head>
 <body>
 
@@ -16,14 +20,14 @@
 		<h2>CABA</h2>
 	</div>
 	
-	<ul id="ref">
+	<!--<ul id="ref">
 		<li><span class="bullet bk_pro">&nbsp;</span> Pro</li>
 		<li><span class="bullet bk_eco">&nbsp;</span> ECO</li>
 		<li id="refFte"><span class="bullet bk_fte_renovador">&nbsp;</span> Fte. Renovador</li>
 		<li><span class="bullet bk_fpv">&nbsp;</span> FPV</li>
 		<li ><span class="bullet bk_izquierda">&nbsp;</span> Izquierda</li>
 		<li><span class="bullet bk_otros">&nbsp;</span> Otros</li>
-	</ul>
+	</ul>-->
 
 	<div class="ayuda" id="ayud1">FILTRAR POR INTERNA</div>
 
@@ -48,20 +52,21 @@
 
 	<select id="opts" class="">
 		<script type="text/template" id="tmpl_opts">
-			<option value="x_fuerza">Todas las fuerzas políticas</option>
+			<option value="x_fuerza" selected="selected">Todas las fuerzas políticas</option>
 			{{#each this}}
 				<option value="{{partido}}">{{partido}} (interna)</option>
 			{{/each}}
 			<option value="unicas">Listás únicas</option>
 		</script>
-	<!-- 	<option value="x_fuerza">Todas las fuerzas políticas</option>
+	<!--<option value="x_fuerza">Todas las fuerzas políticas</option>
 		<option value="pro">Pro (interna)</option>
 		<option value="fpv">FPV (interna)</option>
 		<option value="eco">ECO (interna)</option>
 		<option value="mst">MST (interna)</option>
 		<option value="bien_comun">Bien Común (interna)</option>
 		<option value="surgen">Surgen (interna)</option>
-		<option value="unicas">Listás únicas</option> -->
+		<option value="unicas">Listás únicas</option> 
+	-->
 	</select>
 </section>
 
@@ -70,14 +75,15 @@
 	<article id="mapa_cont"><div class="loader"></div></article>
 	
 	<!-- tooltip -->
-	<div class="tooltip">
-	<h4>COMUNA 1</h4>
-	<p>Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.</p>
-	<div class="fuerza">
-		<div class="candidato">Pro</div>
-		<div class="candidatoBarra bk_pro"></div>
-		<div class="candidatoPorcentaje">45,5%</div>
-	</div>
+	<div class="tooltip" id="tooltip">
+	<script type="text/template" id="tmpl_tooltip">
+		<h4>COMUNA {{id}}</h4>
+		<p>Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.</p>
+		<div class="fuerza">
+			<div class="candidato">Pro</div>
+			<div class="candidatoBarra bk_pro"></div>
+			<div class="candidatoPorcentaje">45,5%</div>
+		</div>
 		<div class="fuerza">
 			<div class="candidato">FPV</div>
 			<div class="candidatoBarra bk_fpv"></div>
@@ -88,6 +94,7 @@
 			<div class="candidatoBarra bk_eco"></div>
 			<div class="candidatoPorcentaje">11,2%</div>
 		</div>	
+	</script>
 	</div>
 
 	<article id="results">
@@ -200,22 +207,26 @@
 		</ul>
 	</div>
 	<!-- Tab: resultados por paratidos -->
-	<div id="x_fuerza">
 		
+	<script type="text/template" id="tmpl_li_partido">
+	<div id="x_fuerza">
 		<div class="help_text">
 			<span>1,5%</span>
 			<p>CORTE: Porcentaje que deben superar los partidos para acceder a la elección general</p>
 		</div>
 		<ul id="list">
-			<li>
-				<h5>Pro <span>60000 votos</span></h5>
+			{{#each this}}
+			<li class="{{#isLessThan porcentaje 1.5}}no_pasa{{/isLessThan}}">
+				<h5>{{id}} Pro <span>{{votos}} votos</span></h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:88%">
-						<div class="porc">88%</div>
+					<div class="barra bk_pro {{id}}" style="width:{{porcentaje}}%;">
+						<div class="porc">{{porcentaje}}%</div>
 					</div>
 				</div>
 			</li>
+			{{/each}}
+			{{!--
 			<li>
 				<h5>FPV <span>40000 votos</span></h5>
 				<div class="cont_barra">
@@ -289,15 +300,17 @@
 					</div>
 				</div>
 			</li>
+			--}}
 		</ul>
 
 		<div id="line"></div>
 
 	</div>
+	</script>
 	</article>
 </section>
 
-<script src="js/vendor.min.js?1429663940139"></script>
-<script src="js/all.min.js?1429663940139"></script>
+<script src="js/vendor.min.js?1429737843476"></script>
+<script src="js/all.min.js?1429737843476"></script>
 </body>
 </html>

@@ -74,20 +74,38 @@ var PermanentLinkJS = function() {
 
 
 // Elecciones class
-var ElecionesApp = function(list_partidos){
+var ElecionesApp = function(list_partidos, results){
 	"use strict";
 	// set self class var
 	var s = this;
 	s.list_partidos = list_partidos;
+	s.r_general = results.general;
+	s.comuna_active_path = null;
+	// s.r_internas = results.inernas;
 
 	function set_data_active(str){
 		$("#selected h4").html(str).fadeIn();
 	}
 
-	function select_comuna(id){
-		var com_name = "Comuna "+id.replace(/c/i, "");
+
+	function select_comuna(polygon){
+		var id = polygon.id.replace(/c/i, "");
+		var com_name = "Comuna "+ id;
 		set_data_active(com_name);
+		
+		// set polygon active
+		// var bbox = polygon.getBBox();
+		// console.log(bbox.x);
+		// $("svg").css("transform", "translateX("+bbox.x+"px) translateY("+bbox.x+"px) scale(2)")
+		s.remove_comuna_active_path();
+		s.comuna_active_path = $(polygon).clone();
+		s.comuna_active_path.attr("class","comuna_active_path");
+		$("svg").append(s.comuna_active_path);
 		s.q.set("comuna", id);
+		// lista de partidos x comuna
+		// console.log(s.r_general.comunas['comuna_'+id]);
+		s.draw_ul_list(s.r_general.comunas['comuna_'+id]);
+
 	}
 
 
@@ -100,6 +118,7 @@ var ElecionesApp = function(list_partidos){
 				$el.closest('li').addClass('active');
 
 				set_data_active(this.value);
+				s.q.set("candidato", this.value);
 
 			});
 
@@ -108,14 +127,25 @@ var ElecionesApp = function(list_partidos){
 				s.change_dropdown($(this).val());
 			});
 
+			
 			// template para el select de internas
 			s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
 			$("#opts").html( s.tmpl_opts(s.list_partidos) );
 			
+			
+			// template para listado de resultados por partido
+			s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
+			s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
+			s.draw_ul_list();
+
+
+			// template tooltip
+			s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
+			s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
 
 			// click mapa
 			$('polygon').on('click.on_comuna', function(e){
-				select_comuna(this.id);
+				select_comuna(this);
 			});
 
 			tooltip(); // esta en scripts.js
@@ -126,18 +156,64 @@ var ElecionesApp = function(list_partidos){
 
 ElecionesApp.prototype.reset = function (){
 	// resetea el los filtros
-	$("#selected h4").html("").fadeOut();
+	$("#selected h4").hide().html("");
+	this.draw_ul_list();
+	this.remove_comuna_active_path();
+	this.q.kill("comuna");
+};
+
+ElecionesApp.prototype.barios_x_com = {
+	'c1':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c2':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c3':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c4':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c5':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c6':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c7':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c8':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c9':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c10':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c11':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c12':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c13':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c14':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
+	'c15':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar."
 };
 
 
+
+ElecionesApp.prototype.draw_ul_list = function(data){
+	if(!data){
+		data = this.r_general.total;
+	}
+	this.cont_results.html(this.tmpl_li_partido(data));
+};
+
+ElecionesApp.prototype.draw_tooltip = function(data){
+	this.tooltip.html(this.tmpl_tooltip(data));
+};
+
+ElecionesApp.prototype.remove_comuna_active_path = function(){
+	if(this.comuna_active_path){	
+		this.comuna_active_path.remove();
+	}
+
+};
+
 ElecionesApp.prototype.change_dropdown = function(val){
 	var x_fuerza = 'x_fuerza';
+	// if(x_fuerza == val){
+	// 	$('#x_interna').hide();
+	// 	$('#x_fuerza').show();
+	// }else{
+	// 	$('#x_fuerza').hide();
+	// 	$('#x_interna').show();
+	// }
+
 	if(x_fuerza == val){
-		$('#x_interna').hide();
-		$('#x_fuerza').show();
+		this.draw_ul_list();
 	}else{
-		$('#x_fuerza').hide();
-		$('#x_interna').show();
+
 	}
 	// set path
 	this.q.set('fuerza', val);
