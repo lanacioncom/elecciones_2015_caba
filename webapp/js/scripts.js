@@ -37,6 +37,11 @@ $(function(){
 				// init app
 				app = new ElecionesApp(list_partidos, results);
 				
+				$("#opts").select2({
+					minimumResultsForSearch: Infinity,	
+					val: "x_fuerza"
+				});
+				
 			});
 		});
 		// tooltip(); lo llama elecciones_app.js
@@ -46,13 +51,17 @@ $(function(){
 
 	 /* // scroll // */
 
-	  $("#list_interna").niceScroll({
+	  $("#list, #list_interna").niceScroll({
 	        cursorcolor:"#d7d7d7",
 	        cursorborder:"0px solid #fff",
 	        cursorwidth: "7px",
 	        autohidemode:false,
 	        hidecursordelay:0
 	  });
+
+	  /* /// select 2 ///*/
+
+
 
 	  
 		/*compartir*/

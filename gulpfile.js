@@ -21,7 +21,7 @@ var t = new Date().getTime(),
 
 // build tasks
 gulp.task('minify-css', function () {
-	gulp.src(['css/reset.css', 'css/fonts.css', 'css/styles.css'], { cwd: 'webapp' })
+	gulp.src(['css/reset.css', 'css/fonts.css', 'css/select2.css', 'css/styles.css'], { cwd: 'webapp' })
     .pipe(minifyCSS())
     .pipe(concat(css_file_min))
     .pipe(gulp.dest('build/css'));
@@ -73,8 +73,8 @@ gulp.task('copy', function () {
 	var img = gulp.src('img/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/img'));
 
-	var data = gulp.src('data/*', { cwd: 'webapp' })
-		.pipe(gulp.dest('build/data'));
+	// var data = gulp.src('data/*', { cwd: 'webapp' })
+	// 	.pipe(gulp.dest('build/data'));
 
 });
 

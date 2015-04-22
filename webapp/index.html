@@ -8,8 +8,13 @@
 	<!-- build:css -->
 	<link rel="stylesheet" type="text/css" href="css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/select2.css"/>
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<!-- endbuild -->
+
+
+	
+
 </head>
 <body>
 
@@ -20,14 +25,14 @@
 		<h2>CABA</h2>
 	</div>
 	
-	<ul id="ref">
+	<!--<ul id="ref">
 		<li><span class="bullet bk_pro">&nbsp;</span> Pro</li>
 		<li><span class="bullet bk_eco">&nbsp;</span> ECO</li>
 		<li id="refFte"><span class="bullet bk_fte_renovador">&nbsp;</span> Fte. Renovador</li>
 		<li><span class="bullet bk_fpv">&nbsp;</span> FPV</li>
 		<li ><span class="bullet bk_izquierda">&nbsp;</span> Izquierda</li>
 		<li><span class="bullet bk_otros">&nbsp;</span> Otros</li>
-	</ul>
+	</ul>-->
 
 	<div class="ayuda" id="ayud1">FILTRAR POR INTERNA</div>
 
@@ -52,20 +57,21 @@
 
 	<select id="opts" class="">
 		<script type="text/template" id="tmpl_opts">
-			<option value="x_fuerza">Todas las fuerzas políticas</option>
+			<option value="x_fuerza" selected="selected">Todas las fuerzas políticas</option>
 			{{#each this}}
 				<option value="{{partido}}">{{partido}} (interna)</option>
 			{{/each}}
 			<option value="unicas">Listás únicas</option>
 		</script>
-	<!-- 	<option value="x_fuerza">Todas las fuerzas políticas</option>
+	<!--<option value="x_fuerza">Todas las fuerzas políticas</option>
 		<option value="pro">Pro (interna)</option>
 		<option value="fpv">FPV (interna)</option>
 		<option value="eco">ECO (interna)</option>
 		<option value="mst">MST (interna)</option>
 		<option value="bien_comun">Bien Común (interna)</option>
 		<option value="surgen">Surgen (interna)</option>
-		<option value="unicas">Listás únicas</option> -->
+		<option value="unicas">Listás únicas</option> 
+	-->
 	</select>
 </section>
 
@@ -309,10 +315,14 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="js/select2/select2.min.js"></script>
 <script type="text/javascript" src="js/handlebars.min.js"></script>
 <script type="text/javascript" src="js/handlebars_helpers.js"></script>
 <script type="text/javascript" src="js/elecciones_app.js"></script>
 <script type="text/javascript" src="js/scripts.js"></script>
+
+
+
 
 <!-- endbuild -->
 </body>

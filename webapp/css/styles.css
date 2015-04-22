@@ -4,7 +4,6 @@ header, section {
 }
 /*header, section { max-width: 645px;}*/
 #x_interna {
-	height: 570px;
 	overflow: hidden;
 	display: none;
 }
@@ -107,22 +106,20 @@ body {
 /*header*/
 header {
 	border-bottom: dotted 1px #dadada;
-	padding: 15px 0px;
+	padding: 10px 0px;
 	margin-bottom: 15px;
-	height: 40px;
 	position: relative;
 }
 
 div.titulos {
 	width: 320px;
-	float: left;
 	font-size: 15px;
 	overflow: hidden;
 }
 
 h1 {
 	font-family: 'TheSansSemi', arial, Helvetica, sans-serif;
-	font-size: 34px;
+	font-size: 30px;
 	color: #29ABE2;
 	display: inline-block;
 	letter-spacing: -1px;
@@ -136,7 +133,7 @@ h2 {
 	color: #000;
 	display: inline-block;
 	font-family: 'TheSansSemi';
-	font-size: 31px;
+	font-size: 27px;
 	padding: 6px 10px;
 	margin: 0 10px;
 	border: solid 1px #BBBBBB;
@@ -233,15 +230,15 @@ div.ayuda {
 	width: 94px;
 	height: 70px;
 	position: absolute;
-	top:20px;
+	top:15px;
 	right:5px;
 	font-family: 'TheSansSemi';
 	font-size: 15px;
 	padding-left: 90px;
 	background-image: url(../img/sprite.png);
 	background-repeat: no-repeat;
-	background-position: 17px 8px;
-	background-size: 39%;
+	background-position: 28px 8px;
+  background-size: 36%;
 }
 
 div.ayuda3 {
@@ -391,8 +388,11 @@ select#opts {
 
 /*mapa*/
 section#cont_data {
-	margin-top: 20px;
+	margin-top: 15px;
+	border-bottom:1px solid #dadada;
+	overflow: hidden;
 }
+
 
 div.loader{
 	width: 50px;
@@ -411,7 +411,7 @@ div.loader{
 
 #mapa_cont {
 	width: 59%;
-	height: 575px;
+	height: 500px;
 	overflow: hidden;
 	float: left;
 }
@@ -508,8 +508,8 @@ div.loader{
 
 #results ul#list {
   display: inline-block;
-  width: 98%;
-  height: 530px;
+  width: 99%;
+  height: 465px;
   overflow: auto;
 }
 
@@ -543,6 +543,8 @@ div.loader{
 	height: 22px;
 	position: relative;
 }
+
+
 .cont_barra .barra .porc {
 	position: absolute;
 	top: 1px;
@@ -591,9 +593,9 @@ li.no_pasa .cont_barra .barra .porc:after {
 
 /* internas */
 ul#list_interna {
-	width: 98%;
+	width: 99%;
 	padding-left: 10px;
-	height: 530px;
+	height: 460px;
 	overflow: auto;
 }
 ul#list_interna li {
@@ -651,16 +653,12 @@ ul#list_interna .cont_barra .cant_v {
 		width: 250px;
 	}
 
-	header{
-		height: 32px;
-	}
-
 	h1 {
 		font-size: 27px;
 	}
 
 	h2 {
-		font-size: 19px;
+		font-size: 26px;
 	}
 
 	ul#ref {
@@ -690,6 +688,27 @@ ul#list_interna .cont_barra .cant_v {
 	  width: 96%;
 	}
 
+	ul#list_interna li h5 {
+ 		 width: 195px;
+ 	}
+
+ 	ul#list_interna .cont_barra{
+ 		width: calc(100% - 180px);
+ 		margin-top: 0px;
+ 		margin-left: 15px;
+ 	}
+
+ 	ul#list_interna li div.bg_li {
+	  padding: 8px 0px;
+	}
+
+	#results ul li {
+	  border-bottom: 1px solid #dadada;
+	  padding: 10px 0;
+	}
+
+	
+
 }
 
 @media (max-width: 750px) {
@@ -697,7 +716,7 @@ ul#list_interna .cont_barra .cant_v {
 	header {
 		padding: 6px 0px;
 		height: 25px;
-		border:0px;
+		margin-bottom: 10px;
 	}
 
 	div.titulos{
@@ -754,7 +773,11 @@ ul#list_interna .cont_barra .cant_v {
   	}
 
   	div.ayuda {
-		top: 17px;
+		top: 6px;
+		right: -13px;
+		font-size: 13px;
+		background-position: 46px 8px;
+  		background-size: 23%;
 	}
 
   	div.ayuda3 {
@@ -763,22 +786,36 @@ ul#list_interna .cont_barra .cant_v {
 	  bottom: 12px;
 	}
 
-	#results ul .cont_barra {
-	  width: calc(100% - 40px);
-	}
-
 	section#cont_data {
-		height: 500px;
+		height: 460px;
 	}
 
-	#results, #x_fuerza, ul#list {
-		height: 500px;
+	ul#list, ul#list_interna {
+		height: 420px !important;
 	}
 
-	ul#list {
-		height: 450px !important;
+	#mapa_cont {
+	  height: 450px;
 	}
-	
+
+	#results{
+		height: 460px;
+	}
+
+	#results ul .cont_barra {
+	  width: calc(100% - 70px);
+	  margin-top: 10px;
+	}
+
+	ul#list_interna li h5 {
+	  width: 130px;
+	}
+
+	ul#list_interna li div.bg_li {
+	  padding: 6px 0px;
+	  padding-bottom:2px;
+	}
+
 
 }
 
@@ -789,13 +826,14 @@ ul#list_interna .cont_barra .cant_v {
 
 	header {
 	  border-bottom:0px;
+	  margin-bottom: 0px
 	}
 
 
 	#filtros h3{
 		width: 30%;
 		position: absolute;
-		top:265px;
+		top:295px;
 		left:6px;
 		font-size: 11px;
 		text-align: center;
@@ -805,14 +843,13 @@ ul#list_interna .cont_barra .cant_v {
 	div#selected{
 		width: 46%;
 		position: absolute;
-		top: 264px;
+		top: 293px;
   		left: 36%;
 	}
 
 	h4{
 		width: 100%;
 		font-size: 12px;
-		text-align: center;
 	}
 
 	div#selected hr {
@@ -842,7 +879,7 @@ ul#list_interna .cont_barra .cant_v {
 
   	#mapa_cont{
   		width: 100%;
-  		margin-top: 13px;
+  		margin-top: 0px;
   		height: 245px;
   	}
 
@@ -889,5 +926,34 @@ ul#list_interna .cont_barra .cant_v {
 	.cont_barra .barra {
 	  height: 12px;
 	}
+
+	#results ul .cont_barra {
+	  margin: 0px;
+	  width: calc(100% - 60px);
+	}
+
+	section#cont_data {
+	  height: 635px;
+	}
+
+	ul#list, ul#list_interna {
+	  height: 342px !important;
+	 padding-left: 0px;
+	}
+
+	ul#list_interna li h5 {
+	  width: 65%;
+	}
+
+	ul#list_interna li img {
+		display: none;
+	}
+
+	ul#list_interna li input {
+		display: none;
+	}
+
+
+
 
 }
