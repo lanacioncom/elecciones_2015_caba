@@ -216,100 +216,26 @@
 		
 	<script type="text/template" id="tmpl_li_partido">
 	<div id="x_fuerza">
-		<div class="help_text">
+		<div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%;">
 			<span>1,5%</span>
 			<p>CORTE: Porcentaje que deben superar los partidos para acceder a la elección general</p>
 		</div>
 		<ul id="list">
-			{{#each this}}
+			{{#each data}}
 			<li class="{{#isLessThan porcentaje 1.5}}no_pasa{{/isLessThan}}">
-				<h5>{{id}} Pro <span>{{votos}} votos</span></h5>
+				<h5 style="padding-left:{{get_width_bar 1.8 ../max}}%;">{{id}} Pro <span>{{votos}}xxxxxx votos</span></h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro {{id}}" style="width:{{porcentaje}}%;">
+					<div class="barra bk_pro {{id}}" style="width:{{get_width_bar porcentaje ../max}}%;">
 						<div class="porc">{{porcentaje}}%</div>
 					</div>
 				</div>
 			</li>
 			{{/each}}
-			{{!--
-			<li>
-				<h5>FPV <span>40000 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_fpv" style="width:60%">
-						<div class="porc">60%</div>
-					</div>
-				</div>
-			</li>
-			<li>
-				<h5>ECO <span>30000 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_eco" style="width:33%">
-						<div class="porc">33%</div>
-					</div>
-				</div>
-			</li>
-			<li>
-				<h5>Izquierda <span>5000 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_izquierda" style="width:15%">
-						<div class="porc">15%</div>
-					</div>
-				</div>
-			</li>
-			<li>
-				<h5>Izquierda <span>5000 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_izquierda" style="width:15%">
-						<div class="porc">15%</div>
-					</div>
-				</div>
-			</li>
-
-			<li>
-				<h5>Izquierda <span>5000 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_izquierda" style="width:15%">
-						<div class="porc">15%</div>
-					</div>
-				</div>
-			</li>
-			<li>
-				<h5>Izquierda <span>5000 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_izquierda" style="width:15%">
-						<div class="porc">15%</div>
-					</div>
-				</div>
-			</li>
-			<li class="no_pasa">
-				<h5>Fte. Renovador <span>300 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_fte_renovador" style="width:1.1%">
-						<div class="porc">1.1%</div>
-					</div>
-				</div>
-			</li>
-			<li class="no_pasa">
-				<h5>Fte. Renovador <span>150 votos</span></h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_fte_renovador" style="width:1.1%">
-						<div class="porc">1.1%</div>
-					</div>
-				</div>
-			</li>
-			--}}
+			
 		</ul>
 
-		<div id="line"></div>
+		<div id="line" style="width:{{get_width_bar 1.5 max}}%;"></div>
 
 	</div>
 	</script>

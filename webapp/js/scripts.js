@@ -33,7 +33,7 @@ $(function(){
 			
 			$.get("data/results_example.json", function(results){
 
-				$("#mapa_cont").html(mapa + '<div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
+				$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
 				// init app
 				app = new ElecionesApp(list_partidos, results);
 				
@@ -44,20 +44,19 @@ $(function(){
 				
 			});
 		});
+
+		 /* // scroll // */
+
+		  $("#list, #list_interna").niceScroll({
+		        cursorcolor:"#d7d7d7",
+		        cursorborder:"0px solid #fff",
+		        cursorwidth: "7px",
+		        autohidemode:false,
+		        hidecursordelay:0
+		  });
 		// tooltip(); lo llama elecciones_app.js
 	
 	});
-
-
-	 /* // scroll // */
-
-	  $("#list, #list_interna").niceScroll({
-	        cursorcolor:"#d7d7d7",
-	        cursorborder:"0px solid #fff",
-	        cursorwidth: "7px",
-	        autohidemode:false,
-	        hidecursordelay:0
-	  });
 
 	 
 	  

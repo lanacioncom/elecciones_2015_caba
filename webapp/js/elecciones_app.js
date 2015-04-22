@@ -164,11 +164,22 @@ ElecionesApp.prototype.reset = function (){
 	this.q.kill("comuna");
 };
 
-ElecionesApp.prototype.draw_ul_list = function(data){
+ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escribe la general
+	
+	var is_comuna = false;
 	if(!data){
 		data = this.r_general.total;
+	}else{
+		is_comuna = true;
 	}
-	this.cont_results.html(this.tmpl_li_partido(data));
+	var max = data.map(function(x){ return x.porcentaje; }); 
+	var l = {
+		data : data,
+		max : Math.max.apply(null, max)
+	};
+	
+	this.cont_results.html(this.tmpl_li_partido(l));
+	if(is_comuna){ $(".help_text, #line").hide();}else{$(".help_text, #line").show();}
 };
 
 

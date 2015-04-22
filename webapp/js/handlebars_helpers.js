@@ -30,6 +30,12 @@ Handlebars.registerHelper( "lower", function ( _str ){
 });
 
 
+Handlebars.registerHelper( "get_width_bar", function ( porcentaje, max, options ){
+	var n = porcentaje*100/max;
+	return  n;
+});
+
+
 
 Handlebars.registerHelper("debug", function(optionalValue) {
 	console.log("Current Context");
