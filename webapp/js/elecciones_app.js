@@ -92,9 +92,6 @@ var ElecionesApp = function(list_partidos, results){
 		s.q.set("comuna", id);
 	}
 
-	function draw_list_res_partidos(data){
-		s.ul_res_x_partidos.html(s.tmpl_li_partido(data));
-	}
 
 	(function init(){
 			// bind events
@@ -123,7 +120,7 @@ var ElecionesApp = function(list_partidos, results){
 			// template para listado de resultados por partido
 			s.ul_res_x_partidos = $("#list"); // contenedor ul para los partidos (barras)  
 			s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
-			draw_list_res_partidos(s.r_general.total);
+			s.draw_ul_list(s.r_general.total);
 
 			// click mapa
 			$('polygon').on('click.on_comuna', function(e){
@@ -160,14 +157,26 @@ ElecionesApp.prototype.barios_x_com = {
 };
 
 
+
+ElecionesApp.prototype.draw_ul_list = function(data){
+	this.ul_res_x_partidos.html(this.tmpl_li_partido(data));
+};
+
+
 ElecionesApp.prototype.change_dropdown = function(val){
 	var x_fuerza = 'x_fuerza';
+	// if(x_fuerza == val){
+	// 	$('#x_interna').hide();
+	// 	$('#x_fuerza').show();
+	// }else{
+	// 	$('#x_fuerza').hide();
+	// 	$('#x_interna').show();
+	// }
+
 	if(x_fuerza == val){
-		$('#x_interna').hide();
-		$('#x_fuerza').show();
+		this.draw_ul_list(this.r_general.total);
 	}else{
-		$('#x_fuerza').hide();
-		$('#x_interna').show();
+
 	}
 	// set path
 	this.q.set('fuerza', val);

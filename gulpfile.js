@@ -73,6 +73,9 @@ gulp.task('copy', function () {
 	var img = gulp.src('img/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/img'));
 
+	var css_img = gulp.src(['css/*.png', 'css/*.gif'], { cwd: 'webapp' })
+		.pipe(gulp.dest('build/css'));
+
 	// var data = gulp.src('data/*', { cwd: 'webapp' })
 	// 	.pipe(gulp.dest('build/data'));
 
