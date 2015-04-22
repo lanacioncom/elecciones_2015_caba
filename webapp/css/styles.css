@@ -364,14 +364,30 @@ div.ayuda {
 	background-image: url(../img/sprite.png);
 	background-repeat: no-repeat;
 	background-position: 28px 8px;
-  background-size: 36%;
+    background-size: 50%;
+}
+
+div.ayuda2 {
+	width: 94px;
+	height: 70px;
+	position: absolute;
+	top:15px;
+	right:5px;
+	font-family: 'TheSansSemi';
+	font-size: 15px;
+	padding-top: 90px;
+	background-image: url(../img/sprite.png);
+	background-repeat: no-repeat;
+	background-position: -30px -55px;
+  	background-size: 140%;
+  	display: none;
 }
 
 div.ayuda3 {
 	width: 32%;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 	color:#969696;;
 	font-family: "TheSansSemi", arial;
 }
