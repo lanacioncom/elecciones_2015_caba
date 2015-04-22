@@ -34,6 +34,11 @@ $(function(){
 			$("#mapa_cont").html(mapa + '<div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
 			
 			app = new ElecionesApp(list_partidos);
+
+			$("#opts").select2({
+		        minimumResultsForSearch: Infinity,
+		        val: "x_fuerza"
+		   });
 			// console.log(app);
 		});
 		// tooltip(); lo llama elecciones_app.js
@@ -43,13 +48,17 @@ $(function(){
 
 	 /* // scroll // */
 
-	  $("#list_interna").niceScroll({
+	  $("#list, #list_interna").niceScroll({
 	        cursorcolor:"#d7d7d7",
 	        cursorborder:"0px solid #fff",
 	        cursorwidth: "7px",
 	        autohidemode:false,
 	        hidecursordelay:0
 	  });
+
+	  /* /// select 2 ///*/
+
+
 
 	  
 		/*compartir*/
