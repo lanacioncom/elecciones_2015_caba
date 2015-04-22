@@ -174,11 +174,6 @@ header, section {
 
 
 
-
-
-
-
-
 /*helpers*/
 [hidden] {
 	display: none !important;
@@ -424,6 +419,7 @@ section {
 		font-size:16px;
 		float:left;
 		padding-bottom:5px;
+
 	}		
 	
 	.tooltip .candidatoBarra {
@@ -681,6 +677,11 @@ div.loader{
 	border-bottom: 1px dotted #A0A0A0;
 	padding-top: 0px;
 	margin-bottom: 3px;
+	cursor:pointer;
+}
+
+#results ul li.candidato:hover {
+	background-color: #f9f9f9;
 }
 
 
@@ -764,7 +765,7 @@ ul#list_interna li div.bg_li {
 	padding: 15px 0px
 }
 ul#list_interna li.active div.bg_li {
-	background: #F7F7F7;
+	background: #Efefef;
 	border-radius: 3px;
 }
 ul#list_interna li input {
@@ -1029,7 +1030,7 @@ ul#list_interna li div.cant_v {
 	div#selected{
 		width: 46%;
 		position: absolute;
-		top: 283px;
+		top: 285px;
   		left: 36%;
 	}
 
@@ -1094,8 +1095,8 @@ ul#list_interna li div.cant_v {
 	}
 
 	#results ul li {
-	  padding: 9px 0;
-	  padding-bottom: 15px;
+	    padding: 7px 0;
+  		padding-bottom: 10px;
 	}
 
 
@@ -1126,7 +1127,7 @@ ul#list_interna li div.cant_v {
 	}
 
 	#results ul li h5 {
-	  padding: 0 0 10px 0px;
+	  padding: 0 0 0px 0px;
 	}
 
 	ul#list_interna li h5 {

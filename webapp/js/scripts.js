@@ -37,7 +37,7 @@ $(function(){
 
 			/* /// select 2 ///*/
 			$("#opts").select2({
-		        minimumResultsForSearch: Infinity,
+		        minimumResultsForSearch: -1,
 		        val: "x_fuerza"
 		   });
 
