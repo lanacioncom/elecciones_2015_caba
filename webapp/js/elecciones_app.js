@@ -102,6 +102,9 @@ var ElecionesApp = function(list_partidos, results){
 		s.comuna_active_path.attr("class","comuna_active_path");
 		$("svg").append(s.comuna_active_path);
 		s.q.set("comuna", id);
+		// lista de partidos x comuna
+		// console.log(s.r_general.comunas['comuna_'+id]);
+		s.draw_ul_list(s.r_general.comunas['comuna_'+id]);
 
 	}
 
@@ -133,7 +136,7 @@ var ElecionesApp = function(list_partidos, results){
 			// template para listado de resultados por partido
 			s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
 			s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
-			s.draw_ul_list(s.r_general.total);
+			s.draw_ul_list();
 
 
 			// template tooltip
@@ -153,10 +156,10 @@ var ElecionesApp = function(list_partidos, results){
 
 ElecionesApp.prototype.reset = function (){
 	// resetea el los filtros
-	$("#selected h4").fadeOut(function(){
-		$(this).html("");
-	});
+	$("#selected h4").hide().html("");
+	this.draw_ul_list();
 	this.remove_comuna_active_path();
+	this.q.kill("comuna");
 };
 
 ElecionesApp.prototype.barios_x_com = {
@@ -180,6 +183,9 @@ ElecionesApp.prototype.barios_x_com = {
 
 
 ElecionesApp.prototype.draw_ul_list = function(data){
+	if(!data){
+		data = this.r_general.total;
+	}
 	this.cont_results.html(this.tmpl_li_partido(data));
 };
 
@@ -191,6 +197,7 @@ ElecionesApp.prototype.remove_comuna_active_path = function(){
 	if(this.comuna_active_path){	
 		this.comuna_active_path.remove();
 	}
+
 };
 
 ElecionesApp.prototype.change_dropdown = function(val){
@@ -204,7 +211,7 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	// }
 
 	if(x_fuerza == val){
-		this.draw_ul_list(this.r_general.total);
+		this.draw_ul_list();
 	}else{
 
 	}
