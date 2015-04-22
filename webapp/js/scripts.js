@@ -40,6 +40,17 @@ $(function(){
 	
 	});
 
+
+	 /* // scroll // */
+
+	  $("#list_interna").niceScroll({
+	        cursorcolor:"#d7d7d7",
+	        cursorborder:"0px solid #fff",
+	        cursorwidth: "7px",
+	        autohidemode:false,
+	        hidecursordelay:0
+	  });
+
 	  
 		/*compartir*/
 		function myPopup(url) {

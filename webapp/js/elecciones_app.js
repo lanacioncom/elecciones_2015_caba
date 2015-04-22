@@ -89,17 +89,7 @@ var ElecionesApp = function(list_partidos){
 		set_data_active(com_name);
 		s.q.set("comuna", id);
 	}
-	
-	function nice_scroll(){
-		/* // scroll // */
-		$("#list, #list_interna").niceScroll({
-			cursorcolor:"#d7d7d7",
-			cursorborder:"0px solid #fff",
-			cursorwidth: "7px",
-			autohidemode:false,
-			hidecursordelay:0
-		});
-	}
+
 
 	(function init(){
 			// bind events
@@ -129,7 +119,6 @@ var ElecionesApp = function(list_partidos){
 			});
 
 			tooltip(); // esta en scripts.js
-			nice_scroll();
 	})();
 
 	// init();
