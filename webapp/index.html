@@ -46,18 +46,26 @@
 	<h3 class="box arrow">TOTAL CABA</h3>
 	<div id="selected" class="arrow">
 		<hr />
-		<h4 onclick="app.none(this); return false;">A. Borthagaray</h4>
+		<h4 onclick="app.reset(this); return false;">A. Borthagaray</h4>
 	</div>
 
+
 	<select id="opts" class="">
-		<option value="x_fuerza">Todas las fuerzas políticas</option>
+		<script type="text/template" id="tmpl_opts">
+			<option value="x_fuerza">Todas las fuerzas políticas</option>
+			{{#each this}}
+				<option value="{{partido}}">{{partido}} (interna)</option>
+			{{/each}}
+			<option value="unicas">Listás únicas</option>
+		</script>
+	<!-- 	<option value="x_fuerza">Todas las fuerzas políticas</option>
 		<option value="pro">Pro (interna)</option>
 		<option value="fpv">FPV (interna)</option>
 		<option value="eco">ECO (interna)</option>
 		<option value="mst">MST (interna)</option>
 		<option value="bien_comun">Bien Común (interna)</option>
 		<option value="surgen">Surgen (interna)</option>
-		<option value="unicas">Listás únicas</option>
+		<option value="unicas">Listás únicas</option> -->
 	</select>
 </section>
 
@@ -95,9 +103,9 @@
 		</div>
 
 		<ul id="list_interna">
-			<li class="candidato active">
+			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato">
+				<input type="radio" name="candidato" value="candidato name!!">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Horacio R. Larreta</h5>
 				<div class="cont_barra">
@@ -111,7 +119,7 @@
 			</li>
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato">
+				<input type="radio" name="candidato" value="candidato name!!">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
@@ -125,7 +133,7 @@
 			</li>
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato">
+				<input type="radio" name="candidato" value="candidato name!!">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
@@ -139,7 +147,7 @@
 			</li>
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato">
+				<input type="radio" name="candidato" value="candidato name!!">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
@@ -153,7 +161,7 @@
 			</li>
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato">
+				<input type="radio" name="candidato" value="candidato name!!">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
@@ -167,7 +175,7 @@
 			</li>
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato">
+				<input type="radio" name="candidato" value="candidato name!!">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
@@ -181,7 +189,7 @@
 			</li>
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato">
+				<input type="radio" name="candidato" value="candidato name!!">
 				<img src="http://votaciones.lanacion.com.ar/media/photos/Ortiz-Correa-Marcia-Sara-MarIa.jpg" alt="" />
 				<h5>Mariano Recalde</h5>
 				<div class="cont_barra">
@@ -297,6 +305,8 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="js/handlebars.min.js"></script>
+<script type="text/javascript" src="js/handlebars_helpers.js"></script>
 <script type="text/javascript" src="js/elecciones_app.js"></script>
 <script type="text/javascript" src="js/scripts.js"></script>
 

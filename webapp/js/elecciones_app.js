@@ -3,7 +3,11 @@ var PermanentLinkJS = function() {
 
 	var query = {};
 
-	function reset(){ return (query = {}); }
+	function reset(){ 
+		query = {};
+		set_hash();
+		return query;
+	}
 
 	function set(key, val) {
 		if (typeof key == 'object'){
@@ -70,21 +74,31 @@ var PermanentLinkJS = function() {
 
 
 // Elecciones class
-var ElecionesApp = function(){
+var ElecionesApp = function(list_partidos){
 	"use strict";
 	// set self class var
 	var s = this;
+	s.list_partidos = list_partidos;
 
-	function clik_candidatos_radio(){
-		/*
-			click para el radio candidatos en el lista de internas
-		*/
+	function set_data_active(str){
+		$("#selected h4").html(str).fadeIn();
 	}
 
 	function select_comuna(id){
 		var com_name = "Comuna "+id.replace(/c/i, "");
-		$("#selected h4").html(com_name).fadeIn();
+		set_data_active(com_name);
 		s.q.set("comuna", id);
+	}
+	
+	function nice_scroll(){
+		/* // scroll // */
+		$("#list, #list_interna").niceScroll({
+			cursorcolor:"#d7d7d7",
+			cursorborder:"0px solid #fff",
+			cursorwidth: "7px",
+			autohidemode:false,
+			hidecursordelay:0
+		});
 	}
 
 	(function init(){
@@ -94,6 +108,9 @@ var ElecionesApp = function(){
 				var $el = $(this);
 				$('li.active:has(input)').removeClass('active');
 				$el.closest('li').addClass('active');
+
+				set_data_active(this.value);
+
 			});
 
 			// change dropdown
@@ -101,20 +118,26 @@ var ElecionesApp = function(){
 				s.change_dropdown($(this).val());
 			});
 
+			// template para el select de internas
+			s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
+			$("#opts").html( s.tmpl_opts(s.list_partidos) );
+			
 
 			// click mapa
-
 			$('polygon').on('click.on_comuna', function(e){
 				select_comuna(this.id);
 			});
-	
+
+			tooltip(); // esta en scripts.js
+			nice_scroll();
 	})();
 
 	// init();
 };
 
-ElecionesApp.prototype.none = function (el){
-		$(el).fadeOut();
+ElecionesApp.prototype.reset = function (){
+	// resetea el los filtros
+	$("#selected h4").html("").fadeOut();
 };
 
 

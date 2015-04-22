@@ -6,7 +6,7 @@ header, section {
 #x_interna {
 	height: 570px;
 	overflow: hidden;
-	/*display: none;*/
+	display: none;
 }
 
 /*//temporales*/
@@ -362,6 +362,7 @@ div#selected h4 {
 	background-position: right;
 	background-repeat: no-repeat;
 	cursor: pointer;
+	display: none;
 }
 
 div#selected h4:after{
@@ -460,7 +461,7 @@ div.loader{
 	position: relative;
 	max-height: 585px;
   overflow: hidden;
-  display: none;
+  /*display: none;*/
 }
 
 .help_text {

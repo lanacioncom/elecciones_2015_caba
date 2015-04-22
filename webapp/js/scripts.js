@@ -25,27 +25,20 @@ var isMobile = { //valida si es un dispositivo movil
 
 $(function(){
 	"use strict";
+
 	// load mapa
 	$.get("img/caba_ilus.txt", function(mapa){
-		$("#mapa_cont").html(mapa + '<div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
+		// get list partidos
+		$.get("data/list_partidos.json", function(list_partidos){
 		
-		// tooltip();
-
-		app = new ElecionesApp();
-		console.log(app);
+			$("#mapa_cont").html(mapa + '<div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
+			
+			app = new ElecionesApp(list_partidos);
+			// console.log(app);
+		});
+		// tooltip(); lo llama elecciones_app.js
 	
 	});
-
-
-	 /* // scroll // */
-
-	  $("#list, #list_interna").niceScroll({
-	        cursorcolor:"#d7d7d7",
-	        cursorborder:"0px solid #fff",
-	        cursorwidth: "7px",
-	        autohidemode:false,
-	        hidecursordelay:0
-	  }); 
 
 	  
 		/*compartir*/
@@ -61,11 +54,13 @@ $(function(){
 function tooltip(){
 
 	  	var comu = $("polygon, path");
-	  	var tool = $(".tooltip")
+	  	var tool = $(".tooltip");
 
+	  	var active_zoon = null;
         comu.on( 'mouseenter', function() {
-          ide = $(this).attr("id");
-          console.log(ide);
+          $el = $(this);
+          ide = $el.attr("id");
+          // llenar popup
         });
 
         if(isMobile.any()) {
@@ -83,21 +78,20 @@ function tooltip(){
           
          e = e || window.event;
          e = jQuery.event.fix(e);
-
-         if(e.pageX > 185 && ancho < 750){
-           var itemX = e.pageX - 200;
-         }else if(e.pageX < 330){
-           var itemX = e.pageX;
-         }else{
-         	var itemX = e.pageX - 200;
-         }
+         
+        var itemX = e.pageX - 200;
+		if(e.pageX > 185 && ancho < 750){
+			itemX = e.pageX - 200;
+		}else if(e.pageX < 330){
+			itemX = e.pageX;
+		}
 
          if(e.pageY > 350 && ancho < 750){
-           var itemY = e.pageY - 260;
+			itemY = e.pageY - 260;
          }else if(e.pageY > 450){
-           var itemY = e.pageY - 260;
+			itemY = e.pageY - 260;
          }else{
-           var itemY = e.pageY + 30;
+			itemY = e.pageY + 30;
          }
 
          $(".tooltip").animate({"top":itemY, "left":itemX},100, 'swing').stop( true, true );

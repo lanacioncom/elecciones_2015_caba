@@ -36,7 +36,7 @@ gulp.task('test_js', function(){
 });
 
 gulp.task('js', ['test_js'], function () {
-	var all = gulp.src(['js/scripts.js', 'js/elecciones_app.js'] , { cwd: 'webapp' })
+	var all = gulp.src(['js/elecciones_app.js', 'js/scripts.js'] , { cwd: 'webapp' })
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(concat(js_all))
@@ -45,6 +45,9 @@ gulp.task('js', ['test_js'], function () {
 	
 	var vendor = gulp.src([
 		'js/jquery.min.js', 
+		'js/handlebars.min.js', 
+		'js/handlebars_helpers.js', 
+		'js/jquery.nicescroll.min.js', 
 		], { cwd: 'webapp' })
 		.pipe(sourcemaps.init())
       	.pipe(uglify())
@@ -57,20 +60,20 @@ gulp.task('js', ['test_js'], function () {
 });
 
 gulp.task('copy', function () {
-	gulp.src('**/*.html', { cwd: 'webapp' })
+	var html = gulp.src('**/*.html', { cwd: 'webapp' })
 		.pipe(htmlreplace({
 			js:[(js_vendor+'?'+t), (js_all+'?'+t)],
 			css: ['css/'+css_file_min+'?'+t]
 		}))
 		.pipe(gulp.dest('build'));
 	
-	gulp.src('css/fonts/*', { cwd: 'webapp' })
+	var fonts = gulp.src('css/fonts/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/css/fonts'));
 
-	gulp.src('img/*', { cwd: 'webapp' })
+	var img = gulp.src('img/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/img'));
 
-	gulp.src('data/*', { cwd: 'webapp' })
+	var data = gulp.src('data/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/data'));
 
 });
