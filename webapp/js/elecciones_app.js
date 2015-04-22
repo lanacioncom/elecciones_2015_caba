@@ -136,6 +136,8 @@ var ElecionesApp = function(list_partidos, results){
 			// template para listado de resultados por partido
 			s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
 			s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
+			s.tmpl_x_interna = Handlebars.compile($('#tmpl_x_interna').html());
+			
 			s.draw_ul_list();
 
 
@@ -144,7 +146,7 @@ var ElecionesApp = function(list_partidos, results){
 			s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
 
 			// click mapa
-			$('polygon').on('click.on_comuna', function(e){
+			$('polygon, path').on('click.on_comuna', function(e){
 				select_comuna(this);
 			});
 
@@ -189,6 +191,16 @@ ElecionesApp.prototype.draw_ul_list = function(data){
 	this.cont_results.html(this.tmpl_li_partido(data));
 };
 
+
+ElecionesApp.prototype.draw_x_interna = function(data){
+	// if(!data){
+	// 	data = this.r_general.total;
+	// }
+	this.cont_results.html(this.tmpl_x_interna());
+};
+
+
+
 ElecionesApp.prototype.draw_tooltip = function(data){
 	this.tooltip.html(this.tmpl_tooltip(data));
 };
@@ -213,7 +225,7 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	if(x_fuerza == val){
 		this.draw_ul_list();
 	}else{
-
+		this.draw_x_interna();
 	}
 	// set path
 	this.q.set('fuerza', val);
