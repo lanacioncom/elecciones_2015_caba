@@ -45,6 +45,7 @@ gulp.task('js', ['test_js'], function () {
 	
 	var vendor = gulp.src([
 		'js/jquery.min.js', 
+		'js/select2/select2.min.js', 
 		'js/handlebars.min.js', 
 		'js/handlebars_helpers.js', 
 		'js/jquery.nicescroll.min.js', 

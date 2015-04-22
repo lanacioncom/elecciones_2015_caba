@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"> 
-	<link rel="stylesheet" href="css/all.min.css?1429729193556">
+	<link rel="stylesheet" href="css/all.min.css?1429737843476">
 
 
 	
@@ -76,7 +76,8 @@
 	
 	<!-- tooltip -->
 	<div class="tooltip" id="tooltip">
-		<h4>COMUNA 1</h4>
+	<script type="text/template" id="tmpl_tooltip">
+		<h4>COMUNA {{id}}</h4>
 		<p>Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.</p>
 		<div class="fuerza">
 			<div class="candidato">Pro</div>
@@ -93,6 +94,7 @@
 			<div class="candidatoBarra bk_eco"></div>
 			<div class="candidatoPorcentaje">11,2%</div>
 		</div>	
+	</script>
 	</div>
 
 	<article id="results">
@@ -205,14 +207,14 @@
 		</ul>
 	</div>
 	<!-- Tab: resultados por paratidos -->
-	<div id="x_fuerza">
 		
+	<script type="text/template" id="tmpl_li_partido">
+	<div id="x_fuerza">
 		<div class="help_text">
 			<span>1,5%</span>
 			<p>CORTE: Porcentaje que deben superar los partidos para acceder a la elección general</p>
 		</div>
 		<ul id="list">
-		<script type="text/template" id="tmpl_li_partido">
 			{{#each this}}
 			<li class="{{#isLessThan porcentaje 1.5}}no_pasa{{/isLessThan}}">
 				<h5>{{id}} Pro <span>{{votos}} votos</span></h5>
@@ -224,7 +226,7 @@
 				</div>
 			</li>
 			{{/each}}
-		</script>
+			{{!--
 			<li>
 				<h5>FPV <span>40000 votos</span></h5>
 				<div class="cont_barra">
@@ -298,15 +300,17 @@
 					</div>
 				</div>
 			</li>
+			--}}
 		</ul>
 
 		<div id="line"></div>
 
 	</div>
+	</script>
 	</article>
 </section>
 
-<script src="js/vendor.min.js?1429729193556"></script>
-<script src="js/all.min.js?1429729193556"></script>
+<script src="js/vendor.min.js?1429737843476"></script>
+<script src="js/all.min.js?1429737843476"></script>
 </body>
 </html>

@@ -80,16 +80,29 @@ var ElecionesApp = function(list_partidos, results){
 	var s = this;
 	s.list_partidos = list_partidos;
 	s.r_general = results.general;
+	s.comuna_active_path = null;
 	// s.r_internas = results.inernas;
 
 	function set_data_active(str){
 		$("#selected h4").html(str).fadeIn();
 	}
 
-	function select_comuna(id){
-		var com_name = "Comuna "+id.replace(/c/i, "");
+
+	function select_comuna(polygon){
+		var id = polygon.id.replace(/c/i, "");
+		var com_name = "Comuna "+ id;
 		set_data_active(com_name);
+		
+		// set polygon active
+		// var bbox = polygon.getBBox();
+		// console.log(bbox.x);
+		// $("svg").css("transform", "translateX("+bbox.x+"px) translateY("+bbox.x+"px) scale(2)")
+		s.remove_comuna_active_path();
+		s.comuna_active_path = $(polygon).clone();
+		s.comuna_active_path.attr("class","comuna_active_path");
+		$("svg").append(s.comuna_active_path);
 		s.q.set("comuna", id);
+
 	}
 
 
@@ -118,13 +131,18 @@ var ElecionesApp = function(list_partidos, results){
 			
 			
 			// template para listado de resultados por partido
-			s.ul_res_x_partidos = $("#list"); // contenedor ul para los partidos (barras)  
+			s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
 			s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
 			s.draw_ul_list(s.r_general.total);
 
+
+			// template tooltip
+			s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
+			s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
+
 			// click mapa
 			$('polygon').on('click.on_comuna', function(e){
-				select_comuna(this.id);
+				select_comuna(this);
 			});
 
 			tooltip(); // esta en scripts.js
@@ -135,7 +153,10 @@ var ElecionesApp = function(list_partidos, results){
 
 ElecionesApp.prototype.reset = function (){
 	// resetea el los filtros
-	$("#selected h4").html("").fadeOut();
+	$("#selected h4").fadeOut(function(){
+		$(this).html("");
+	});
+	this.remove_comuna_active_path();
 };
 
 ElecionesApp.prototype.barios_x_com = {
@@ -159,9 +180,18 @@ ElecionesApp.prototype.barios_x_com = {
 
 
 ElecionesApp.prototype.draw_ul_list = function(data){
-	this.ul_res_x_partidos.html(this.tmpl_li_partido(data));
+	this.cont_results.html(this.tmpl_li_partido(data));
 };
 
+ElecionesApp.prototype.draw_tooltip = function(data){
+	this.tooltip.html(this.tmpl_tooltip(data));
+};
+
+ElecionesApp.prototype.remove_comuna_active_path = function(){
+	if(this.comuna_active_path){	
+		this.comuna_active_path.remove();
+	}
+};
 
 ElecionesApp.prototype.change_dropdown = function(val){
 	var x_fuerza = 'x_fuerza';

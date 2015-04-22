@@ -83,6 +83,7 @@ function tooltip(){
         comu.on( 'mouseenter', function() {
           $el = $(this);
           ide = $el.attr("id");
+          app.draw_tooltip({id:ide.replace(/c/i, "")});
           // llenar popup
         });
 
