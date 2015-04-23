@@ -231,19 +231,19 @@ ElecionesApp.prototype.q = new PermanentLinkJS();
 
 
 ElecionesApp.prototype.barios_x_com = {
-	'c1':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c2':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c3':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c4':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c5':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c6':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c7':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c8':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c9':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c10':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c11':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c12':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c13':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c14':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.",
-	'c15':"Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar."
-};
+	  "c1": "Recoleta",
+	  "c2": "Palermo",
+	  "c3": "Barracas, Boca, Nueva Pompeya, Parque Patricios ",
+	  "c4": "Constitución, Monserrat, Puerto Madero, Retiro, San Nicolás, San Telmo",
+	  "c5": "Belgrano, Colegiales, Nuñez",
+	  "c6": "Almagro, Boedo",
+	  "c7": "Caballito",
+	  "c8": "Flores, Parque Chacabuco",
+	  "c9": "Liniers, Mataderos, Parque Avellaneda",
+	  "c10": "Floresta, Monte Castro, Velez Sarsfield, Versalles, Villa Luro, Villa Real",
+	  "c11": "Villa Del Parque, Villa  Devoto, Villa Gral. Mitre, Villa Santa Rita",
+	  "c12": "Coghlan, Saavedra, Villa Pueyrredón, Villa Urquiza",
+	  "c13": "Balvanera, San Cristobal",
+	  "c14": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortuzar",
+	  "c15": "Villa Lugano, Villa Riachuelo, Villa Soldati"
+	};
