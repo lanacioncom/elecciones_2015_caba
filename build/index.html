@@ -5,14 +5,14 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"> 
-	<link rel="stylesheet" href="css/all.min.css?1429746456961">
+	<link rel="stylesheet" href="css/all.min.css?1429817229969">
 
 
 </head>
 <body>
 
 
-<header>
+<header class="clearfix">
 	<div class="titulos">
 		<h1>Primarias <span></span></h1>
 		<h2>CABA</h2>
@@ -76,21 +76,21 @@
 	<div class="tooltip" id="tooltip">
 	<script type="text/template" id="tmpl_tooltip">
 		<h4>COMUNA {{id}}</h4>
-		<p>Agronomia, Chacarita, Paternal, Parque Chas, Villa Crespo, Villa Ortuzar.</p>
+		<p>{{barios_x_com}}</p>
 		<div class="fuerza">
-			<div class="candidato">Pro</div>
-			<div class="candidatoBarra bk_pro"></div>
-			<div class="candidatoPorcentaje">45,5%</div>
+			<div class="candidato">Partido id {{comuna.0.id}}</div>
+			<div class="candidatoBarra bk_pro" style="width:{{get_width_bar comuna.0.porcentaje max}}%;"></div>
+			<div class="candidatoPorcentaje">{{comuna.0.porcentaje}}%</div>
 		</div>
 		<div class="fuerza">
-			<div class="candidato">FPV</div>
-			<div class="candidatoBarra bk_fpv"></div>
-			<div class="candidatoPorcentaje">25,5%</div>
+			<div class="candidato">Partido id {{comuna.1.id}}</div>
+			<div class="candidatoBarra bk_fpv"  style="width:{{get_width_bar comuna.1.porcentaje max}}%;"></div>
+			<div class="candidatoPorcentaje">{{comuna.1.porcentaje}}%</div>
 		</div>
 		<div class="fuerza">
-			<div class="candidato">ECO</div>
-			<div class="candidatoBarra bk_eco"></div>
-			<div class="candidatoPorcentaje">11,2%</div>
+			<div class="candidato">Partido id {{comuna.2.id}}</div>
+			<div class="candidatoBarra bk_eco" style="width:{{get_width_bar comuna.2.porcentaje max}}%;"></div>
+			<div class="candidatoPorcentaje">{{comuna.2.porcentaje}}%</div>
 		</div>	
 	</script>
 	</div>
@@ -213,7 +213,7 @@
 	<div id="x_fuerza">
 		<div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%;">
 			<span>1,5%</span>
-			<p>CORTE: Porcentaje que deben superar los partidos para acceder a la elección general</p>
+			<p>PISO ELECTORAL: Porcentaje que deben superar los partidos para acceder a la elección general</p>
 		</div>
 		<ul id="list">
 			{{#each data}}
@@ -237,7 +237,7 @@
 	</article>
 </section>
 
-<script src="js/vendor.min.js?1429746456961"></script>
-<script src="js/all.min.js?1429746456961"></script>
+<script src="js/vendor.min.js?1429817229969"></script>
+<script src="js/all.min.js?1429817229969"></script>
 </body>
 </html>

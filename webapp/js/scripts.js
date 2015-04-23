@@ -84,14 +84,24 @@ $(function(){
 	/* // tooltip /*/
 function tooltip(){
 
-	  	var comu = $("polygon, path");
-	  	var tool = $(".tooltip");
+		var comu = $("polygon, path");
+		var tool = $(".tooltip");
 
-	  	var active_zoon = null;
-        comu.on( 'mouseenter', function() {
-          $el = $(this);
-          ide = $el.attr("id");
-          app.draw_tooltip({id:ide.replace(/c/i, "")});
+		var active_zoon = null;
+		comu.on( 'mouseenter', function() {
+		$el = $(this);
+		ide = $el.attr("id").replace(/c/i, "");
+		
+		var data = app.r_general.comunas["comuna_"+ide];
+		var max = app.get_max_obj(data, "porcentaje");
+		data = app.sort_obj(data, "porcentaje");
+		
+		app.draw_tooltip({
+			id:ide,
+			max: max,
+			comuna: data,
+			barios_x_com: app.barios_x_com["c"+ide]
+		});
           // llenar popup
         });
 

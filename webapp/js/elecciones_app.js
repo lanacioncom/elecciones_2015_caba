@@ -165,6 +165,23 @@ ElecionesApp.prototype.reset = function (){
 	this.q.kill("comuna");
 };
 
+ElecionesApp.prototype.get_max_obj = function(arr, key){ 
+	
+	var max = arr.map(function(x){ return x[key]; });
+	return Math.max.apply(null, max); 
+};
+
+ElecionesApp.prototype.sort_obj = function(arr, key){ 
+	function compare(a,b) {
+	  if (a[key] > b[key])
+	     return -1;
+	  if (a[key] < b[key])
+	    return 1;
+	  return 0;
+	}
+	return arr.sort(compare);
+};
+
 ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escribe la general
 	
 	var is_comuna = false;
@@ -173,10 +190,11 @@ ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escri
 	}else{
 		is_comuna = true;
 	}
+	this.sort_obj(data, 'porcentaje');
 	var max = data.map(function(x){ return x.porcentaje; }); 
 	var l = {
 		data : data,
-		max : Math.max.apply(null, max)
+		max : this.get_max_obj(data, "porcentaje")
 	};
 
 	this.cont_results.html(this.tmpl_li_partido(l));
