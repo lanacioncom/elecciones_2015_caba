@@ -204,12 +204,12 @@ header, section {
 	display: inline-block;
 	position: absolute;
 	right: -15px;
-	top: 36%;
+	top: 37%;
 	width: 0;
 	height: 0;
-	border-top: 5px solid transparent;
-	border-left: 5px solid #000;
-	border-bottom: 5px solid transparent;
+	border-top: 4px solid transparent;
+	border-left: 5px solid #BEBEBE;
+	border-bottom: 4px solid transparent;
 }
 
 .clearfix {
@@ -483,7 +483,11 @@ div#selected.arrow:after {
 	right: -10px;
 }
 div#selected hr {
-	margin-top: .75em
+	margin-top: .75em;
+	border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 div#selected h4 {
@@ -495,7 +499,7 @@ div#selected h4 {
 	left: 0;
 	background: #FFFFFF;
 	text-transform: uppercase;
-	border: solid 1px #dadada;
+	border: solid 1px #807F7F;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
