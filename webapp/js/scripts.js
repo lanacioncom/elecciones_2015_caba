@@ -24,8 +24,9 @@ var isMobile = { //valida si es un dispositivo movil
 };
 
 $(function(){
+    
 	"use strict";
-
+    $.ajaxSetup({ cache: false }); 
 	// load mapa
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
