@@ -36,25 +36,36 @@ $(function(){
 
 				$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
 				// init app
-				app = new ElecionesApp(list_partidos, results);
 				
-			$("#opts").select2({
-		        minimumResultsForSearch: -1,
-		        val: "x_fuerza"
-		   });
+				app = new ElecionesApp(list_partidos, results);
+
+
+				/* select */
+				
+				$("#opts").select2({
+			        minimumResultsForSearch: -1,
+			        val: "x_fuerza"
+			    });
+
+			    
+
+			    /* // scroll // */
+
+			    $("#list, #list_interna").niceScroll({
+			        cursorcolor:"#d7d7d7",
+			        cursorborder:"0px solid #fff",
+			        cursorwidth: "7px",
+			        autohidemode:false,
+			        hidecursordelay:0
+			    });
 				
 			});
 		});
 
-		 /* // scroll // */
+	
+		
 
-		  $("#list, #list_interna").niceScroll({
-		        cursorcolor:"#d7d7d7",
-		        cursorborder:"0px solid #fff",
-		        cursorwidth: "7px",
-		        autohidemode:false,
-		        hidecursordelay:0
-		  });
+
 		// tooltip(); lo llama elecciones_app.js
 	
 	});

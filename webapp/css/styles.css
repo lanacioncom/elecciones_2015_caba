@@ -570,6 +570,7 @@ div.loader{
 #mapa_cont svg #mapa {
 	transform: translateX(5%) translateY(0px) scale(1);
 }
+
 path, polygon {
 	stroke: white;
 	stroke-width: 1.2px;
@@ -582,7 +583,26 @@ path, polygon {
 }
 
 #mapa_cont svg #c2, #mapa_cont svg #c3, #mapa_cont svg #c11 {
-	fill: #1796D7;
+	fill: url(#pattern1);
+}
+
+#mapa_cont svg #c4, #mapa_cont svg #c8, #mapa_cont svg #c13 {
+	fill: url(#pattern2);
+}
+
+
+svg #pattern1 line{
+	stroke:#FEDB30;
+	stroke-width:2px;
+}
+
+svg #pattern2 line{
+	stroke:#FEDB30;
+	stroke-width:5px;
+}
+
+.o-lines-light:after {
+  
 }
 
 svg .comuna_active_path { 	
