@@ -26,7 +26,7 @@ var isMobile = { //valida si es un dispositivo movil
 $(function(){
     
 	"use strict";
-    $.ajaxSetup({ cache: false }); 
+    // $.ajaxSetup({ cache: false }); 
 	// load mapa
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
@@ -48,13 +48,13 @@ $(function(){
 
 		 /* // scroll // */
 
-		  $("#list, #list_interna").niceScroll({
-		        cursorcolor:"#d7d7d7",
-		        cursorborder:"0px solid #fff",
-		        cursorwidth: "7px",
-		        autohidemode:false,
-		        hidecursordelay:0
-		  });
+		  // $("#list, #list_interna").niceScroll({
+		  //       cursorcolor:"#d7d7d7",
+		  //       cursorborder:"0px solid #fff",
+		  //       cursorwidth: "7px",
+		  //       autohidemode:false,
+		  //       hidecursordelay:0
+		  // });
 		// tooltip(); lo llama elecciones_app.js
 	
 	});

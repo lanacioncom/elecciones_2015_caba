@@ -721,7 +721,7 @@ svg .comuna_active_path {
 }
 #results ul .cont_barra {
 	width: 85%;
-	width: calc(100% - 25px); /*background: rgba(200, 200, 200, .1);*/
+	width: calc(100% - 60px); /*background: rgba(200, 200, 200, .1);*/
 }
 .cont_barra .barra {
 	width: 100%;

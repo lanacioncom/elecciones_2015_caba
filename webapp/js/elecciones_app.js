@@ -80,13 +80,13 @@ var ElecionesApp = function(list_partidos, results){
 	var s = this;
 	s.list_partidos = list_partidos;
 	s.r_general = results.general;
+	s.internas = results.interna;
 	s.comuna_active_path = null;
 	// s.r_internas = results.inernas;
 
 	function set_data_active(str){
 		$("#selected h4").html(str).fadeIn();
 	}
-
 
 	function select_comuna(polygon){
 		var id = polygon.id.replace(/c/i, "");
@@ -111,16 +111,6 @@ var ElecionesApp = function(list_partidos, results){
 
 	(function init(){
 			// bind events
-			var candidato_btn = $('input[type="radio"]');
-			candidato_btn.on('click.select_condidato', function(el){
-				var $el = $(this);
-				$('li.active:has(input)').removeClass('active');
-				$el.closest('li').addClass('active');
-
-				set_data_active(this.value);
-				s.q.set("candidato", this.value);
-
-			});
 
 			// change dropdown
 			$('select#opts').change(function(e){
@@ -154,7 +144,7 @@ var ElecionesApp = function(list_partidos, results){
 			tooltip(); // esta en scripts.js
 	})();
 
-	// init();
+	this.set_data_active = set_data_active;
 };
 
 ElecionesApp.prototype.reset = function (){
@@ -194,22 +184,41 @@ ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escri
 	var max = data.map(function(x){ return x.porcentaje; }); 
 	var l = {
 		data : data,
+		is_comuna: is_comuna,
 		max : this.get_max_obj(data, "porcentaje")
 	};
 
 	this.cont_results.html(this.tmpl_li_partido(l));
 	if(is_comuna){ $(".help_text, #line").hide();}else{$(".help_text, #line").show();}
+
+// start niceScroll
+	this.start_niceScroll("#list");
+
 };
 
 
-ElecionesApp.prototype.draw_x_interna = function(data){
-	// if(!data){
-	// 	data = this.r_general.total;
-	// }
-	this.cont_results.html(this.tmpl_x_interna());
+ElecionesApp.prototype.draw_x_interna = function(val){
+	
+	var s = this;
+
+	var d = this.internas;
+	console.log(this);
+	s.cont_results.html(this.tmpl_x_interna(d));
+
+// bind events for inputs
+	var candidato_btn = $('input[type="radio"]');
+	candidato_btn.on('click.select_condidato', function(el){
+		var $el = $(this);
+		$('li.active:has(input)').removeClass('active');
+		$el.closest('li').addClass('active');
+
+		s.set_data_active(this.value);
+		s.q.set("candidato", this.value);
+	});
+
+// start niceScroll
+	s.start_niceScroll();
 };
-
-
 
 ElecionesApp.prototype.draw_tooltip = function(data){
 	this.tooltip.html(this.tmpl_tooltip(data));
@@ -224,22 +233,14 @@ ElecionesApp.prototype.remove_comuna_active_path = function(){
 
 ElecionesApp.prototype.change_dropdown = function(val){
 	var x_fuerza = 'x_fuerza';
-	// if(x_fuerza == val){
-	// 	$('#x_interna').hide();
-	// 	$('#x_fuerza').show();
-	// }else{
-	// 	$('#x_fuerza').hide();
-	// 	$('#x_interna').show();
-	// }
 
 	$('#ayud1').hide();
 	$('.compartir').show();
 
-
 	if(x_fuerza == val){
 		this.draw_ul_list();
 	}else{
-		this.draw_x_interna();
+		this.draw_x_interna(val);
 	}
 	// set path
 	this.q.set('fuerza', val);
@@ -247,6 +248,15 @@ ElecionesApp.prototype.change_dropdown = function(val){
 
 ElecionesApp.prototype.q = new PermanentLinkJS();
 
+ElecionesApp.prototype.start_niceScroll = function(selector){
+	$(selector).niceScroll({
+		cursorcolor:"#d7d7d7",
+		cursorborder:"0px solid #fff",
+		cursorwidth: "7px",
+		autohidemode:false,
+		hidecursordelay:0
+	});
+};
 
 ElecionesApp.prototype.barios_x_com = {
 	  "c1": "Recoleta",
