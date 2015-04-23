@@ -124,6 +124,7 @@ var ElecionesApp = function(list_partidos, results){
 
 			// change dropdown
 			$('select#opts').change(function(e){
+
 				s.change_dropdown($(this).val());
 			});
 
@@ -177,7 +178,7 @@ ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escri
 		data : data,
 		max : Math.max.apply(null, max)
 	};
-	
+
 	this.cont_results.html(this.tmpl_li_partido(l));
 	if(is_comuna){ $(".help_text, #line").hide();}else{$(".help_text, #line").show();}
 };
@@ -212,6 +213,10 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	// 	$('#x_fuerza').hide();
 	// 	$('#x_interna').show();
 	// }
+
+	$('#ayud1').hide();
+	$('.compartir').show();
+
 
 	if(x_fuerza == val){
 		this.draw_ul_list();

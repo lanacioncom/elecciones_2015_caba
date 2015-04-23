@@ -241,6 +241,7 @@ div.titulos {
 	width: 320px;
 	font-size: 15px;
 	overflow: hidden;
+	float: left;
 }
 
 h1 {
@@ -565,7 +566,7 @@ div.loader{
 #mapa_cont svg #mapa {
 	transform: translateX(5%) translateY(0px) scale(1);
 }
-#mapa_cont svg path, polygon {
+path, polygon {
 	stroke: white;
 	stroke-width: 1.2px;
 	cursor: pointer;
