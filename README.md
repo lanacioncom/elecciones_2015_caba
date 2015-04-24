@@ -33,4 +33,22 @@ gulp deploy_ftp
 
 ## Backend
 
+## Tecnologías utilizadas:
+
++ Python
++ Handlebars
++ Jquery
++ Nice Scroll
++ Gulp.js
++ Bower
+
+
+## Créditos:
+
++ Pablo Loscri
++ Juan Elosua
++ Gaston De La Llana
++ Mariana Trigo Viera
++ Florencia Fernandez Blanco
++ Cristian Bertelegni
 
