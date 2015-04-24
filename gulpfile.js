@@ -29,14 +29,14 @@ gulp.task('minify-css', function () {
 
 // test JS
 gulp.task('test_js', function(){
-	return gulp.src(['js/scripts.js', 'js/elecciones_app.js'], { cwd: 'webapp' })
+	return gulp.src(['js/permanentlinkjs.js', 'js/scripts.js', 'js/elecciones_app.js'], { cwd: 'webapp' })
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
 		.pipe(jshint.reporter(stylish));
 });
 
 gulp.task('js', ['test_js'], function () {
-	var all = gulp.src(['js/elecciones_app.js', 'js/scripts.js'] , { cwd: 'webapp' })
+	var all = gulp.src(['js/elecciones_app.js', 'js/permanentlinkjs.js', 'js/scripts.js'] , { cwd: 'webapp' })
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(concat(js_all))

@@ -1,78 +1,3 @@
-var PermanentLinkJS = function() {
-	"use strict";
-
-	var query = {};
-
-	function reset(){ 
-		query = {};
-		set_hash();
-		return query;
-	}
-
-	function set(key, val) {
-		if (typeof key == 'object'){
-			try{
-				for (var k in key){
-					query[k] = key[k];	
-				}
-			}catch(err){
-				console.error("Error set query: %s", err.message);
-			}
-		}else{
-			try{
-				query[key] = val;
-				set_hash();
-			}catch(err){
-				console.error("Error set query: %s", err.message);
-			}
-		}
-		return query;
-	}
-	
-	function get_parameters(str) {
-		str = str || location.hash;
-		return str.replace("#", "").split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this;}.bind({}))[0];
-	}
-
-	function set_from_location(){
-		return (query = get_parameters());
-	}
-
-	function kill(k){ 
-		delete query[k]; 
-		set_hash();
-		return query;
-	}
-
-	function to_string(o){
-		var s = [];
-		for(var k in o){
-			s.push([k, o[k]].join("="));
-		}
-		return s.join("&");
-	}
-
-	function set_hash(q) {
-		q = typeof q == "string" ? q : to_string(q || query);
-		try{
-			return (location.hash = q);
-		}catch(err){
-			console.error("Error set_hash: %s", err.message);
-		}
-	}
-
-	this.get_query = function() { return query; };
-	
-	this.reset = reset;
-	this.get_parameters = get_parameters;
-	this.to_string = to_string;
-	this.set_hash = set_hash;
-	this.set = set;
-	this.kill = kill;
-	this.set_from_location = set_from_location;
-};
-
-
 // Elecciones class
 var ElecionesApp = function(list_partidos, results){
 	"use strict";
@@ -82,6 +7,7 @@ var ElecionesApp = function(list_partidos, results){
 	s.r_general = results.general;
 	s.internas = results.interna;
 	s.comuna_active_path = null;
+	s.filtro_home = "x_fuerza"; // filtro seteado por default
 	s.filtro_activo = "x_fuerza";
 	// s.r_internas = results.inernas;
 
@@ -104,10 +30,13 @@ var ElecionesApp = function(list_partidos, results){
 
 		// change dropdown
 		$('select#opts').change(function(e){
-
 			s.change_dropdown($(this).val());
 		});
-
+		$('h3').on('click', function(){ // volver a la home 
+			s.filtro_activo = s.filtro_home;
+			s.reset();
+			$('select#opts').select2("val", s.filtro_activo);
+		});
 		
 		// template para el select de internas
 		s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
@@ -125,7 +54,6 @@ var ElecionesApp = function(list_partidos, results){
 		// template tooltip
 		s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
 		s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
-
 
 		s.on_click_comuna();
 		
@@ -156,8 +84,6 @@ ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 	
 	s.draw_x_interna(data);
 
-
-	
 };
 
 
@@ -187,13 +113,13 @@ ElecionesApp.prototype.on_click_comuna = function (){
 	// click mapa
 	$('polygon, path').on('click.on_comuna', function(e){
 		
-		if(s.filtro_activo == "x_fuerza"){ // dropdown x fuerza
+		if(s.filtro_activo == s.filtro_home){ // dropdown x fuerza
 			
 			s.select_comuna_general(this);
 		
 		}else{ // dropdown x interna o listas únicas
-
 			s.select_comuna_interna(this);
+
 		
 		}
 
@@ -206,7 +132,7 @@ ElecionesApp.prototype.reset = function (){
 	$("#selected h4").hide().html("");
 	
 	this.remove_comuna_active_path();
-	if(this.filtro_activo == "x_fuerza"){ // dropdown x fuerza
+	if(this.filtro_activo == this.filtro_home){ // dropdown x fuerza
 		this.draw_ul_list();
 		this.q.kill("comuna");
 
@@ -339,11 +265,20 @@ ElecionesApp.prototype.start_niceScroll = function(selector){
 
 ElecionesApp.prototype.pintar_mapa = function(data){
 	var s = this;
-	s.ganadores_comunas.forEach(function(x){
-		$("#"+x.comuna).css({ fill: s.colores[x.id]});
-	});
-};
+	
 
+	if(this.filtro_activo == 'x_fuerza'){
+		s.ganadores_comunas.forEach(function(x){
+			$("#"+x.comuna).css({ fill: s.colores[x.id]});
+		});
+
+	}else{
+
+		// setar el color del partido para los patterns
+		// $("line").css({ stroke: color_partido});
+		
+	}
+};
 
 
 ElecionesApp.prototype.barios_x_com = {
