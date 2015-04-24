@@ -9,7 +9,7 @@ log = logging.getLogger('paso.%s' % (__name__))
 
 RESUMEN_RENAME = {
   'Electores': 'e',
-  'Votantes': 'v',
+  'VotantesJef': 'v',
   'Mesas': 'mt',
   'MesasInformadas': 'mi',
   'UltimaActualizacion': 'ut'
@@ -73,7 +73,7 @@ def t_results_section_API(d=None, comuna=None, dest_dict=None):
         a00 = []
         for idx, row in enumerate(d["general"][0]["partidos"]):
             a00.append(t_rename_data(row, RESULTS_PARTY_RENAME))
-            if len(row["lista"]) == 1:
+            if len(row["listas"]) == 1:
                 # Do not include special parties inside "Listas únicas"
                 if row["id_partido"] not in SPECIAL_PARTIES: 
                     a99.append(t_rename_data(row, RESULTS_PARTY_RENAME))
@@ -82,9 +82,9 @@ def t_results_section_API(d=None, comuna=None, dest_dict=None):
                 dest_dict["partido_%s" 
                           % (row["id_partido"])] = \
                             {"r": t_rename_data(row, RESULTS_PARTY_SUMMARY_RENAME),
-                             "c_%02d" % (comuna): [t_rename_data(l,RESULTS_CANDIDATE_RENAME) for l in row["lista"]]}
-        dest_dict["partido_99"]["comuna_%02d" % (comuna)] = a99
-        dest_dict["partido_00"]["comuna_%02d" % (comuna)] = a00
+                             "c_%02d" % (comuna): [t_rename_data(l,RESULTS_CANDIDATE_RENAME) for l in row["listas"]]}
+        dest_dict["partido_99"]["c_%02d" % (comuna)] = a99
+        dest_dict["partido_00"]["c_%02d" % (comuna)] = a00
     else:
         a99 = []
         a00 = []
