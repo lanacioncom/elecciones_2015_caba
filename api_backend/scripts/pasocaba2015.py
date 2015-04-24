@@ -5,24 +5,25 @@ from apirequests import get_resumen_API, get_results_API
 from apitransforms import t_resumen_API, t_results_API
 from apiio import write_API_data, get_stored_json
 from utils import update_time_increased
-from collections import OrderedDict
 from time import time
 log = logging.getLogger('paso.%s' % (__name__))
 
 # GLOBAL VARS
-final_dictionaries = {}
-tmp_storage = OrderedDict()
+final_dictionaries = {"partido_00": {}, "partido_99": {}}
+tmp_storage = []
 
 
 def is_new_data_available():
     '''This function will serve as a trigger
        to launch the API consumption process'''
+
+    # First try to grab the data from the site
+    new_resumen_dict = get_resumen_API()
+    if not new_resumen_dict:
+        return False
+    final_dictionaries['resumen'] = t_resumen_API(new_resumen_dict)
     old_resumen_dict = get_stored_json('resumen')
     if old_resumen_dict:
-        new_resumen_dict = get_resumen_API()
-        if not new_resumen_dict:
-            return False
-        final_dictionaries['resumen'] = t_resumen_API(new_resumen_dict)
         return update_time_increased(old_resumen_dict,
                                      final_dictionaries["resumen"])
     log.debug('Did not find old json file, continue processing')
@@ -52,5 +53,4 @@ def run():
 
 
 if __name__ == '__main__':
-    # run_test("001","999")
     run()
