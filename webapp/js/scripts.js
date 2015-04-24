@@ -47,17 +47,6 @@ $(function(){
 			        val: "x_fuerza"
 			    });
 
-			    
-
-			    /* // scroll // */
-
-			    // $("#list, #list_interna").niceScroll({
-			    //     cursorcolor:"#d7d7d7",
-			    //     cursorborder:"0px solid #fff",
-			    //     cursorwidth: "7px",
-			    //     autohidemode:false,
-			    //     hidecursordelay:0
-			    // });
 				
 			});
 		});
@@ -81,39 +70,45 @@ $(function(){
 function tooltip(){
 
 		var comu = $("polygon, path");
-		var tool = $(".tooltip");
+		var toolip = $(".tooltip");
 
-		var active_zoon = null;
 		comu.on( 'mouseenter', function() {
-		$el = $(this);
-		ide = $el.attr("id").replace(/c/i, "");
-		
-		var data = app.r_general.comunas["comuna_"+ide];
-		var max = app.get_max_obj(data, "porcentaje");
-		data = app.sort_obj(data, "porcentaje");
-		
-		app.draw_tooltip({
-			id:ide,
-			max: max,
-			comuna: data,
-			barios_x_com: app.barios_x_com["c"+ide]
-		});
-          // llenar popup
+
+			$el = $(this);
+
+			ide = $el.attr("id").replace(/c/i, "");
+			
+			if(app.filtro_activo == "x_fuerza"){
+
+				var data = app.r_general.comunas["comuna_"+ide];
+				var max = app.get_max_obj(data, "porcentaje");
+				data = app.sort_obj(data, "porcentaje");
+				
+	          	// llenar popup
+				app.draw_tooltip({
+					id:ide,
+					max: max,
+					comuna: data,
+					barios_x_com: app.barios_x_com["c"+ide]
+				});
+
+				toolip.show();
+				mouse_move($el, toolip);
+			}else{
+				// tooltip 
+
+			}
+        	
+        	// animate tooltip
+	        
+
         });
 
-        if(isMobile.any()) {
-           
-        }else{
-          comu.hover(function() {
-            $('.tooltip').show();
-          },function(){
-            $('.tooltip').hide();
-          });
-        }
+}
 
-
-        comu.on('mousemove', function(e){
-          
+function mouse_move($el, toolip){
+    $el.on('mousemove', function(e){
+      
          e = e || window.event;
          e = jQuery.event.fix(e);
          
@@ -134,5 +129,14 @@ function tooltip(){
 
          $(".tooltip").animate({"top":itemY, "left":itemX},100, 'swing').stop( true, true );
 
-        });
+    });
+
+    if(isMobile.any()) {
+	           
+    }else{
+		
+		$el.on('mouseout', function(){
+        	toolip.hide();
+		});	
+    }
 }

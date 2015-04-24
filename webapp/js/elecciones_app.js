@@ -82,77 +82,112 @@ var ElecionesApp = function(list_partidos, results){
 	s.r_general = results.general;
 	s.internas = results.interna;
 	s.comuna_active_path = null;
+	s.filtro_activo = "x_fuerza";
 	// s.r_internas = results.inernas;
 
 	function set_data_active(str){
 		$("#selected h4").html(str).fadeIn();
 	}
 
-	function select_comuna(polygon){
-		var id = polygon.id.replace(/c/i, "");
-		var com_name = "Comuna "+ id;
-		set_data_active(com_name);
-		
-		// set polygon active
-		// var bbox = polygon.getBBox();
-		// console.log(bbox.x);
-		// $("svg").css("transform", "translateX("+bbox.x+"px) translateY("+bbox.x+"px) scale(2)")
-		s.remove_comuna_active_path();
-		s.comuna_active_path = $(polygon).clone();
-		s.comuna_active_path.attr("class","comuna_active_path");
-		$("svg").append(s.comuna_active_path);
-		s.q.set("comuna", id);
-		// lista de partidos x comuna
-		// console.log(s.r_general.comunas['comuna_'+id]);
-		s.draw_ul_list(s.r_general.comunas['comuna_'+id]);
-
-	}
-
 
 	(function init(){
-			// bind events
+		// bind events
 
-			// change dropdown
-			$('select#opts').change(function(e){
+		// change dropdown
+		$('select#opts').change(function(e){
 
-				s.change_dropdown($(this).val());
-			});
+			s.change_dropdown($(this).val());
+		});
 
-			
-			// template para el select de internas
-			s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
-			$("#opts").html( s.tmpl_opts(s.list_partidos) );
-			
-			
-			// template para listado de resultados por partido
-			s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
-			s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
-			s.tmpl_x_interna = Handlebars.compile($('#tmpl_x_interna').html());
-			
-			s.draw_ul_list();
+		
+		// template para el select de internas
+		s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
+		$("#opts").html( s.tmpl_opts(s.list_partidos) );
+		
+		
+		// template para listado de resultados por partido
+		s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
+		s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
+		s.tmpl_x_interna = Handlebars.compile($('#tmpl_x_interna').html());
+		
+		s.draw_ul_list();
 
 
-			// template tooltip
-			s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
-			s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
+		// template tooltip
+		s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
+		s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
 
-			// click mapa
-			$('polygon, path').on('click.on_comuna', function(e){
-				select_comuna(this);
-			});
 
-			tooltip(); // esta en scripts.js
+		s.on_click_comuna();
+
+		tooltip(); // esta en scripts.js
 	})();
 
 	this.set_data_active = set_data_active;
 };
 
+
+ElecionesApp.prototype.select_comuna_interna = 	function(polygon){};
+
+
+ElecionesApp.prototype.select_comuna_general = 	function(polygon){
+	var s = this;
+
+	var id = polygon.id.replace(/c/i, "");
+	var com_name = "Comuna "+ id;
+	s.set_data_active(com_name);
+	
+	// set polygon active
+	// var bbox = polygon.getBBox();
+	// console.log(bbox.x);
+	// $("svg").css("transform", "translateX("+bbox.x+"px) translateY("+bbox.x+"px) scale(2)")
+	s.remove_comuna_active_path();
+	s.comuna_active_path = $(polygon).clone();
+	s.comuna_active_path.attr("class","comuna_active_path");
+	$("svg").append(s.comuna_active_path);
+	s.q.set("comuna", id);
+	// lista de partidos x comuna
+	// console.log(s.r_general.comunas['comuna_'+id]);
+	s.draw_ul_list(s.r_general.comunas['comuna_'+id]);
+};
+
+
+ElecionesApp.prototype.on_click_comuna = function (){
+	var s = this;
+	// click mapa
+	$('polygon, path').on('click.on_comuna', function(e){
+		
+		if(s.filtro_activo == "x_fuerza"){ // dropdown x fuerza
+			
+			s.select_comuna_general(this);
+		
+		}else{ // dropdown x interna o listas únicas
+
+			s.select_comuna_interna();
+		
+		}
+
+	});
+};
+
+
 ElecionesApp.prototype.reset = function (){
 	// resetea el los filtros
 	$("#selected h4").hide().html("");
-	this.draw_ul_list();
-	this.remove_comuna_active_path();
-	this.q.kill("comuna");
+	
+	if(this.filtro_activo == "x_fuerza"){ // dropdown x fuerza
+		this.draw_ul_list();
+		this.remove_comuna_active_path();
+		this.q.kill("comuna");
+
+	}else{ // dropdown x interna o listas únicas
+
+
+	}
+	// clear radio btn
+	$('li.candidato.active input').prop('checked', false);
+	$('li.candidato.active').removeClass('active');
+	
 };
 
 ElecionesApp.prototype.get_max_obj = function(arr, key){ 
@@ -202,7 +237,6 @@ ElecionesApp.prototype.draw_x_interna = function(val){
 	var s = this;
 
 	var d = this.internas;
-	console.log(this);
 	s.cont_results.html(this.tmpl_x_interna(d));
 
 // bind events for inputs
@@ -231,19 +265,25 @@ ElecionesApp.prototype.remove_comuna_active_path = function(){
 
 };
 
+
 ElecionesApp.prototype.change_dropdown = function(val){
+	
+	this.filtro_activo = val;
+	
 	var x_fuerza = 'x_fuerza';
 
 	$('#ayud1').hide();
 	$('.compartir').show();
 
-	if(x_fuerza == val){
+	if(x_fuerza == this.filtro_activo){
 		this.draw_ul_list();
 	}else{
 		this.draw_x_interna(val);
 	}
 	// set path
 	this.q.set('fuerza', val);
+
+
 };
 
 ElecionesApp.prototype.q = new PermanentLinkJS();
