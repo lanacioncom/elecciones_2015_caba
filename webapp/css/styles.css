@@ -687,7 +687,7 @@ svg .comuna_active_path {
 }
 
 .porc_text div.porc_partido {
-	font-size: 18px;
+	font-size: 14px;
   	color: #000;
    float: left;
 
@@ -699,12 +699,18 @@ svg .comuna_active_path {
 }
 
 .porc_text div.cant_v {
-	width: 100px;
-	font-size: 12px;
+	font-size: 15px;
 	color: #999;
 	float: left;
-	margin:3px 10px;
+	margin:0px 4px 0px 10px;
 }
+
+#porPart  {
+	font-size: 15px;
+	color:#999;
+	margin-left:5px;
+}	 
+
 
 #results ul#list {
   display: inline-block;
@@ -859,6 +865,7 @@ ul#list_interna li div.cant_v {
 	margin-top: 10px;
 	  color:#808080;
 }
+
 
 @media (max-width: 850px) {
 
@@ -1040,12 +1047,13 @@ ul#list_interna li div.cant_v {
 	  font-size: 15px;
 	}
 
-
-
-	  
-
+#porPart  {
+	display: none;
+	
+}	
 
 }
+
 
 @media (max-width: 640px) {
 	section#cont_data {
@@ -1106,7 +1114,6 @@ ul#list_interna li div.cant_v {
   		top:-15px;
   		left: 5px;
   		font-size: 13px;
-
   	}
 
   	#mapa_cont{
@@ -1205,6 +1212,7 @@ ul#list_interna li div.cant_v {
 	  display: none;
 	}
 
+ 
 
 
 }
