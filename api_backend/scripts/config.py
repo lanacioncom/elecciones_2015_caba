@@ -18,7 +18,7 @@ else:
     JSON_DATA_PATH = os.path.join(dir, '../data')
     JSON_EXAMPLE_PATH = os.path.join(dir, '../examples')
 
-SIMULATE = True
+SIMULATE = False
 
 # Logging configuration
 LOG_FILENAME = 'pasocaba2015.log'
@@ -27,8 +27,7 @@ log = logging.getLogger('paso')
 
 
 BASE_URL = 'https://paso2015.buenosaires.gob.ar/api'
-HEADERS = {'user-agent': 'Mozilla/5.0',
-           'X-Requested-With': 'XMLHttpRequest'}
+HEADERS = {'user-agent': 'Mozilla/5.0'}
 # Wait 3 seconds for socket data
 TIMEOUT = 3
 
