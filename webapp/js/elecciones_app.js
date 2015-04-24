@@ -169,10 +169,10 @@ ElecionesApp.prototype.select_comuna_general = 	function(polygon){
 	s.set_data_active(com_name);
 	
 	// set polygon active
-	// var bbox = polygon.getBBox();
-	// console.log(bbox.x);
+	var bbox = polygon.getBBox();
+	console.log(bbox, $('svg').height(), $('svg').width());
 	// $("svg").css("transform", "translateX("+bbox.x+"px) translateY("+bbox.x+"px) scale(2)")
-	
+	$('svg').velocity({ translateX: (($('svg').width()/2) - bbox.x -(bbox.width/2))*2, translateY: (($('svg').height()/2) - bbox.y - (bbox.height/2))*1.5, scale: 2 });
 	s.set_comuna_active_path(polygon);
 
 	s.q.set("comuna", id);
@@ -340,10 +340,8 @@ ElecionesApp.prototype.start_niceScroll = function(selector){
 ElecionesApp.prototype.pintar_mapa = function(data){
 	var s = this;
 	s.ganadores_comunas.forEach(function(x){
-		$("#"+x.comuna).css("fill", s.colores[x.id]);
-		// console.log($("#"+x.comuna).attr('fill'));
+		$("#"+x.comuna).velocity({ fill: s.colores[x.id]});
 	});
-
 };
 
 
