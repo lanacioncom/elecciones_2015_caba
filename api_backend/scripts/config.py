@@ -26,7 +26,7 @@ REL_LOGS_PATH = os.path.join(dir, '../logs')
 log = logging.getLogger('paso')
 
 
-BASE_URL = 'https://paso2015.buenosaires.gob.ar/api'
+BASE_URL = 'https://apipaso.buenosaires.gob.ar/api'
 HEADERS = {'user-agent': 'Mozilla/5.0'}
 # Wait 3 seconds for socket data
 TIMEOUT = 3
