@@ -1,5 +1,6 @@
 # coding: utf-8
 import logging
+from config import SIMULATE
 log = logging.getLogger('paso.%s' % (__name__))
 
 
@@ -12,8 +13,9 @@ def get_filename(party=None):
 def update_time_increased(od=None, nd=None):
     '''Compare times to determine if it has increased from
        last execution. Take into account midnight change'''
-    ot = od["resumen"]["UltimaActualizacion"]
-    nt = nd["resumen"]["UltimaActualizacion"]
+    ot = od["ut"]
+    print nd
+    nt = nd["ut"]
 
     # Dirty but does the job
     if (ot[0] == '0'):
@@ -24,6 +26,8 @@ def update_time_increased(od=None, nd=None):
     if (int(ot) < int(nt)):
         log.debug('Found new data %s - %s' %
                       (ot, nt))
+        if SIMULATE:
+            nd["ut"] = u'100000'
         return True
     else:
         log.debug('Same data as before %s - %s' %
