@@ -26,7 +26,7 @@ var isMobile = { //valida si es un dispositivo movil
 $(function(){
     
 	"use strict";
-    $.ajaxSetup({ cache: false }); 
+    // $.ajaxSetup({ cache: false }); 
 	// load mapa
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
@@ -36,25 +36,21 @@ $(function(){
 
 				$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
 				// init app
-				app = new ElecionesApp(list_partidos, results);
 				
-			$("#opts").select2({
-		        minimumResultsForSearch: -1,
-		        val: "x_fuerza"
-		   });
+				app = new ElecionesApp(list_partidos, results);
+
+
+				/* select */
+				
+				$("#opts").select2({
+			        minimumResultsForSearch: -1,
+			        val: "x_fuerza"
+			    });
+
 				
 			});
 		});
 
-		 /* // scroll // */
-
-		  $("#list, #list_interna").niceScroll({
-		        cursorcolor:"#d7d7d7",
-		        cursorborder:"0px solid #fff",
-		        cursorwidth: "7px",
-		        autohidemode:false,
-		        hidecursordelay:0
-		  });
 		// tooltip(); lo llama elecciones_app.js
 	
 	});
@@ -73,49 +69,74 @@ $(function(){
 	/* // tooltip /*/
 function tooltip(){
 
-	  	var comu = $("polygon, path");
-	  	var tool = $(".tooltip");
+	var comu = $("polygon, path");
+	var toolip = $(".tooltip");
 
-	  	var active_zoon = null;
-        comu.on( 'mouseenter', function() {
-          $el = $(this);
-          ide = $el.attr("id");
-          app.draw_tooltip({id:ide.replace(/c/i, "")});
-          // llenar popup
-        });
+	comu.on( 'mouseenter', function() {
 
-        if(isMobile.any()) {
-           
-        }else{
-          comu.hover(function() {
-            $('.tooltip').show();
-          },function(){
-            $('.tooltip').hide();
-          });
-        }
+		$el = $(this);
 
+		ide = $el.attr("id").replace(/c/i, "");
+		
+		if(app.filtro_activo == "x_fuerza"){
 
-        comu.on('mousemove', function(e){
-          
-         e = e || window.event;
-         e = jQuery.event.fix(e);
-         
-        var itemX = e.pageX - 200;
-		if(e.pageX > 185 && ancho < 750){
-			itemX = e.pageX - 200;
-		}else if(e.pageX < 330){
-			itemX = e.pageX;
+			var data = app.r_general.comunas["comuna_"+ide];
+			var max = app.get_max_obj(data, "porcentaje");
+			data = app.sort_obj(data, "porcentaje");
+			
+          	// llenar popup
+			app.draw_tooltip({
+				id:ide,
+				max: max,
+				comuna: data,
+				barios_x_com: app.barios_x_com["c"+ide]
+			});
+
+			toolip.show();
+			mouse_move($el, toolip);
+		}else{
+			// tooltip 
+
 		}
+    	
+    	// animate tooltip
+        
 
-         if(e.pageY > 350 && ancho < 750){
-			itemY = e.pageY - 260;
-         }else if(e.pageY > 350){
-			itemY = e.pageY - 260;
-         }else{
-			itemY = e.pageY + 30;
-         }
+    });
 
-         $(".tooltip").animate({"top":itemY, "left":itemX},100, 'swing').stop( true, true );
+	function mouse_move($el, toolip){
+	    $el.on('mousemove', function(e){
+	      
+	         e = e || window.event;
+	         e = jQuery.event.fix(e);
+	         
+	        var itemX = e.pageX - 200;
+			if(e.pageX > 185 && ancho < 750){
+				itemX = e.pageX - 200;
+			}else if(e.pageX < 330){
+				itemX = e.pageX;
+			}
 
-        });
+	         if(e.pageY > 350 && ancho < 750){
+				itemY = e.pageY - 260;
+	         }else if(e.pageY > 350){
+				itemY = e.pageY - 260;
+	         }else{
+				itemY = e.pageY + 30;
+	         }
+
+	         $(".tooltip").animate({"top":itemY, "left":itemX},100, 'swing').stop( true, true );
+
+	    });
+
+	    if(isMobile.any()) {
+		           
+	    }else{
+			
+			$el.on('mouseout', function(){
+	        	toolip.hide();
+			});	
+	    }
+	}
 }
+

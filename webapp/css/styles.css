@@ -11,40 +11,47 @@ header, section {
 /*//temporales*/
 
 /* Colores partidos */
-.bk_pro {
+.p1, .bk_pro {
 	background: #FEDB30;
+	fill: #FEDB30;
 }
-.bk_fpv {
+.p2, .bk_fpv {
 	background: #1796D7;
+	fill: #1796D7;
 }
-.bk_eco {
+.p3, .bk_eco {
 	background: #7CC374;
+	fill: #7CC374;
 }
-.bk_izquierda {
+.p4, .bk_izquierda {
 	background: #F4987E;
+	fill: #F4987E;
 }
-.bk_fte_renovador {
+.p5, .bk_fte_renovador {
 	background: #B185B7;
+	fill: #B185B7;
 }
-.bk_otros {
+.p6, .bk_otros {
 	background: #B3B3B3;
+	fill: #B3B3B3;
 }
-.col_pro {
+
+.p1, .col_pro {
 	color: #FEDB30;
 }
-.col_fpv {
+.p2, .col_fpv {
 	color: #1796D7;
 }
-.col_eco {
+.p3, .col_eco {
 	color: #7CC374;
 }
-.col_izquierda {
+.p4, .col_izquierda {
 	color: #F4987E;
 }
-.col_fte_renovador {
+.p5, .col_fte_renovador {
 	color: #B185B7;
 }
-.col_otros {
+.p6, .col_otros {
 	color: #B3B3B3;
 }
 
@@ -570,6 +577,7 @@ div.loader{
 #mapa_cont svg #mapa {
 	transform: translateX(5%) translateY(0px) scale(1);
 }
+
 path, polygon {
 	stroke: white;
 	stroke-width: 1.2px;
@@ -582,7 +590,26 @@ path, polygon {
 }
 
 #mapa_cont svg #c2, #mapa_cont svg #c3, #mapa_cont svg #c11 {
-	fill: #1796D7;
+	fill: url(#pattern1);
+}
+
+#mapa_cont svg #c4, #mapa_cont svg #c8, #mapa_cont svg #c13 {
+	fill: url(#pattern2);
+}
+
+
+svg #pattern1 line{
+	stroke:#FEDB30;
+	stroke-width:2px;
+}
+
+svg #pattern2 line{
+	stroke:#FEDB30;
+	stroke-width:5px;
+}
+
+.o-lines-light:after {
+  
 }
 
 svg .comuna_active_path { 	
@@ -667,7 +694,7 @@ svg .comuna_active_path {
 }
 
 .porc_text div.porc_partido {
-	font-size: 18px;
+	font-size: 14px;
   	color: #000;
    float: left;
 
@@ -679,12 +706,18 @@ svg .comuna_active_path {
 }
 
 .porc_text div.cant_v {
-	width: 100px;
-	font-size: 12px;
+	font-size: 15px;
 	color: #999;
 	float: left;
-	margin:3px 10px;
+	margin:0px 4px 0px 10px;
 }
+
+#porPart  {
+	font-size: 15px;
+	color:#999;
+	margin-left:5px;
+}	 
+
 
 #results ul#list {
   display: inline-block;
@@ -721,7 +754,7 @@ svg .comuna_active_path {
 }
 #results ul .cont_barra {
 	width: 85%;
-	width: calc(100% - 25px); /*background: rgba(200, 200, 200, .1);*/
+	width: calc(100% - 60px); /*background: rgba(200, 200, 200, .1);*/
 }
 .cont_barra .barra {
 	width: 100%;
@@ -839,6 +872,7 @@ ul#list_interna li div.cant_v {
 	margin-top: 10px;
 	  color:#808080;
 }
+
 
 @media (max-width: 850px) {
 
@@ -1020,12 +1054,13 @@ ul#list_interna li div.cant_v {
 	  font-size: 15px;
 	}
 
-
-
-	  
-
+#porPart  {
+	display: none;
+	
+}	
 
 }
+
 
 @media (max-width: 640px) {
 	section#cont_data {
@@ -1086,7 +1121,6 @@ ul#list_interna li div.cant_v {
   		top:-15px;
   		left: 5px;
   		font-size: 13px;
-
   	}
 
   	#mapa_cont{
@@ -1185,6 +1219,7 @@ ul#list_interna li div.cant_v {
 	  display: none;
 	}
 
+ 
 
 
 }
