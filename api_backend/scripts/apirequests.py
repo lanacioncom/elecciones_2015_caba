@@ -57,7 +57,7 @@ def get_results_section_API(comuna=None):
         # Get data from disk
         d = {u"time": u"160000"}
         try:
-            fname = '%s/entry_comuna%d.json' % (JSON_EXAMPLE_PATH, comuna)
+            fname = '%s/comuna%d.json' % (JSON_EXAMPLE_PATH, comuna)
             print fname
             with io.open(fname, 'r') as f:
                 j = json.loads(f.read(), encoding='utf8')
@@ -68,13 +68,16 @@ def get_results_section_API(comuna=None):
         return d
 
 
-def get_results_API(o_d=None):
+def get_results_API(o_l=None):
     '''Loop to get all the needed
        results from the API'''
     # Loop through the needed API services by section
     for i in range(0, 16):
         # Get the results by section
-        o_d["comuna_%02d" % (i)] = get_results_section_API(i)
-        if not o_d["comuna_%02d" % (i)]:
+        r = get_results_section_API(i)
+        if not r:
             return False
+        o_l.append(r)
+        #if not o_d["comuna_%02d" % (i)]:
+        #    return False
     return True
