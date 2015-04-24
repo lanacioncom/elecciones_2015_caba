@@ -596,6 +596,24 @@ path, polygon {
 	fill: #FEDB30;
 }
 
+
+svg #pattern1 line{
+	stroke:#FEDB30;
+	stroke-width:2px;
+}
+
+svg #pattern2 line{
+	stroke:#FEDB30;
+	stroke-width:5px;
+}
+
+
+svg .comuna_active_path { 	
+	stroke: black;
+	stroke-width: 1px;
+	cursor: default;
+}
+
 #mapa_cont svg path:hover, polygon:hover {
 	fill-opacity: 0.9;
 }
@@ -620,26 +638,10 @@ path, polygon {
 	fill: url(#pattern1);
 }
 
-
-svg #pattern1 line{
-	stroke:#FEDB30;
-	stroke-width:2px;
+#mapa_cont svg g#refes{
+	transform: translateX(0px) translateY(0px)  scale(1);
 }
 
-svg #pattern2 line{
-	stroke:#FEDB30;
-	stroke-width:5px;
-}
-
-.o-lines-light:after {
-  
-}
-
-svg .comuna_active_path { 	
-	stroke: black;
-	stroke-width: 1px;
-	cursor: default;
-}
 
 #results {
 	border-left: solid 1px #dadada;
@@ -989,7 +991,8 @@ ul#list_interna li div.cant_v {
 	}
 
 	.cont_barra .barra .porc {
-		top: -7px;
+		top: -6px;
+		font: 15px arial;
 	}
 
  	ul#list_interna li div.bg_li {
@@ -1218,7 +1221,7 @@ ul#list_interna li div.cant_v {
   	}
 
   	.help_text {
-  		display: none;
+  		display: none !important;
   	}
 
   	div.ayuda3 {
@@ -1252,7 +1255,7 @@ ul#list_interna li div.cant_v {
 	}
  
 	#results div#line {
-		display: none;
+		display: none !important;
 	}
 
 	.cont_barra .barra {
@@ -1308,6 +1311,8 @@ ul#list_interna li div.cant_v {
 	}
 
  
-
+	#mapa_cont svg g#refes{
+		transform: translateX(-240px) translateY(-310px)  scale(1.6);
+	}
 
 }
