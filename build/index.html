@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"> 
-	<link rel="stylesheet" href="css/all.min.css?1429817229969">
+	<link rel="stylesheet" href="css/all.min.css?1429900052109">
 
 
 </head>
@@ -95,115 +95,37 @@
 	</script>
 	</div>
 
+	
+
 	<article id="results">
 	<!-- Tab: resultados por interna -->
 	<script type="text/template" id="tmpl_x_interna">
 	<div id="x_interna">
 		<div class="porc_text">
-			<div class="porc_partido">Total Fuerza <span id="porPart">48%</span></div>
-			<div class="cant_v">600.000 votos</div>
+			<div class="arrow-before"></div><div class="arrow-after"></div>
+			<div class="porc_partido">TOTAL FUERZA </div>
+			<div class="cant_v">{{votos}}600.000 votos</div>
+			<div id="porPart">({{porcentaje}}% del total)</div>
 		</div>
 
 		<ul id="list_interna">
+			{{#each total}}
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name!!">
+				<input type="radio" name="candidato" value="candidato name {{id}}!!">
 				<div class="foto michetti">&nbsp;</div>
-				<h5>Horacio R. Larreta</h5>
-				<div class="cant_v">2345 votos</div>
+				<h5>Nombre candidato {{id}}</h5>
+				<div class="cant_v">{{votos}}xxxx votos</div>
 				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
+					{{!-- clase barra + style de partido--}}
 					<div class="barra bk_pro" style="width:98%">
-						<div class="porc">88%</div>
+						<div class="porc">{{porcentaje}}%</div>
 					</div>
 					
 				</div>
 			</div>
 			</li>
-			<li class="candidato">
-			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name!!">
-				<div class="foto larreta">&nbsp;</div>
-				<h5>Mariano Recalde</h5>
-				<div class="cant_v">2345 votos</div>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:98%">
-						<div class="porc">88%</div>
-					</div>
-				</div>
-			</div>
-			</li>
-			<li class="candidato">
-			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name!!">
-				<div class="foto">&nbsp;</div>
-				<h5>Mariano Recalde</h5>
-				<div class="cant_v">2345 votos</div>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:98%">
-						<div class="porc">88%</div>
-					</div>
-				</div>
-			</div>
-			</li>
-			<li class="candidato">
-			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name!!">
-				<div class="foto">&nbsp;</div>
-				<h5>Mariano Recalde</h5>
-				<div class="cant_v">2345 votos</div>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:98%">
-						<div class="porc">88%</div>
-					</div>
-				</div>
-			</div>
-			</li>
-			<li class="candidato">
-			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name!!">
-				<div class="foto">&nbsp;</div>
-				<h5>Mariano Recalde</h5>
-				<div class="cant_v">2345 votos</div>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:98%">
-						<div class="porc">88%</div>
-					</div>
-				</div>
-			</div>
-			</li>
-			<li class="candidato">
-			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name!!">
-				<div class="foto">&nbsp;</div>
-				<h5>Mariano Recalde</h5>
-				<div class="cant_v">2345 votos</div>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:98%">
-					<div class="porc">88%</div>
-					</div>
-				</div>
-			</div>
-			</li>
-			<li class="candidato">
-			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name!!">
-				<div class="foto">&nbsp;</div>
-				<h5>Mariano Recalde</h5>
-				<div class="cant_v">2345 votos</div>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro" style="width:98%">
-						<div class="porc">88%</div>
-					</div>
-				</div>
-			</div>
-			</li>
+			{{/each}}
 		</ul>
 	</div>
 	</script>
@@ -218,7 +140,13 @@
 		<ul id="list">
 			{{#each data}}
 			<li class="{{#isLessThan porcentaje 1.5}}no_pasa{{/isLessThan}}">
-				<h5 style="padding-left:{{get_width_bar 1.8 ../max}}%;">{{id}} Pro <span>{{votos}}xxxxxx votos</span></h5>
+				<h5 
+					style="padding-left:{{#if ../is_comuna}}
+							1.8%
+						{{else}}
+							{{get_width_bar 1.8 ../max}}%
+						{{/if}};">{{id}} Pro <span>{{votos}}xxxxxx votos</span>
+				</h5>
 				<div class="cont_barra">
 					<!-- clase barra + style de partido-->
 					<div class="barra bk_pro {{id}}" style="width:{{get_width_bar porcentaje ../max}}%;">
@@ -237,7 +165,7 @@
 	</article>
 </section>
 
-<script src="js/vendor.min.js?1429817229969"></script>
-<script src="js/all.min.js?1429817229969"></script>
+<script src="js/vendor.min.js?1429900052109"></script>
+<script src="js/all.min.js?1429900052109"></script>
 </body>
 </html>

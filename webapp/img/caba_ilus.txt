@@ -134,9 +134,19 @@
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="448.598" y1="104.664" x2="105.679" y2="447.583"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="453.434" y1="109.471" x2="110.515" y2="452.391"/>
 	  </pattern>
-
-
 	</defs>
+
+<g id="refes">
+	<text transform="matrix(1 0 0 1 335 515)" fill="#7F7F7F" font-family="arial" font-size="12">+ votos</text>
+	<text transform="matrix(1 0 0 1 483.9883 515)" fill="#7F7F7F" font-family="arial" font-size="12">- votos</text>
+	<g>
+		<rect id="masVotos" x="335" y="527" fill="#666666" width="61" height="8"/>
+		<rect id="mediosVotos" x="398" y="527" fill="#666666" width="60" height="8"/>
+		<rect id="menosVotos" x="461" y="527" fill="#666666" width="59" height="8"/>
+	</g>
+</g>
+
+
 <polygon id="c2" fill="#FDDA32" stroke="#FFFFFF" stroke-miterlimit="10" points="380.219,146.329 381.485,146.269 381.496,146.269 
 	384.065,146.044 384.329,146.026 385.368,146.097 385.395,146.097 389.08,148.536 389.374,148.725 405.349,159.277 405.967,159.235 
 	407.34,159.142 407.968,159.095 409.295,159.005 410.591,156.969 410.642,156.809 410.66,156.667 410.642,156.465 410.609,156.375 

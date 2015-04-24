@@ -34,7 +34,7 @@ $(function(){
 			
 			$.get("data/results_example.json", function(results){
 
-				$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div>');
+				$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
 				// init app
 				
 				app = new ElecionesApp(list_partidos, results);
