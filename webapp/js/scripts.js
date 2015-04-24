@@ -69,74 +69,74 @@ $(function(){
 	/* // tooltip /*/
 function tooltip(){
 
-		var comu = $("polygon, path");
-		var toolip = $(".tooltip");
+	var comu = $("polygon, path");
+	var toolip = $(".tooltip");
 
-		comu.on( 'mouseenter', function() {
+	comu.on( 'mouseenter', function() {
 
-			$el = $(this);
+		$el = $(this);
 
-			ide = $el.attr("id").replace(/c/i, "");
+		ide = $el.attr("id").replace(/c/i, "");
+		
+		if(app.filtro_activo == "x_fuerza"){
+
+			var data = app.r_general.comunas["comuna_"+ide];
+			var max = app.get_max_obj(data, "porcentaje");
+			data = app.sort_obj(data, "porcentaje");
 			
-			if(app.filtro_activo == "x_fuerza"){
+          	// llenar popup
+			app.draw_tooltip({
+				id:ide,
+				max: max,
+				comuna: data,
+				barios_x_com: app.barios_x_com["c"+ide]
+			});
 
-				var data = app.r_general.comunas["comuna_"+ide];
-				var max = app.get_max_obj(data, "porcentaje");
-				data = app.sort_obj(data, "porcentaje");
-				
-	          	// llenar popup
-				app.draw_tooltip({
-					id:ide,
-					max: max,
-					comuna: data,
-					barios_x_com: app.barios_x_com["c"+ide]
-				});
+			toolip.show();
+			mouse_move($el, toolip);
+		}else{
+			// tooltip 
 
-				toolip.show();
-				mouse_move($el, toolip);
-			}else{
-				// tooltip 
-
-			}
-        	
-        	// animate tooltip
-	        
-
-        });
-
-}
-
-function mouse_move($el, toolip){
-    $el.on('mousemove', function(e){
-      
-         e = e || window.event;
-         e = jQuery.event.fix(e);
-         
-        var itemX = e.pageX - 200;
-		if(e.pageX > 185 && ancho < 750){
-			itemX = e.pageX - 200;
-		}else if(e.pageX < 330){
-			itemX = e.pageX;
 		}
-
-         if(e.pageY > 350 && ancho < 750){
-			itemY = e.pageY - 260;
-         }else if(e.pageY > 350){
-			itemY = e.pageY - 260;
-         }else{
-			itemY = e.pageY + 30;
-         }
-
-         $(".tooltip").animate({"top":itemY, "left":itemX},100, 'swing').stop( true, true );
+    	
+    	// animate tooltip
+        
 
     });
 
-    if(isMobile.any()) {
-	           
-    }else{
-		
-		$el.on('mouseout', function(){
-        	toolip.hide();
-		});	
-    }
+	function mouse_move($el, toolip){
+	    $el.on('mousemove', function(e){
+	      
+	         e = e || window.event;
+	         e = jQuery.event.fix(e);
+	         
+	        var itemX = e.pageX - 200;
+			if(e.pageX > 185 && ancho < 750){
+				itemX = e.pageX - 200;
+			}else if(e.pageX < 330){
+				itemX = e.pageX;
+			}
+
+	         if(e.pageY > 350 && ancho < 750){
+				itemY = e.pageY - 260;
+	         }else if(e.pageY > 350){
+				itemY = e.pageY - 260;
+	         }else{
+				itemY = e.pageY + 30;
+	         }
+
+	         $(".tooltip").animate({"top":itemY, "left":itemX},100, 'swing').stop( true, true );
+
+	    });
+
+	    if(isMobile.any()) {
+		           
+	    }else{
+			
+			$el.on('mouseout', function(){
+	        	toolip.hide();
+			});	
+	    }
+	}
 }
+

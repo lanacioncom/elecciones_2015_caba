@@ -11,40 +11,47 @@ header, section {
 /*//temporales*/
 
 /* Colores partidos */
-.bk_pro {
+.p1, .bk_pro {
 	background: #FEDB30;
+	fill: #FEDB30;
 }
-.bk_fpv {
+.p2, .bk_fpv {
 	background: #1796D7;
+	fill: #1796D7;
 }
-.bk_eco {
+.p3, .bk_eco {
 	background: #7CC374;
+	fill: #7CC374;
 }
-.bk_izquierda {
+.p4, .bk_izquierda {
 	background: #F4987E;
+	fill: #F4987E;
 }
-.bk_fte_renovador {
+.p5, .bk_fte_renovador {
 	background: #B185B7;
+	fill: #B185B7;
 }
-.bk_otros {
+.p6, .bk_otros {
 	background: #B3B3B3;
+	fill: #B3B3B3;
 }
-.col_pro {
+
+.p1, .col_pro {
 	color: #FEDB30;
 }
-.col_fpv {
+.p2, .col_fpv {
 	color: #1796D7;
 }
-.col_eco {
+.p3, .col_eco {
 	color: #7CC374;
 }
-.col_izquierda {
+.p4, .col_izquierda {
 	color: #F4987E;
 }
-.col_fte_renovador {
+.p5, .col_fte_renovador {
 	color: #B185B7;
 }
-.col_otros {
+.p6, .col_otros {
 	color: #B3B3B3;
 }
 

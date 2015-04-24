@@ -85,6 +85,15 @@ var ElecionesApp = function(list_partidos, results){
 	s.filtro_activo = "x_fuerza";
 	// s.r_internas = results.inernas;
 
+	s.ganadores_comunas = [];
+	// data temporal...
+	for (var com in s.r_general.comunas){
+		var c = s.r_general.comunas[com][0];
+		c.comuna = com.replace(/omuna_/i, "");
+		s.ganadores_comunas.push(s.r_general.comunas[com][0]);
+	}
+	console.log(s.ganadores_comunas);
+
 	function set_data_active(str){
 		$("#selected h4").html(str).fadeIn();
 	}
@@ -119,6 +128,8 @@ var ElecionesApp = function(list_partidos, results){
 
 
 		s.on_click_comuna();
+		
+		s.pintar_mapa();
 
 		tooltip(); // esta en scripts.js
 	})();
@@ -127,7 +138,27 @@ var ElecionesApp = function(list_partidos, results){
 };
 
 
-ElecionesApp.prototype.select_comuna_interna = 	function(polygon){};
+ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
+	var s = this;
+	var id = polygon.id.replace(/c/i, "");
+	var com_name = "Comuna "+ id;
+	s.set_data_active(com_name);
+
+	s.set_comuna_active_path(polygon);
+	s.q.set("comuna", id);
+
+	// data temporal
+	var data = {
+		total:s.internas.comunas["comuna_"+id],
+		porcentaje: 33.5
+	};
+	// !data temporal
+	
+	s.draw_x_interna(data);
+
+
+	
+};
 
 
 ElecionesApp.prototype.select_comuna_general = 	function(polygon){
@@ -141,10 +172,9 @@ ElecionesApp.prototype.select_comuna_general = 	function(polygon){
 	// var bbox = polygon.getBBox();
 	// console.log(bbox.x);
 	// $("svg").css("transform", "translateX("+bbox.x+"px) translateY("+bbox.x+"px) scale(2)")
-	s.remove_comuna_active_path();
-	s.comuna_active_path = $(polygon).clone();
-	s.comuna_active_path.attr("class","comuna_active_path");
-	$("svg").append(s.comuna_active_path);
+	
+	s.set_comuna_active_path(polygon);
+
 	s.q.set("comuna", id);
 	// lista de partidos x comuna
 	// console.log(s.r_general.comunas['comuna_'+id]);
@@ -163,7 +193,7 @@ ElecionesApp.prototype.on_click_comuna = function (){
 		
 		}else{ // dropdown x interna o listas únicas
 
-			s.select_comuna_interna();
+			s.select_comuna_interna(this);
 		
 		}
 
@@ -175,13 +205,13 @@ ElecionesApp.prototype.reset = function (){
 	// resetea el los filtros
 	$("#selected h4").hide().html("");
 	
+	this.remove_comuna_active_path();
 	if(this.filtro_activo == "x_fuerza"){ // dropdown x fuerza
 		this.draw_ul_list();
-		this.remove_comuna_active_path();
 		this.q.kill("comuna");
 
 	}else{ // dropdown x interna o listas únicas
-
+		this.draw_x_interna();
 
 	}
 	// clear radio btn
@@ -232,12 +262,13 @@ ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escri
 };
 
 
-ElecionesApp.prototype.draw_x_interna = function(val){
-	
+ElecionesApp.prototype.draw_x_interna = function(data){
+	if (!data){
+		data = this.internas;
+	}
 	var s = this;
 
-	var d = this.internas;
-	s.cont_results.html(this.tmpl_x_interna(d));
+	s.cont_results.html(this.tmpl_x_interna(data));
 
 // bind events for inputs
 	var candidato_btn = $('input[type="radio"]');
@@ -265,6 +296,15 @@ ElecionesApp.prototype.remove_comuna_active_path = function(){
 
 };
 
+ElecionesApp.prototype.set_comuna_active_path = function(polygon){
+	
+	this.remove_comuna_active_path();
+	this.comuna_active_path = $(polygon).clone();
+	this.comuna_active_path.attr("class","comuna_active_path");
+	$("svg").append(this.comuna_active_path);
+
+};
+
 
 ElecionesApp.prototype.change_dropdown = function(val){
 	
@@ -278,15 +318,13 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	if(x_fuerza == this.filtro_activo){
 		this.draw_ul_list();
 	}else{
-		this.draw_x_interna(val);
+		this.draw_x_interna();
 	}
 	// set path
 	this.q.set('fuerza', val);
 
 
 };
-
-ElecionesApp.prototype.q = new PermanentLinkJS();
 
 ElecionesApp.prototype.start_niceScroll = function(selector){
 	$(selector).niceScroll({
@@ -297,6 +335,18 @@ ElecionesApp.prototype.start_niceScroll = function(selector){
 		hidecursordelay:0
 	});
 };
+
+
+ElecionesApp.prototype.pintar_mapa = function(data){
+	var s = this;
+	s.ganadores_comunas.forEach(function(x){
+		$("#"+x.comuna).css("fill", s.colores[x.id]);
+		// console.log($("#"+x.comuna).attr('fill'));
+	});
+
+};
+
+
 
 ElecionesApp.prototype.barios_x_com = {
 	  "c1": "Recoleta",
@@ -315,3 +365,9 @@ ElecionesApp.prototype.barios_x_com = {
 	  "c14": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortuzar",
 	  "c15": "Villa Lugano, Villa Riachuelo, Villa Soldati"
 	};
+
+ElecionesApp.prototype.q = new PermanentLinkJS();
+
+ElecionesApp.prototype.colores = ["#FEDB30","#1796D7","#7CC374","#F4987E","#B185B7","#B3B3B3"];
+
+
