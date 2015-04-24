@@ -95,7 +95,9 @@ function tooltip(){
 			toolip.show();
 			mouse_move($el, toolip);
 		}else{
-			// tooltip 
+			// tooltip por interna
+
+			app.draw_tooltip();
 
 		}
     	

@@ -249,7 +249,6 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	// set path
 	this.q.set('fuerza', val);
 
-
 };
 
 ElecionesApp.prototype.start_niceScroll = function(selector){

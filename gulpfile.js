@@ -13,11 +13,21 @@ var gulp = require('gulp'),
 	ftp = require('gulp-ftp');
     merge = require('merge-stream');
 
-var t = new Date().getTime(),
-	js_all = 'js/all.min.js',
-	js_vendor = 'js/vendor.min.js',
-	css_file_min = 'all.min.css';
+// var fs = require('fs');
+// var path = require('path');
+// var filePath = path.join(__dirname, '.git/refs/remotes/origin/master');
+// fs.readFileSync(filePath, function (err, resolvedPath) {
+//   if (err) throw err;
+//   v = resolvedPath;
+// });
 
+var t = new Date().getTime();
+var v = "1.1"
+
+
+var js_all = 'js/all'+v+'.min.js';
+var js_vendor = 'js/vendor'+v+'.min.js';
+var css_file_min = 'all'+v+'.min.css';
 
 // build tasks
 gulp.task('minify-css', function () {
@@ -113,6 +123,7 @@ gulp.task('server_pro', function() {
 
 // default task
 gulp.task('default', function() {
+
   console.log("Elecciones 2015 CABA");
 });
 
