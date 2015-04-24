@@ -1,6 +1,6 @@
 # coding: utf-8
 import logging
-from config import SIMULATE
+from time import strptime
 log = logging.getLogger('paso.%s' % (__name__))
 
 
@@ -14,24 +14,17 @@ def update_time_increased(od=None, nd=None):
     '''Compare times to determine if it has increased from
        last execution. Take into account midnight change'''
     ot = od["ut"]
-    print nd
     nt = nd["ut"]
+    d_old = strptime(ot, "%Y-%m-%d %H:%M:%S")
+    d_new = strptime(nt, "%Y-%m-%d %H:%M:%S")
 
-    # Dirty but does the job
-    if (ot[0] == '0'):
-        ot = '3' + ot[1:]
-    if (nt[0] == '0'):
-        nt = '3' + nt[1:]
-
-    if (int(ot) < int(nt)):
+    if (ot < nt):
         log.debug('Found new data %s - %s' %
-                      (ot, nt))
-        if SIMULATE:
-            nd["ut"] = u'100000'
+                  (ot, nt))
         return True
     else:
         log.debug('Same data as before %s - %s' %
-                      (ot, nt))
+                  (ot, nt))
         return False
 
 
