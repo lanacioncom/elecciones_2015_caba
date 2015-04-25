@@ -247,8 +247,8 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 			s.q.set("candidato", this.value);
 		});
 
-	// start niceScroll
-		s.start_niceScroll();
+		// start niceScroll
+		s.start_niceScroll('#list_interna');
 	}
 };
 
@@ -304,26 +304,43 @@ ElecionesApp.prototype.start_niceScroll = function(selector){
 
 
 ElecionesApp.prototype.pintar_mapa = function(){
-	var s = this;
 	
-	var fill = "#000";
+	var s = this;
+	var list_comunas = ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15"];
+	
+	var fill = "#fff";
+
+	$("path, polygon").css({ fill: '#fff'});
+	$("path, polygon").css({ stroke: '#fff'});
 	
 	if(this.filtro_activo == this.filtro_home){
 		s.ganadores_comunas.forEach(function(x){
 			$("#"+x.comuna).css({ fill: s.dict_partidos[x.id].color_partido});
 		});
 	}else{
-		// s.ganadores_comunas.forEach(function(x){
-		// 	fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
-		// 	$("#"+x.comuna).css({ fill: fill});
 		
-		// });
-		var x = s.ganadores_comunas[0];
-		fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
+		var interna = this.cache_ajax["partido_"+this.filtro_activo].c_00;
+
+		s.ganadores_comunas.forEach(function(x){
+			fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
+			var style = { fill: fill};
+			if (x.id != interna[0].id){
+				style["fill-opacity"] = ".4";
+				if (x.id != interna[1].id){
+					style = { "fill": "#ccc"};
+				}
+			}
+			$("#"+x.comuna).css(style);
+		});
+		if(s.ganadores_comunas.length < 15){ 
+			$("path, polygon").css({ stroke: '#ccc'});
+		}
+		// var x = s.ganadores_comunas[0];
+		// fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
 		// setar el color del partido para los patterns
-		$("path, polygon").css({ fill: fill});
-		$("#refes rect#masVotos").css({ fill: fill});
-		$("line").css({ stroke: fill});
+		// $("path, polygon").css({ fill: fill});
+		// $("#refes rect#masVotos").css({ fill: fill});
+		// $("line").css({ stroke: fill});
 
 	}
 };
