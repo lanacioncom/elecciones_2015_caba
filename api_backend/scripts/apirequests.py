@@ -40,7 +40,7 @@ def get_resumen_API():
 def get_results_section_API(comuna=None):
     '''Get the results for a given section'''
     if PRODUCTION or not SIMULATE:
-        if comuna:
+        if not comuna:
             suffix = GENERALES_SERVICE
         else:
             suffix = COMUNA_SERVICE + "?id=%s" % (comuna)
