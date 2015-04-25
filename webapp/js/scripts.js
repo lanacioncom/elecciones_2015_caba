@@ -31,8 +31,8 @@ $(function(){
 	var path_to_data = "test_data/"; 
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
-		$.get("data/diccionario_partidos.json", function(dict_partidos){
-			$.get("data/diccionario_candidatos.json", function(dict_candidatos){
+		$.get("dicts/diccionario_partidos.json", function(dict_partidos){
+			$.get("dicts/diccionario_candidatos.json", function(dict_candidatos){
 				
 				$.get(path_to_data+"partido_00.json", function(results){
 
