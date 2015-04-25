@@ -8,8 +8,8 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results){
 	s.r_general = results;
 	s.internas = results.interna;
 	s.comuna_active_path = null;
-	s.filtro_home = "x_fuerza"; // filtro seteado por default
-	s.filtro_activo = "x_fuerza";
+	s.filtro_home = "00"; // filtro seteado por default
+	s.filtro_activo = "00";
 	// s.r_internas = results.inernas;
 
 	function set_data_active(str){
@@ -19,7 +19,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results){
 
 	(function init(){
 		// data colores mapa...
-		s.get_ganadores_x_comuna(s.r_general);
+		s.get_ganadores_x_comuna(s.r_general); // pinta el mapa
 
 		// bind events
 
@@ -30,7 +30,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results){
 		$('h3').on('click', function(){ // volver a la home 
 			s.filtro_activo = s.filtro_home;
 			s.reset();
-			$('select#opts').select2("val", s.filtro_activo);
+			$('select#opts').select2("val", s.filtro_home);
 		});
 		
 		// template para el select de internas
@@ -65,6 +65,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results){
 
 
 ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
+	// toma todos los ganadores por comuna y pinta el mapa
 	var s = this;
 	s.ganadores_comunas = [];
 	for (var com in data){
@@ -141,16 +142,18 @@ ElecionesApp.prototype.on_click_comuna = function (){
 
 
 ElecionesApp.prototype.reset = function (){
+	var s = this;
 	// resetea el los filtros
 	$("#selected h4").hide().html("");
 	
-	this.remove_comuna_active_path();
+	s.remove_comuna_active_path();
 	if(this.filtro_activo == this.filtro_home){ // dropdown x fuerza
-		this.draw_ul_list();
-		this.q.kill("comuna");
+		s.get_ganadores_x_comuna(s.r_general);
+		s.draw_ul_list();
+		s.q.kill("comuna");
 
 	}else{ // dropdown x interna o listas únicas
-		this.draw_x_interna();
+		s.draw_x_interna();
 
 	}
 	// clear radio btn
@@ -267,12 +270,11 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	
 	this.filtro_activo = val;
 	
-	var x_fuerza = 'x_fuerza';
-
 	$('#ayud1').hide();
 	$('.compartir').show();
 
-	if(x_fuerza == this.filtro_activo){
+	if(this.filtro_home == this.filtro_activo){
+		s.get_ganadores_x_comuna(s.r_general);
 		this.draw_ul_list();
 	}else{
 		this.draw_x_interna(val);
@@ -299,7 +301,7 @@ ElecionesApp.prototype.pintar_mapa = function(){
 	
 	var fill = "#000";
 	
-	if(this.filtro_activo == 'x_fuerza'){
+	if(this.filtro_activo == this.filtro_home){
 		s.ganadores_comunas.forEach(function(x){
 			$("#"+x.comuna).css({ fill: s.dict_partidos[x.id].color_partido});
 		});
