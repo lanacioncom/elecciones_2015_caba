@@ -1,24 +1,16 @@
 // Elecciones class
-var ElecionesApp = function(list_partidos, results){
+var ElecionesApp = function(dict_partidos, dict_candidatos, results){
 	"use strict";
 	// set self class var
 	var s = this;
-	s.list_partidos = list_partidos;
-	s.r_general = results.general;
+	s.dict_partidos = dict_partidos;
+	s.dict_candidatos = dict_candidatos;
+	s.r_general = results;
 	s.internas = results.interna;
 	s.comuna_active_path = null;
 	s.filtro_home = "x_fuerza"; // filtro seteado por default
 	s.filtro_activo = "x_fuerza";
 	// s.r_internas = results.inernas;
-
-	s.ganadores_comunas = [];
-	// data temporal...
-	for (var com in s.r_general.comunas){
-		var c = s.r_general.comunas[com][0];
-		c.comuna = com.replace(/omuna_/i, "");
-		s.ganadores_comunas.push(s.r_general.comunas[com][0]);
-	}
-	console.log(s.ganadores_comunas);
 
 	function set_data_active(str){
 		$("#selected h4").html(str).fadeIn();
@@ -26,6 +18,9 @@ var ElecionesApp = function(list_partidos, results){
 
 
 	(function init(){
+		// data colores mapa...
+		s.get_ganadores_x_comuna(s.r_general);
+
 		// bind events
 
 		// change dropdown
@@ -40,13 +35,15 @@ var ElecionesApp = function(list_partidos, results){
 		
 		// template para el select de internas
 		s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
-		$("#opts").html( s.tmpl_opts(s.list_partidos) );
+		$("#opts").html( s.tmpl_opts(s.dict_partidos) );
 		
-		
+		// console.log(s.dict_partidos);
 		// template para listado de resultados por partido
 		s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
 		s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
 		s.tmpl_x_interna = Handlebars.compile($('#tmpl_x_interna').html());
+		
+		// s.pintar_mapa();
 		
 		s.draw_ul_list();
 
@@ -57,14 +54,36 @@ var ElecionesApp = function(list_partidos, results){
 
 		s.on_click_comuna();
 		
-		s.pintar_mapa();
-
+// ***********
 		tooltip(); // esta en scripts.js
+
+
 	})();
 
 	this.set_data_active = set_data_active;
 };
 
+
+ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
+	var s = this;
+	s.ganadores_comunas = [];
+	for (var com in data){
+		if(!/c\_0{2}|r/i.test(com)){ // que no sea la comuna 00
+			var i = 0;
+
+			while(/BLC|NUL|REC|IMP/i.test(data[com][i].id)){
+				i += 1;
+				if(i>15){
+					break;
+				}
+			}
+			var c = data[com][i];
+			c.comuna = com.replace(/\_0?/, "");
+			s.ganadores_comunas.push(c);
+		}
+	}
+	s.pintar_mapa();
+};
 
 ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 	var s = this;
@@ -72,7 +91,6 @@ ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 	var com_name = "Comuna "+ id;
 	s.set_data_active(com_name);
 
-	s.set_comuna_active_path(polygon);
 	s.q.set("comuna", id);
 
 	// data temporal
@@ -93,18 +111,13 @@ ElecionesApp.prototype.select_comuna_general = 	function(polygon){
 	var id = polygon.id.replace(/c/i, "");
 	var com_name = "Comuna "+ id;
 	s.set_data_active(com_name);
-	
-	// set polygon active
-	// var bbox = polygon.getBBox();
-	// console.log(bbox, $('svg').height(), $('svg').width());
-	// // $("svg").css("transform", "translateX("+bbox.x+"px) translateY("+bbox.x+"px) scale(2)")
-	// $('svg').velocity({ translateX: (($('svg').width()/2) - bbox.x -(bbox.width/2))*2, translateY: (($('svg').height()/2) - bbox.y - (bbox.height/2))*1.5, scale: 2 });
-	// s.set_comuna_active_path(polygon);
+
+	s.set_comuna_active_path(polygon);
 
 	s.q.set("comuna", id);
+
 	// lista de partidos x comuna
-	// console.log(s.r_general.comunas['comuna_'+id]);
-	s.draw_ul_list(s.r_general.comunas['comuna_'+id]);
+	s.draw_ul_list(id);
 };
 
 
@@ -163,20 +176,25 @@ ElecionesApp.prototype.sort_obj = function(arr, key){
 	return arr.sort(compare);
 };
 
-ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escribe la general
+ElecionesApp.prototype.draw_ul_list = function(id){ // si no viene data, escribe la general
 	
 	var is_comuna = false;
-	if(!data){
-		data = this.r_general.total;
+	var data;
+	if(!id){
+		data = this.r_general.c_00;
 	}else{
+		id = (id < 10) ? "0"+id: id; // make id for data
+		data = this.r_general["c_"+id];
 		is_comuna = true;
 	}
-	this.sort_obj(data, 'porcentaje');
-	var max = data.map(function(x){ return x.porcentaje; }); 
+	// this.sort_obj(data, 'p'); // ya viene ordenado
+	var max = data.map(function(x){ return x.p; });
 	var l = {
 		data : data,
+		dict_candidatos: this.dict_candidatos,
+		dict_partidos: this.dict_partidos,
 		is_comuna: is_comuna,
-		max : this.get_max_obj(data, "porcentaje")
+		max : this.get_max_obj(data, "p")
 	};
 
 	this.cont_results.html(this.tmpl_li_partido(l));
@@ -188,27 +206,41 @@ ElecionesApp.prototype.draw_ul_list = function(data){ // si no viene data, escri
 };
 
 
-ElecionesApp.prototype.draw_x_interna = function(data){
-	if (!data){
-		data = this.internas;
-	}
+ElecionesApp.prototype.cache_ajax = {};
+
+ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del partido requerido
 	var s = this;
+	var key_cache = "partido_" + val;
+	if(!s.cache_ajax[key_cache]){ // si no esta en cache lo va a buscar...
+		
+		$.get("data/" + key_cache + ".json", function(data){
+			s.cache_ajax[key_cache] = data;
+			run_interna(key_cache);
+		});
 
-	s.cont_results.html(this.tmpl_x_interna(data));
+	}else{	
+			run_interna(key_cache);
+	}
 
-// bind events for inputs
-	var candidato_btn = $('input[type="radio"]');
-	candidato_btn.on('click.select_condidato', function(el){
-		var $el = $(this);
-		$('li.active:has(input)').removeClass('active');
-		$el.closest('li').addClass('active');
+	function run_interna(key_cache){
+		s.cont_results.html(s.tmpl_x_interna(s.cache_ajax[key_cache]));
+		s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
+			
+		
+		// bind events for inputs
+		var candidato_btn = $('input[type="radio"]');
+		candidato_btn.on('click.select_condidato', function(el){
+			var $el = $(this);
+			$('li.active:has(input)').removeClass('active');
+			$el.closest('li').addClass('active');
 
-		s.set_data_active(this.value);
-		s.q.set("candidato", this.value);
-	});
+			s.set_data_active(this.value);
+			s.q.set("candidato", this.value);
+		});
 
-// start niceScroll
-	s.start_niceScroll();
+	// start niceScroll
+		s.start_niceScroll();
+	}
 };
 
 ElecionesApp.prototype.draw_tooltip = function(data){
@@ -223,7 +255,6 @@ ElecionesApp.prototype.remove_comuna_active_path = function(){
 };
 
 ElecionesApp.prototype.set_comuna_active_path = function(polygon){
-	
 	this.remove_comuna_active_path();
 	this.comuna_active_path = $(polygon).clone();
 	this.comuna_active_path.attr("class","comuna_active_path");
@@ -244,10 +275,11 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	if(x_fuerza == this.filtro_activo){
 		this.draw_ul_list();
 	}else{
-		this.draw_x_interna();
+		this.draw_x_interna(val);
 	}
 	// set path
 	this.q.set('fuerza', val);
+	this.remove_comuna_active_path();
 
 };
 
@@ -262,20 +294,28 @@ ElecionesApp.prototype.start_niceScroll = function(selector){
 };
 
 
-ElecionesApp.prototype.pintar_mapa = function(data){
+ElecionesApp.prototype.pintar_mapa = function(){
 	var s = this;
 	
-
+	var fill = "#000";
+	
 	if(this.filtro_activo == 'x_fuerza'){
 		s.ganadores_comunas.forEach(function(x){
-			$("#"+x.comuna).css({ fill: s.colores[x.id]});
+			$("#"+x.comuna).css({ fill: s.dict_partidos[x.id].color_partido});
 		});
-
 	}else{
-
-		// setar el color del partido para los patterns
-		// $("line").css({ stroke: color_partido});
+		// s.ganadores_comunas.forEach(function(x){
+		// 	fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
+		// 	$("#"+x.comuna).css({ fill: fill});
 		
+		// });
+		var x = s.ganadores_comunas[0];
+		fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
+		// setar el color del partido para los patterns
+		$("path, polygon").css({ fill: fill});
+		$("#refes rect#masVotos").css({ fill: fill});
+		$("line").css({ stroke: fill});
+
 	}
 };
 

@@ -30,24 +30,25 @@ $(function(){
 	// load mapa
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
-		$.get("data/list_partidos.json", function(list_partidos){
-			
-			$.get("data/results_example.json", function(results){
-
-				$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
-				// init app
+		$.get("data/diccionario_partidos.json", function(dict_partidos){
+			$.get("data/diccionario_candidatos.json", function(dict_candidatos){
 				
-				app = new ElecionesApp(list_partidos, results);
+				$.get("data/partido_00.json", function(results){
 
+					$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
+					// init app
+					
+					app = new ElecionesApp(dict_partidos, dict_candidatos, results);
 
-				/* select */
-				
-				$("#opts").select2({
-			        minimumResultsForSearch: -1,
-			        val: "x_fuerza"
-			    });
+					/* select */
+					
+					$("#opts").select2({
+				        minimumResultsForSearch: -1,
+				        val: "x_fuerza"
+				    });
 
-				
+					
+				});
 			});
 		});
 
@@ -66,6 +67,9 @@ $(function(){
 });
 
 
+
+
+
 	/* // tooltip /*/
 function tooltip(){
 
@@ -79,16 +83,20 @@ function tooltip(){
 		ide = $el.attr("id").replace(/c/i, "");
 		
 		if(app.filtro_activo == "x_fuerza"){
-
-			var data = app.r_general.comunas["comuna_"+ide];
-			var max = app.get_max_obj(data, "porcentaje");
-			data = app.sort_obj(data, "porcentaje");
+			ide = ide < 10 ? "0"+ide : ide;
+			var data = app.r_general["c_"+ide];
+			var max = data[0].p;
+			data = data.slice(0, 3).map(function(d){
+				d.color = app.dict_partidos[d.id].color_partido;
+				d.nombre = app.dict_partidos[d.id].nombre_partido;
+				return d;
+			});
 			
           	// llenar popup
 			app.draw_tooltip({
 				id:ide,
 				max: max,
-				comuna: data,
+				partidos: data,
 				barios_x_com: app.barios_x_com["c"+ide]
 			});
 
