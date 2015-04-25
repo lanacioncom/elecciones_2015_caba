@@ -354,18 +354,18 @@ ElecionesApp.prototype.barios_x_com = {
 	  "c01": "Constitución, Monserrat, Puerto Madero, Retiro, San Nicolás, San Telmo",
 	  "c02": "Recoleta",
 	  "c03": "Balvanera, San Cristobal",
-	  "c04": "Barracas, Boca, Nueva Pompeya, Parque Patricios",
+	  "c04": "Barracas, La Boca, Nueva Pompeya, Parque Patricios",
 	  "c05": "Almagro, Boedo",
 	  "c06": "Caballito",
 	  "c07": "Flores, Parque Chacabuco",
 	  "c08": "Villa Lugano, Villa Riachuelo, Villa Soldati",
 	  "c09": "Liniers, Mataderos, Parque Avellaneda",
-	  "c10": "Floresta, Monte Castro, Velez Sarsfield, Versalles, Villa Luro, Villa Real",
+	  "c10": "Floresta, Monte Castro, Vélez Sarsfield, Versalles, Villa Luro, Villa Real",
 	  "c11": "Villa Del Parque, Villa  Devoto, Villa Gral. Mitre, Villa Santa Rita",
 	  "c12": "Coghlan, Saavedra, Villa Pueyrredón, Villa Urquiza",
-	  "c13": "Belgrano, Colegiales, Nuñez",
+	  "c13": "Belgrano, Colegiales, Núñez",
 	  "c14": "Palermo",
-	  "c15": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortuzar"
+	  "c15": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortúzar"
 	};
 
 ElecionesApp.prototype.q = new PermanentLinkJS();
