@@ -112,16 +112,16 @@
 	<!-- Tab: resultados por interna -->
 	<script type="text/template" id="tmpl_x_interna">
 	<div id="x_interna">
-		<div class="porc_text">
+		<div class="porc_text" {{#if is_99}}hidden{{/if}}>
 			<div class="arrow-before"></div><div class="arrow-after"></div>
 			<div class="porc_partido">TOTAL FUERZA </div>
 			<div class="cant_v">{{r.v}} votos</div>
-			<div id="porPart">({{toFixed_n comunas.r.p}}% del total)</div>
+			<div id="porPart">({{toFixed_n comunas.r.p}}% del total) {{interna}}</div>
 		</div>
 
 		<ul id="list_interna">
+			{{#each comunas.c_00}}
 			<li class="candidato">
-			{{get_candidato_apellido}}
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato" value="{{id}}">
 				<div class="foto {{get_candidato_apellido}}">&nbsp;</div>

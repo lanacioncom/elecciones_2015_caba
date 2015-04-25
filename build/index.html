@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"> 
-	<link rel="stylesheet" href="css/all1.1.min.css?1429913226944">
+	<link rel="stylesheet" href="css/all1.1.min.css?1429942156093">
 
 
 </head>
@@ -50,11 +50,13 @@
 
 	<select id="opts" class="">
 		<script type="text/template" id="tmpl_opts">
-			<option value="x_fuerza" selected="selected">Todas las fuerzas políticas</option>
+			<option value="00" selected="selected">Todas las fuerzas políticas</option>
 			{{#each this}}
-				<option value="{{partido}}">{{partido}} (interna)</option>
+				{{#if select}}
+				<option value="{{@key}}">{{nombre_partido}} (interna)</option>
+				{{/if}}
 			{{/each}}
-			<option value="unicas">Listás únicas</option>
+			<option value="99">Listas únicas</option>
 		</script>
 	<!--<option value="x_fuerza">Todas las fuerzas políticas</option>
 		<option value="pro">Pro (interna)</option>
@@ -77,11 +79,14 @@
 	<script type="text/template" id="tmpl_tooltip">
 		<h4>COMUNA {{id}}</h4>
 		<p>{{barios_x_com}}</p>
+		{{#each partidos}}
 		<div class="fuerza">
-			<div class="candidato">Partido id {{comuna.0.id}}</div>
-			<div class="candidatoBarra bk_pro" style="width:{{get_width_bar comuna.0.porcentaje max}}%;"></div>
-			<div class="candidatoPorcentaje">{{comuna.0.porcentaje}}%</div>
+			<div class="candidato">{{nombre}}</div>
+			<div class="candidatoBarra" style="width:{{get_width_bar p ../max}}%; background: {{color}}"></div>
+			<div class="candidatoPorcentaje">{{toFixed_n p}}%</div>
 		</div>
+		{{/each}}
+		{{!--
 		<div class="fuerza">
 			<div class="candidato">Partido id {{comuna.1.id}}</div>
 			<div class="candidatoBarra bk_fpv"  style="width:{{get_width_bar comuna.1.porcentaje max}}%;"></div>
@@ -92,6 +97,7 @@
 			<div class="candidatoBarra bk_eco" style="width:{{get_width_bar comuna.2.porcentaje max}}%;"></div>
 			<div class="candidatoPorcentaje">{{comuna.2.porcentaje}}%</div>
 		</div>	
+			--}}
 	</script>
 	</div>
 
@@ -104,22 +110,22 @@
 		<div class="porc_text">
 			<div class="arrow-before"></div><div class="arrow-after"></div>
 			<div class="porc_partido">TOTAL FUERZA </div>
-			<div class="cant_v">{{votos}}600.000 votos</div>
-			<div id="porPart">({{porcentaje}}% del total)</div>
+			<div class="cant_v">{{r.v}} votos</div>
+			<div id="porPart">({{toFixed_n comunas.r.p}}% del total)</div>
 		</div>
 
 		<ul id="list_interna">
-			{{#each total}}
 			<li class="candidato">
+			{{get_candidato_apellido}}
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="candidato name {{id}}!!">
-				<div class="foto michetti">&nbsp;</div>
-				<h5>Nombre candidato {{id}}</h5>
-				<div class="cant_v">{{votos}}xxxx votos</div>
+				<input type="radio" name="candidato" value="{{id}}">
+				<div class="foto {{get_candidato_apellido}}">&nbsp;</div>
+				<h5>{{get_candidato_nombre}}</h5>
+				<div class="cant_v">{{v}} votos</div>
 				<div class="cont_barra">
 					{{!-- clase barra + style de partido--}}
-					<div class="barra bk_pro" style="width:98%">
-						<div class="porc">{{porcentaje}}%</div>
+					<div class="barra" style="width:{{get_width_bar p ../max}}%; background: {{get_candidato_color}};">
+						<div class="porc">{{toFixed_n p}}%</div>
 					</div>
 					
 				</div>
@@ -139,21 +145,22 @@
 		</div>
 		<ul id="list">
 			{{#each data}}
-			<li class="{{#isLessThan porcentaje 1.5}}no_pasa{{/isLessThan}}">
-				<h5 
-					style="padding-left:{{#if ../is_comuna}}
-							1.8%
-						{{else}}
-							{{get_width_bar 1.8 ../max}}%
-						{{/if}};">{{id}} Pro <span>{{votos}}xxxxxx votos</span>
-				</h5>
-				<div class="cont_barra">
-					<!-- clase barra + style de partido-->
-					<div class="barra bk_pro {{id}}" style="width:{{get_width_bar porcentaje ../max}}%;">
-						<div class="porc">{{porcentaje}}%</div>
+				<li class="{{#isLessThan p 1.5}}no_pasa{{/isLessThan}}">
+					<h5 
+						style="padding-left:{{#if ../is_comuna}}
+								1.8%
+							{{else}}
+								{{get_width_bar 1.8 ../max}}%
+							{{/if}};">{{get_partido}} <span>{{v}} votos</span>
+					</h5>
+					<div class="cont_barra">
+						<!-- clase barra + style de partido-->
+						<div class="barra" style="width:{{get_width_bar p ../max}}%; background: {{get_partido_color}}">
+							<div class="porc">{{toFixed_n p}}%</div>
+						</div>
 					</div>
-				</div>
-			</li>
+				</li>
+
 			{{/each}}
 			
 		</ul>
@@ -165,7 +172,7 @@
 	</article>
 </section>
 
-<script src="js/vendor1.1.min.js?1429913226944"></script>
-<script src="js/all1.1.min.js?1429913226944"></script>
+<script src="js/vendor1.1.min.js?1429942156093"></script>
+<script src="js/all1.1.min.js?1429942156093"></script>
 </body>
 </html>

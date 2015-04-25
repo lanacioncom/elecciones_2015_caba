@@ -1,5 +1,5 @@
 // Elecciones class
-var ElecionesApp = function(dict_partidos, dict_candidatos, results){
+var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_data){
 	"use strict";
 	// set self class var
 	var s = this;
@@ -7,6 +7,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results){
 	s.dict_candidatos = dict_candidatos;
 	s.r_general = results;
 	s.internas = results.interna;
+	s.path_to_data = path_to_data;
 	s.comuna_active_path = null;
 	s.filtro_home = "00"; // filtro seteado por default
 	s.filtro_activo = "00";
@@ -215,7 +216,7 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 	var key_cache = "partido_" + val;
 	if(!s.cache_ajax[key_cache]){ // si no esta en cache lo va a buscar...
 		
-		$.get("data/" + key_cache + ".json", function(data){
+		$.get(s.path_to_data + key_cache + ".json", function(data){
 			s.cache_ajax[key_cache] = data;
 			run_interna(key_cache);
 		});
@@ -227,6 +228,7 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 	function run_interna(key_cache){
 		var data = {
 			comunas : s.cache_ajax[key_cache],
+			is_99: val == "99",
 			max: s.cache_ajax[key_cache].c_00[0].p,
 			dict_candidatos: s.dict_candidatos
 		};
