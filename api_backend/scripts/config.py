@@ -74,5 +74,3 @@ def init():
     log_format = logging.Formatter(LOG_FORMAT_DATA)
     handler.setFormatter(log_format)
     log.addHandler(handler)
-    if PRODUCTION:
-        log.info("Production environment detected")
