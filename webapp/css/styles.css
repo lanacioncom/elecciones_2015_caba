@@ -456,7 +456,7 @@ section {
 	
 	.tooltip .candidatoBarra {
 		height: 11px;
-		width:100%;
+		width:0%;
 		max-width:117px;
 		float:left;
 		margin-right:10px;

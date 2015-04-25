@@ -89,12 +89,18 @@ ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
 
 ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 	var s = this;
+
 	var id = polygon.id.replace(/c/i, "");
 	var com_name = "Comuna "+ id;
 	s.set_data_active(com_name);
 
 	s.q.set("comuna", id);
-
+	s.set_comuna_active_path(polygon);
+	
+	console.log(s.filtro_activo)
+	var interna = s.cache_ajax['partido_'+s.filtro_activo]
+	var comuna = interna['c_'+id]
+	console.log(com)
 	// data temporal
 	var data = {
 		total:s.internas.comunas["comuna_"+id],
@@ -102,7 +108,7 @@ ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 	};
 	// !data temporal
 	
-	s.draw_x_interna(data);
+	// s.draw_x_interna(data);
 
 };
 
