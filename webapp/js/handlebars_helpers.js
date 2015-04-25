@@ -69,6 +69,17 @@ Handlebars.registerHelper( "get_width_bar", function ( porcentaje, max, options 
 	return  n;
 });
 
+Handlebars.registerHelper( "check_index_opacyti", function ( options ){
+	var r = "";
+	if(!options.data.first){
+		r = "opacity: .4;";		
+		if(options.data.index != 1){
+			r += "background: #ccc;";		
+		}
+	}
+	return r;
+});
+
 
 
 Handlebars.registerHelper("debug", function(optionalValue) {
