@@ -194,13 +194,16 @@ header, section {
 
 .box {
 	color:#999999;
-	background-color: #f7f7f7;
 	display: inline-block;
 	padding: 9px 14px 6px 12px;
 	border: solid 1px #dadada;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+}
+
+.activo{
+	background-color: #f7f7f7;
 }
 
 .arrow {
@@ -812,7 +815,7 @@ svg .comuna_active_path {
 }
 #results ul .cont_barra {
 	width: 85%;
-	width: calc(100% - 60px); /*background: rgba(200, 200, 200, .1);*/
+	width: calc(100% - 75px); /*background: rgba(200, 200, 200, .1);*/
 }
 .cont_barra .barra {
 	/*width: 100%;*/
@@ -824,7 +827,7 @@ svg .comuna_active_path {
 .cont_barra .barra .porc {
 	position: absolute;
 	top: 1px;
-	right: -43px;
+	right: -60px;
 	font: 18px arial;
 	font-weight: bold;
 }
@@ -935,6 +938,37 @@ ul#list_interna li div.cant_v {
 	  color:#808080;
 }
 
+footer{
+	width: 100%;
+	padding:10px;
+	max-width: 990px;
+	color:#999;
+}
+
+footer div.creditos{
+	font-size: 12px;
+	background-color: #f7f7f7;
+	border: 1px solid #dadada;
+	padding: 5px 6px;
+	float: left;
+	border-radius: 3px;
+	cursor: pointer;
+	margin: -3px;
+}
+
+footer div.datos{
+	font-size: 12px;
+	float:right;
+	margin-left: 4px;
+    padding-left: 4px;
+	font-family: arial;
+	border-left:1px solid #dadada; 
+}
+
+footer div.datos span{
+	color:#29B5EA;
+	font-weight: bold;
+} 
 
 @media (max-width: 850px) {
 
@@ -999,6 +1033,7 @@ ul#list_interna li div.cant_v {
 	.cont_barra .barra .porc {
 		top: -6px;
 		font: 15px arial;
+		  right: -55px;
 	}
 
  	ul#list_interna li div.bg_li {
@@ -1012,7 +1047,7 @@ ul#list_interna li div.cant_v {
 
 	ul#list_interna li div.cant_v {
 	  color:#808080;
-	  text-indent: 15px;
+	  text-indent: 0px;
 	}
 
 	.cont_barra .barra {
@@ -1117,7 +1152,7 @@ ul#list_interna li div.cant_v {
 	}
 
 	ul#list, ul#list_interna {
-		height: 420px !important;
+		height: 405px !important;
 	}
 
 	#mapa_cont {
@@ -1184,6 +1219,10 @@ ul#list_interna li div.cant_v {
 		padding: 7px 2px 7px 2px;
 	}
 
+	.tooltip {
+		display: none !important; 
+	}
+
 	div#selected{
 		width: 46%;
 		position: absolute;
@@ -1193,7 +1232,7 @@ ul#list_interna li div.cant_v {
 
 	h4{
 		width: 100%;
-		font-size: 12px;
+		font-size: 11px;
 	}
 
 	div#selected hr {
@@ -1270,7 +1309,7 @@ ul#list_interna li div.cant_v {
 
 	#results ul .cont_barra {
 	  margin: 0px;
-	  width: calc(100% - 60px);
+	  width: calc(100% - 70px);
 	}
 
 	section#cont_data {
@@ -1318,7 +1357,7 @@ ul#list_interna li div.cant_v {
 
  
 	#mapa_cont svg g#refes{
-		transform: translateX(-240px) translateY(-310px)  scale(1.6);
+		transform: translateX(-240px) translateY(-330px)  scale(1.6);
 	}
 
 }
