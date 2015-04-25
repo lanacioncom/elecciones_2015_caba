@@ -666,7 +666,7 @@ svg .comuna_active_path {
 	border-right: 1.5px dotted #000;
 	position: absolute;
 	top: 41px;
-	left: 0px;
+	left: -1.5px;
 	background: rgba(255, 255, 255, 0.59);
 }
 
@@ -909,10 +909,11 @@ ul#list_interna li div.foto {
 ul#list_interna li h5 {
 	font-family: 'TheSansSemiLight';
 	display: inline-block;
-	width: 97px;
+	width: 91px;
 	float: left;
 	line-height: 1;
 	font-size: 1.4em;
+	padding-right: 16px;
 }
 ul#list_interna li.active h5 {
 	font-family: 'TheSansBold';
