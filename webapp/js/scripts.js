@@ -76,16 +76,18 @@ function tooltip(){
 
 	var comu = $("polygon, path");
 	var toolip = $(".tooltip");
-
+	var html = "";
+	var data;
 	comu.on( 'mouseenter', function() {
 
 		$el = $(this);
 
 		ide = $el.attr("id").replace(/c/i, "");
 		
+		ide = ide < 10 ? "0"+ide : ide;
+		
 		if(app.filtro_activo == app.filtro_home){
-			ide = ide < 10 ? "0"+ide : ide;
-			var data = app.r_general["c_"+ide];
+			data = app.r_general["c_"+ide];
 			var max = data[0].p;
 			data = data.slice(0, 3).map(function(d){
 				d.color = app.dict_partidos[d.id].color_partido;
@@ -94,25 +96,40 @@ function tooltip(){
 			});
 			
           	// llenar popup
-			app.draw_tooltip({
+
+          	html = app.tmpl_tooltip({
 				id:ide,
 				max: max,
 				partidos: data,
 				barios_x_com: app.barios_x_com["c"+ide]
 			});
-
-			toolip.show();
-			mouse_move($el, toolip);
 		}else{
+			
 			// tooltip por interna
-
-			app.draw_tooltip();
-
+			var partido_id = app.filtro_activo;
+			data = app.cache_ajax['partido_'+partido_id]['c_'+ide].slice(0, 3);
+				data = data.map(function(d){
+					d.color = app.dict_candidatos[d.id] ? app.dict_candidatos[d.id].color_candidato : "#ccc";
+					d.apellido = app.dict_candidatos[d.id] ? app.dict_candidatos[d.id].apellido : "#ccc";
+					// d.nombre = app.dict_partidos[d.id].nombre_partido;
+					return d;
+				});
+			
+			html = app.tmpl_tooltip_interna({
+						id: ide,
+						max: data[0].p,
+						candidatos: data,
+						barios_x_com: app.barios_x_com["c"+ide]
+					});
 		}
     	
+		app.draw_tooltip(html);
+
+		toolip.show();
+
+		mouse_move($el, toolip);
     	// animate tooltip
         
-
     });
 
 	function mouse_move($el, toolip){

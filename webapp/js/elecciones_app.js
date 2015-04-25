@@ -51,6 +51,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 		// template tooltip
 		s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
 		s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
+		s.tmpl_tooltip_interna = Handlebars.compile($('#tmpl_tooltip_interna').html());
 
 		s.on_click_comuna();
 		
@@ -252,8 +253,8 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 	}
 };
 
-ElecionesApp.prototype.draw_tooltip = function(data){
-	this.tooltip.html(this.tmpl_tooltip(data));
+ElecionesApp.prototype.draw_tooltip = function(html){
+	this.tooltip.html(html);
 };
 
 ElecionesApp.prototype.remove_comuna_active_path = function(){

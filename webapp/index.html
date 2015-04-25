@@ -91,18 +91,17 @@
 			<div class="candidatoPorcentaje">{{toFixed_n p}}%</div>
 		</div>
 		{{/each}}
-		{{!--
+	</script>
+	<script type="text/template" id="tmpl_tooltip_interna">
+		<h4>COMUNA {{id}}</h4>
+		<p>{{barios_x_com}}</p>
+		{{#each candidatos}}
 		<div class="fuerza">
-			<div class="candidato">Partido id {{comuna.1.id}}</div>
-			<div class="candidatoBarra bk_fpv"  style="width:{{get_width_bar comuna.1.porcentaje max}}%;"></div>
-			<div class="candidatoPorcentaje">{{comuna.1.porcentaje}}%</div>
+			<div class="candidato">{{apellido}}</div>
+			<div class="candidatoBarra" style="width:{{get_width_bar p ../max}}%; background: {{color}}; {{check_index_opacyti}}"></div>
+			<div class="candidatoPorcentaje">{{toFixed_n p}}%</div>
 		</div>
-		<div class="fuerza">
-			<div class="candidato">Partido id {{comuna.2.id}}</div>
-			<div class="candidatoBarra bk_eco" style="width:{{get_width_bar comuna.2.porcentaje max}}%;"></div>
-			<div class="candidatoPorcentaje">{{comuna.2.porcentaje}}%</div>
-		</div>	
-			--}}
+		{{/each}}
 	</script>
 	</div>
 
@@ -144,7 +143,7 @@
 		
 	<script type="text/template" id="tmpl_li_partido">
 	<div id="x_fuerza">
-		<div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%;">
+		<div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%; margin-left: calc({{get_width_bar 1.5 max}}% - 5.5px);">
 			<span>1,5%</span>
 			<p>PISO ELECTORAL: Porcentaje que deben superar los partidos para acceder a la elección general</p>
 		</div>

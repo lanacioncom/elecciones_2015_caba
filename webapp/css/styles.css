@@ -618,7 +618,7 @@ svg #pattern2 line{
 
 
 svg .comuna_active_path { 	
-	stroke: black;
+	stroke: #000 !important;
 	stroke-width: 1px;
 	cursor: default;
 }
@@ -818,7 +818,7 @@ svg .comuna_active_path {
 	width: calc(100% - 75px); /*background: rgba(200, 200, 200, .1);*/
 }
 .cont_barra .barra {
-	/*width: 100%;*/
+	width: 0%;
 	height: 22px;
 	position: relative;
 }
