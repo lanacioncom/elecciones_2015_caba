@@ -48,9 +48,9 @@ Handlebars.registerHelper( "get_candidato_color", function ( options ){
 	return dict_p[this.id] ? dict_p[this.id].color_candidato : "";
 });
 
-Handlebars.registerHelper( "get_candidato_apellido", function ( options ){
+Handlebars.registerHelper( "get_candidato_apellido_class", function ( options ){
 	var dict_p = options.data.root.dict_candidatos;
-	return dict_p[this.id] ? dict_p[this.id].apellido.toLowerCase() : "";
+	return dict_p[this.id] ? dict_p[this.id].foto.toLowerCase() : "";
 });
 
 Handlebars.registerHelper( "get_partido_color", function ( options ){
