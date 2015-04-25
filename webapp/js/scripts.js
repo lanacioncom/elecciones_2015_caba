@@ -83,7 +83,7 @@ function tooltip(){
 
 		ide = $el.attr("id").replace(/c/i, "");
 		
-		if(app.filtro_activo == "x_fuerza"){
+		if(app.filtro_activo == app.filtro_home){
 			ide = ide < 10 ? "0"+ide : ide;
 			var data = app.r_general["c_"+ide];
 			var max = data[0].p;

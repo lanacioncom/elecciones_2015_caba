@@ -22,7 +22,7 @@ var gulp = require('gulp'),
 // });
 
 var t = new Date().getTime();
-var v = "1.1"
+var v = "0.2"
 
 
 var js_all = 'js/all'+v+'.min.js';
@@ -46,7 +46,7 @@ gulp.task('test_js', function(){
 });
 
 gulp.task('js', ['test_js'], function () {
-	var all = gulp.src(['js/elecciones_app.js', 'js/permanentlinkjs.js', 'js/scripts.js'] , { cwd: 'webapp' })
+	var all = gulp.src(['js/permanentlinkjs.js', 'js/elecciones_app.js', 'js/scripts.js'] , { cwd: 'webapp' })
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(concat(js_all))
@@ -87,8 +87,11 @@ gulp.task('copy', function () {
 	var css_img = gulp.src(['css/*.png', 'css/*.gif'], { cwd: 'webapp' })
 		.pipe(gulp.dest('build/css'));
 
-	var data = gulp.src('data/*', { cwd: 'webapp' })
-		.pipe(gulp.dest('build/data'));
+	var data = gulp.src('test_data/*', { cwd: 'webapp' })
+		.pipe(gulp.dest('build/test_data'));
+
+	var data = gulp.src('dicts/*', { cwd: 'webapp' })
+		.pipe(gulp.dest('build/dicts'));
 
 });
 
