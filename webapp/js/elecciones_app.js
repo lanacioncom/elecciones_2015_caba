@@ -37,7 +37,6 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results){
 		s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
 		$("#opts").html( s.tmpl_opts(s.dict_partidos) );
 		
-		// console.log(s.dict_partidos);
 		// template para listado de resultados por partido
 		s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
 		s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
@@ -226,7 +225,8 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 	}
 
 	function run_interna(key_cache){
-		s.cont_results.html(s.tmpl_x_interna(s.cache_ajax[key_cache]));
+		var data = {comunas : s.cache_ajax[key_cache], dict_candidatos: s.dict_candidatos};
+		s.cont_results.html(s.tmpl_x_interna(data));
 		s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
 			
 		
