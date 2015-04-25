@@ -225,7 +225,11 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 	}
 
 	function run_interna(key_cache){
-		var data = {comunas : s.cache_ajax[key_cache], dict_candidatos: s.dict_candidatos};
+		var data = {
+			comunas : s.cache_ajax[key_cache],
+			max: s.cache_ajax[key_cache].c_00[0].p,
+			dict_candidatos: s.dict_candidatos
+		};
 		s.cont_results.html(s.tmpl_x_interna(data));
 		s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
 			

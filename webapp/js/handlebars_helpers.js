@@ -48,6 +48,11 @@ Handlebars.registerHelper( "get_candidato_color", function ( options ){
 	return dict_p[this.id] ? dict_p[this.id].color_candidato : "";
 });
 
+Handlebars.registerHelper( "get_candidato_apellido", function ( options ){
+	var dict_p = options.data.root.dict_candidatos;
+	return dict_p[this.id] ? dict_p[this.id].apellido.toLowerCase() : "";
+});
+
 Handlebars.registerHelper( "get_partido_color", function ( options ){
 	var dict_p = options.data.root.dict_partidos;
 	return dict_p[this.id] ? dict_p[this.id].color_partido : "";
