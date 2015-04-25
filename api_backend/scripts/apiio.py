@@ -9,7 +9,8 @@ log = logging.getLogger('paso.%s' % __name__)
 def get_stored_json(fname=None):
     '''Get the last general JSON file'''
     try:
-        with io.open('%s/%s.json' % (JSON_DATA_PATH, fname), 'r', encoding='utf8') as f:
+        with io.open('%s/%s.json' % (JSON_DATA_PATH, fname),
+                     'r', encoding='utf8') as f:
             j = json.loads(f.read(), encoding='utf8')
         log.debug("resumen json old data: %s" % (j))
         return j
@@ -24,10 +25,10 @@ def write_API_data(d_d=None):
         try:
             # with io.open('%s/%s.json'
             #              % (JSON_DATA_PATH, fname),
-            #              'w', encoding='utf8') as f:
+            #              'wb') as f:
             with io.open('%s/%s.json'
                          % (JSON_DATA_PATH, fname),
-                         'wb') as f:
+                         'w', encoding='utf8') as f:
                 log.debug("writing output JSON: %s.json" % (fname))
                 f.write(json.dumps(d, ensure_ascii=False))
         except (IOError):
