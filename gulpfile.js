@@ -13,13 +13,6 @@ var gulp = require('gulp'),
 	ftp = require('gulp-ftp');
     merge = require('merge-stream');
 
-// var fs = require('fs');
-// var path = require('path');
-// var filePath = path.join(__dirname, '.git/refs/remotes/origin/master');
-// fs.readFileSync(filePath, function (err, resolvedPath) {
-//   if (err) throw err;
-//   v = resolvedPath;
-// });
 
 var t = new Date().getTime();
 var v = "0.3"
@@ -29,6 +22,29 @@ var js_all = 'js/all'+v+'.min.js';
 var js_vendor = 'js/vendor'+v+'.min.js';
 var css_file_min = 'all'+v+'.min.css';
 
+gulp.task('get_id_git', function () {
+	var fs = require('fs');
+	var path = require('path');
+	var file_path = path.join(__dirname, '.git/refs/remotes/origin/master');
+	// var swig = require('gulp-swig');
+	var data = require('gulp-data');
+	// var fm = require('front-matter');
+	gulp.src(file_path)
+	.pipe(
+		data(function(file) {
+		console.log(file.contents);
+	  	return { 'foo': file.data }
+	}));
+	
+	// // fs.readFileSync(filePath, function (err, resolvedPath) {
+	// //   if (err) throw err;
+	// //   v = resolvedPath;
+	// // });
+	// var text = fs.readFileSync('foo.tx', 'utf8');
+	// console.log(text);
+	 
+});
+
 // build tasks
 gulp.task('minify-css', function () {
 	gulp.src(['css/reset.css', 'css/fonts.css', 'css/select2.css', 'css/styles.css'], { cwd: 'webapp' })
@@ -36,6 +52,8 @@ gulp.task('minify-css', function () {
     .pipe(concat(css_file_min))
     .pipe(gulp.dest('build/css'));
 });
+
+
 
 // test JS
 gulp.task('test_js', function(){
@@ -92,7 +110,6 @@ gulp.task('copy', function () {
 
 	var data = gulp.src('dicts/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/dicts'));
-
 });
 
 gulp.task('build', ['minify-css', 'js', 'copy']);

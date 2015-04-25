@@ -666,7 +666,7 @@ svg .comuna_active_path {
 	border-right: 1.5px dotted #000;
 	position: absolute;
 	top: 41px;
-	left: 0px;
+	left: -1.5px;
 	background: rgba(255, 255, 255, 0.59);
 }
 

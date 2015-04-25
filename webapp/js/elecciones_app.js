@@ -310,8 +310,11 @@ ElecionesApp.prototype.pintar_mapa = function(){
 	
 	var fill = "#fff";
 
-	$("path, polygon").css({ fill: '#fff'});
-	$("path, polygon").css({ stroke: '#fff'});
+	$("path, polygon").css({ // reset styles maps
+		'fill': '#fff',
+		'stroke': fill,
+		'fill-opacity': "1"
+		});
 	
 	if(this.filtro_activo == this.filtro_home){
 		s.ganadores_comunas.forEach(function(x){
