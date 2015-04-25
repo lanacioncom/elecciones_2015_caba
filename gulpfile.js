@@ -22,7 +22,7 @@ var gulp = require('gulp'),
 // });
 
 var t = new Date().getTime();
-var v = "0.2"
+var v = "0.3"
 
 
 var js_all = 'js/all'+v+'.min.js';
