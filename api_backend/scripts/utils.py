@@ -32,7 +32,7 @@ def update_time_increased(od=None, nd=None):
                       % (f_omp, f_nmp))
 
     if not updated:
-        logging.debug('Did not find updated data, going back to sleep')
+        logging.info('Did not find updated data, going back to sleep')
     return updated
 
 
