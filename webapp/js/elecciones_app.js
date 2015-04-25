@@ -267,21 +267,22 @@ ElecionesApp.prototype.set_comuna_active_path = function(polygon){
 
 
 ElecionesApp.prototype.change_dropdown = function(val){
-	
-	this.filtro_activo = val;
+	var s = this;
+	s.filtro_activo = val;
 	
 	$('#ayud1').hide();
 	$('.compartir').show();
 
-	if(this.filtro_home == this.filtro_activo){
+	if(s.filtro_home == s.filtro_activo){
 		s.get_ganadores_x_comuna(s.r_general);
-		this.draw_ul_list();
-	}else{
-		this.draw_x_interna(val);
+		s.draw_ul_list();
+	}else{	
+		s.draw_x_interna(val);
 	}
 	// set path
-	this.q.set('fuerza', val);
-	this.remove_comuna_active_path();
+	s.q.set('fuerza', val);
+	s.remove_comuna_active_path();
+
 
 };
 
