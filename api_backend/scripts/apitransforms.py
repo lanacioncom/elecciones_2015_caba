@@ -157,10 +157,9 @@ def t_results_API(origin_list=None, dest_dict=None):
         log.debug("transform results for section %s" % (i))
         if not t_results_section_API(v, i, dest_dict):
             return False
-        
     # Sort special party results
-    # Write to file to preview intermediate result
-    to_json("datos_completos",dest_dict)
     if not t_sort_results_API(dest_dict):
         return False
+    # Write to file to preview intermediate result
+    #to_json("datos_completos",dest_dict)
     return True
