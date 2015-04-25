@@ -16,26 +16,33 @@ if PRODUCTION:
     JSON_EXAMPLE_PATH = '/var/www/paso2015/examples'
 else:
     JSON_DATA_PATH = os.path.join(dir, '../data')
-    JSON_EXAMPLE_PATH = os.path.join(dir, '../examples')
+    JSON_EXAMPLE_PATH = os.path.join(dir, '../examples/marta_API')
 
+##### PAY ATTENTION TO THIS ON PRODUCTION #####
 SIMULATE = False
 
 # Logging configuration
 LOG_FILENAME = 'pasocaba2015.log'
 REL_LOGS_PATH = os.path.join(dir, '../logs')
 log = logging.getLogger('paso')
+LOG_FORMAT_DATA = '%(asctime)s %(name)-8s %(levelname)s: %(message)s'
 
-
-BASE_URL = 'https://paso2015.buenosaires.gob.ar/api'
 BASE_URL = 'https://apipaso.buenosaires.gob.ar/api'
 HEADERS = {'user-agent': 'Mozilla/5.0'}
-# Wait 3 seconds for socket data
-TIMEOUT = 3
+# Wait n seconds for socket data
+TIMEOUT = 5
 
 
 GENERALES_SERVICE = '/generalesJef'
 COMUNA_SERVICE = '/jefComuna'
 RESUMEN_SERVICE = '/resumen'
+
+SPECIAL_PARTIES = {
+    "BLC": 0,
+    "NUL": 1,
+    "IMP": 1,
+    "REC": 1
+}
 
 
 def create_folder_structure():
@@ -51,15 +58,20 @@ def init():
     # Create folder structure
     create_folder_structure()
     # Configure logging
-    log.setLevel(logging.DEBUG)
-    #log.setLevel(logging.ERROR) 
+    if PRODUCTION:
+        log.setLevel(logging.INFO)
+        #log.setLevel(logging.DEBUG)
+        #log.setLevel(logging.ERROR)
+    else:
+        log.setLevel(logging.DEBUG)
+     
     # Add the log message handler to the logger
     handler = logging.handlers.RotatingFileHandler('%s/%s' %
                                                    (REL_LOGS_PATH,
                                                     LOG_FILENAME),
                                                    maxBytes=1048576,
                                                    backupCount=5)
-    log_format = logging.Formatter('%(asctime)s %(name)-8s %(levelname)s: %(message)s')
+    log_format = logging.Formatter(LOG_FORMAT_DATA)
     handler.setFormatter(log_format)
     log.addHandler(handler)
     if PRODUCTION:
