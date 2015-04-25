@@ -1360,4 +1360,23 @@ footer div.datos span{
 		transform: translateX(-240px) translateY(-330px)  scale(1.6);
 	}
 
+	footer{
+		padding-top: 10px;
+	}
+
+	footer div.datos{
+		float: left !important;
+		margin-left: 0px;
+ 		padding-left: 0px;
+ 		border: 0px;
+ 		margin-right: 15px;
+ 		height: 20px;
+	}
+
+	footer div.creditos {
+		display: none;
+	}
+
+
+
 }
