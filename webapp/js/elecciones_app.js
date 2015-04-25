@@ -350,21 +350,21 @@ ElecionesApp.prototype.pintar_mapa = function(){
 
 
 ElecionesApp.prototype.barios_x_com = {
-	  "c01": "Recoleta",
-	  "c02": "Palermo",
-	  "c03": "Barracas, Boca, Nueva Pompeya, Parque Patricios ",
-	  "c04": "Constitución, Monserrat, Puerto Madero, Retiro, San Nicolás, San Telmo",
-	  "c05": "Belgrano, Colegiales, Nuñez",
-	  "c06": "Almagro, Boedo",
-	  "c07": "Caballito",
-	  "c08": "Flores, Parque Chacabuco",
+	  "c01": "Constitución, Monserrat, Puerto Madero, Retiro, San Nicolás, San Telmo",
+	  "c02": "Recoleta",
+	  "c03": "Balvanera, San Cristobal",
+	  "c04": "Barracas, Boca, Nueva Pompeya, Parque Patricios",
+	  "c05": "Almagro, Boedo",
+	  "c06": "Caballito",
+	  "c07": "Flores, Parque Chacabuco",
+	  "c08": "Villa Lugano, Villa Riachuelo, Villa Soldati",
 	  "c09": "Liniers, Mataderos, Parque Avellaneda",
 	  "c10": "Floresta, Monte Castro, Velez Sarsfield, Versalles, Villa Luro, Villa Real",
 	  "c11": "Villa Del Parque, Villa  Devoto, Villa Gral. Mitre, Villa Santa Rita",
 	  "c12": "Coghlan, Saavedra, Villa Pueyrredón, Villa Urquiza",
-	  "c13": "Balvanera, San Cristobal",
-	  "c14": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortuzar",
-	  "c15": "Villa Lugano, Villa Riachuelo, Villa Soldati"
+	  "c13": "Belgrano, Colegiales, Nuñez",
+	  "c14": "Palermo",
+	  "c15": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortuzar"
 	};
 
 ElecionesApp.prototype.q = new PermanentLinkJS();
