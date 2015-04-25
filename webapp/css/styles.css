@@ -909,10 +909,11 @@ ul#list_interna li div.foto {
 ul#list_interna li h5 {
 	font-family: 'TheSansSemiLight';
 	display: inline-block;
-	width: 97px;
+	width: 91px;
 	float: left;
 	line-height: 1;
 	font-size: 1.4em;
+	padding-right: 16px;
 }
 ul#list_interna li.active h5 {
 	font-family: 'TheSansBold';
