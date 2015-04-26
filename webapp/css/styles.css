@@ -179,8 +179,28 @@ header, section {
 }
 
 
+/*referencias*/
 
+.referencias {
+	position: absolute;
+	bottom: 85px;
+  	left: 350px;
+  	display:none;
+	
 
+}
+
+.ref span {
+	display: inline-block;
+	width:15px;
+	height:15px;
+	background-color:red;
+	margin:3px 7px 3px 3px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+	
 /*helpers*/
 [hidden] {
 	display: none !important;
@@ -398,15 +418,17 @@ div.ayuda2 {
 }
 
 div.ayuda3 {
-	width: 32%;
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-	color:#969696;;
-	font-family: "TheSansSemi", arial;
-	background-color: rgba(255, 255, 255, 0.81);
-    padding: 8px;
-    border-radius: 3px;
+	width: 23%;
+	position: absolute;
+	bottom: 10px;
+	right: 50px;
+	/*top: -10px;
+	left: -4px;*/
+	color: #ccc;
+	font-family: "TheSans", arial;
+	background-color: rgba(255, 255, 255, 0);
+	padding: 8px;
+	border-radius: 3px;
     
 }
 

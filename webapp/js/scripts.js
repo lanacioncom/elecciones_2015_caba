@@ -49,17 +49,6 @@ $(function(){
 					// $('polygon').each(function(el){
 					// 	console.log(el);
 					// });
-				// init app
-					app = new ElecionesApp(dict_partidos, dict_candidatos, results, path_to_data);
-
-					$("#opts").select2({
-				        minimumResultsForSearch: -1,
-				        val: "x_fuerza"
-				    });
-
-				
-
-					
 
 					
 				});
