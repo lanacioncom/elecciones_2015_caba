@@ -35,7 +35,7 @@ def run():
     try:
         start_time = time()
         init()
-        log.debug("Start time %s" % (start_time))
+        log.info("Start time %s" % (start_time))
         log.debug("Checking for new data")
         if not is_new_data_available():
             return
