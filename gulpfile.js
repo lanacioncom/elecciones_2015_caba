@@ -11,6 +11,7 @@ var gulp = require('gulp'),
 	stylish = require('jshint-stylish'),
 	gutil = require('gulp-util'),
     merge = require('merge-stream');
+var minifyHTML = require('gulp-minify-html');
 
 var rimraf = require('gulp-rimraf');
 
@@ -85,11 +86,16 @@ gulp.task('js', ['test_js'], function () {
 });
 
 gulp.task('copy', function () {
+	var opts = {
+		conditionals: true,
+		spare:true
+	};
 	var html = gulp.src('**/*.html', { cwd: 'webapp' })
 		.pipe(htmlreplace({
 			js:[(js_vendor+'?'+t), (js_all+'?'+t)],
 			css: ['css/'+css_file_min+'?'+t]
 		}))
+		.pipe(minifyHTML(opts))
 		.pipe(gulp.dest('build'));
 	
 	var fonts = gulp.src('css/fonts/*', { cwd: 'webapp' })
@@ -101,14 +107,16 @@ gulp.task('copy', function () {
 	var css_img = gulp.src(['css/*.png', 'css/*.gif'], { cwd: 'webapp' })
 		.pipe(gulp.dest('build/css'));
 
-	var data = gulp.src('test_data/*', { cwd: 'webapp' })
-		.pipe(gulp.dest('build/test_data'));
+	// var data = gulp.src('test_data/*', { cwd: 'webapp' })
+	// 	.pipe(gulp.dest('build/test_data'));
 
 	var data = gulp.src('dicts/*', { cwd: 'webapp' })
 		.pipe(gulp.dest('build/dicts'));
+
+	return merge(html, fonts, img, css_img, data);
 });
 
-gulp.task('build', ['clear_build', 'minify-css', 'js', 'copy']);
+gulp.task('build', ['minify-css', 'js', 'copy']);
 
 
 // SERVER

@@ -33,7 +33,7 @@ var isMobile = { //valida si es un dispositivo movil
 $(function(){
     
 	"use strict";
-    $.ajaxSetup({ cache: false }); 
+    $.ajaxSetup({ cache: true }); 
 	// load mapa
 	// var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
 	var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
@@ -46,7 +46,9 @@ $(function(){
 
 					$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
 								
-					
+					// $('polygon').each(function(el){
+					// 	console.log(el);
+					// });
 				// init app
 					app = new ElecionesApp(dict_partidos, dict_candidatos, results, path_to_data);
 

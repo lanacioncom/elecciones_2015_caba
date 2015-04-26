@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Elecciones 2015 - lanacion.com</title>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"> 
-	<link rel="stylesheet" href="css/all.v.7e713fdf39.min.css?1430078500938">
-
-	<!--Etiquetas HTML5 para IE8 hacia abajo-->
-		<!--[if lt IE 9]>
+<!DOCTYPE html><html><head><title>Elecciones 2015 - lanacion.com</title><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta name=viewport content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"><link rel=stylesheet href=css/all.v.b3c589d244.min.css?1430080358333><!--[if lt IE 9]>
 		<script type="text/javascript">
 		document.createElement("nav");
 		document.createElement("header");
@@ -19,8 +9,8 @@
 		document.createElement("hgroup");	
 		document.createElement("canvas");	
 		</script>
-        
-        <style> 
+ 
+ <style> 
 			#mapa_cont, #filtros, .ayuda{display:none !important}
 			footer{display:none}
 			div.mensaje{width:100%; height:500px; position:relative; }	
@@ -29,22 +19,7 @@
 			div.mensaje div.texto p a{color:#335577; font-weight:bold;}	
 		</style>
 		
-	<![endif]-->
-
-
-</head>
-<body>
-
-
-<header class="clearfix">
-	<div class="titulos">
-		<!--<h1>Primarias <span></span></h1>
-		<h2>CABA</h2>-->
-		<h1>Mapa de resultados</h1>
-	</div>
-
-	<!--- para IE7 , IE8 --->
-			<!--[if lt IE 9]>
+	<![endif]--></head><body><header class=clearfix><div class=titulos><h1>Mapa de resultados</h1></div><!--[if lt IE 9]>
 			<div class="mensaje">
 				<div class="texto">
 					<p>Este contenido no es soportado por su navegador.</p>
@@ -52,172 +27,4 @@
 					<p>Disculpe las molestias</p>
 				</div>
 			</div>
-	<![endif]-->
-	
-	<!--<ul id="ref">
-		<li><span class="bullet bk_pro">&nbsp;</span> Pro</li>
-		<li><span class="bullet bk_eco">&nbsp;</span> ECO</li>
-		<li id="refFte"><span class="bullet bk_fte_renovador">&nbsp;</span> Fte. Renovador</li>
-		<li><span class="bullet bk_fpv">&nbsp;</span> FPV</li>
-		<li ><span class="bullet bk_izquierda">&nbsp;</span> Izquierda</li>
-		<li><span class="bullet bk_otros">&nbsp;</span> Otros</li>
-	</ul>-->
-
-	<div class="ayuda" id="ayud1">FILTRAR POR INTERNA</div>
-
-	<div class="compartir">
-		<a href="mailto:?subject=Mirá el mapa de resultados de las PASO en CABA&body=Elecciones primarias 2015 en lanacion.com, toda la cobertura --> http://www.lanacion.com.ar/elecciones-2015-t50499" class="btn" id="mail" title="Compartir por mail"></a>
-		<a target="_blank" href="#" onclick="myPopup('https://plus.google.com/share?url=http://www.lanacion.com.ar/elecciones-2015-t50499')" class="btn" id="google" title="Compartir en Google+"></a>
-		<a target="_blank" href="#" onclick="myPopup('http://twitter.com/share?text=Mirá el mapa de resultados de las PASO en CABA de @lanacioncom&url=http://www.lanacion.com.ar/elecciones-2015-t50499&hashtags=lanacioncom,elecciones2015')" class="btn" id="twit" title="Compartir en Twitter"></a>
-		<a target="_blank" href="#" onclick="myPopup('https://www.facebook.com/sharer/sharer.php?u=http://www.lanacion.com.ar/elecciones-2015-t50499')" class="btn" id="facebook" title="Compartir en Facebook"></a>
-	</div>
-
-</header>
-
-
-<!-- filtros -->
-<section id="filtros" class="clearfix">
-	<h3 class="box arrow">TOTAL CABA</h3>
-	<div id="selected" class="arrow">
-		<hr />
-		<h4 onclick="app.reset(this); return false;">A. Borthagaray</h4>
-	</div>
-
-
-	<select id="opts" class="">
-		<script type="text/template" id="tmpl_opts">
-			<option value="00" selected="selected">Todas las fuerzas políticas</option>
-			{{#each this}}
-				{{#if select}}
-				<option value="{{@key}}">{{nombre_partido}} (interna)</option>
-				{{/if}}
-			{{/each}}
-			{{!--
-			<option value="99">Listas únicas</option>
-			--}}
-		</script>
-	<!--<option value="x_fuerza">Todas las fuerzas políticas</option>
-		<option value="pro">Pro (interna)</option>
-		<option value="fpv">FPV (interna)</option>
-		<option value="eco">ECO (interna)</option>
-		<option value="mst">MST (interna)</option>
-		<option value="bien_comun">Bien Común (interna)</option>
-		<option value="surgen">Surgen (interna)</option>
-		<option value="unicas">Listás únicas</option> 
-	-->
-	</select>
-</section>
-
-<section id="cont_data" class="clearfix">
-
-	<article id="mapa_cont"><div class="loader"></div></article>
-	
-	<!-- tooltip -->
-	<div class="tooltip" id="tooltip">
-	<script type="text/template" id="tmpl_tooltip">
-		<h4>COMUNA {{id}}</h4>
-		<p>{{barios_x_com}}</p>
-		{{#each partidos}}
-		<div class="fuerza">
-			<div class="candidato">{{nombre}}</div>
-			<div class="candidatoBarra" style="width:{{get_width_bar p ../max}}%; background: {{color}}"></div>
-			<div class="candidatoPorcentaje">{{toFixed_n p}}%</div>
-		</div>
-		{{/each}}
-	</script>
-	<script type="text/template" id="tmpl_tooltip_interna">
-		<h4>COMUNA {{id}}</h4>
-		<p>{{barios_x_com}}</p>
-		{{#each candidatos}}
-		<div class="fuerza">
-			<div class="candidato">{{apellido}}</div>
-			<div class="candidatoBarra" style="width:{{get_width_bar p ../max}}%; background: {{color}}; {{check_index_opacyti}}"></div>
-			<div class="candidatoPorcentaje">{{toFixed_n p}}%</div>
-		</div>
-		{{/each}}
-	</script>
-	</div>
-
-	
-
-	<article id="results">
-	<!-- Tab: resultados por interna -->
-	<script type="text/template" id="tmpl_x_interna">
-	<div id="x_interna">
-		<div class="porc_text" {{#if is_99}}hidden{{/if}}>
-			<div class="arrow-before"></div><div class="arrow-after"></div>
-			<div class="porc_partido">Total fuerza </div>
-			<div class="cant_v">{{toFixed_n_0 r.v}} votos</div>
-			<div id="porPart">({{toFixed_n r.p}}% del total)</div>
-		</div>
-
-		<ul id="list_interna">
-			{{#each comuna}}
-			<li class="candidato">
-			<div class="bg_li clearfix">
-				<input hidden type="radio" name="candidato" value="{{id}}" />
-				<div class="foto {{get_candidato_apellido_class}}">&nbsp;</div>
-				<h5>{{get_candidato_nombre}}</h5>
-				<div class="cant_v">{{toFixed_n_0 v}} votos</div>
-				<div class="cont_barra">
-					<div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_candidato_color}}; {{check_index_opacyti}}">
-						<div class="porc">{{toFixed_n p}}%</div>
-					</div>
-					
-				</div>
-			</div>
-			</li>
-			{{/each}}
-		</ul>
-	</div>
-	</script>
-	<!-- Tab: resultados por paratidos -->
-		
-	<script type="text/template" id="tmpl_li_partido">
-	<div id="x_fuerza">
-		<div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%; margin-left: calc({{get_width_bar 1.5 max}}% - 5.5px);">
-			<span>1,5%</span>
-			<p>PISO ELECTORAL: Porcentaje que deben superar los partidos para acceder a la elección general</p>
-		</div>
-		<ul id="list">
-			{{#each data}}
-			
-			{{#if ../is_comuna}}
-				<li>
-			{{else}}
-				<li class="{{chekIsLessThan15}}">
-			{{/if}}
-					<h5 
-						style="padding-left:{{#if ../is_comuna}}
-								1.8%
-							{{else}}
-								{{get_width_bar 1.8 ../../max}}%
-							{{/if}};">{{get_partido}} <span>{{toFixed_n_0 v}} votos</span>
-					</h5>
-					<div class="cont_barra">
-						<div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_partido_color}}">
-							<div class="porc">{{toFixed_n p}}%</div>
-						</div>
-					</div>
-				</li>
-
-			{{/each}}
-			
-		</ul>
-		<div id="line" style="width: {{get_width_bar 1.5 max}}%; width: calc({{get_width_bar 1.5 max}}% - 4px);"></div>
-
-	</div>
-	</script>
-	</article>
-</section>
-<footer>
-	<div class="creditos">Créditos</div>
-	<div class="datos" id="padron">Padrón total: <span></span></div>
-	<div class="datos" id="votos">Votos escrutados: <span>%</span></div>
-	<div class="datos" id="mesas" style="border-left:0px">Mesas escrutadas: <span>%</span></div>
-</footer>
-
-<script src="js/vendor.v.7e713fdf39.min.js?1430078500938"></script>
-<script src="js/all.v.7e713fdf39.min.js?1430078500938"></script>
-</body>
-</html>
+	<![endif]--><div class=ayuda id=ayud1>FILTRAR POR INTERNA</div><div class=compartir><a href="mailto:?subject=Mirá el mapa de resultados de las PASO en CABA&body=Elecciones primarias 2015 en lanacion.com, toda la cobertura --> http://www.lanacion.com.ar/elecciones-2015-t50499" class=btn id=mail title="Compartir por mail"></a> <a target=_blank href=# onclick="myPopup('https://plus.google.com/share?url=http://www.lanacion.com.ar/elecciones-2015-t50499')" class=btn id=google title="Compartir en Google+"></a> <a target=_blank href=# onclick="myPopup('http://twitter.com/share?text=Mirá el mapa de resultados de las PASO en CABA de @lanacioncom&url=http://www.lanacion.com.ar/elecciones-2015-t50499&hashtags=lanacioncom,elecciones2015')" class=btn id=twit title="Compartir en Twitter"></a> <a target=_blank href=# onclick="myPopup('https://www.facebook.com/sharer/sharer.php?u=http://www.lanacion.com.ar/elecciones-2015-t50499')" class=btn id=facebook title="Compartir en Facebook"></a></div></header><section id=filtros class=clearfix><h3 class="box arrow">TOTAL CABA</h3><div id=selected class=arrow><hr><h4 onclick="app.reset(this); return false;">A. Borthagaray</h4></div><select id=opts><script type=text/template id=tmpl_opts><option value="00" selected="selected">Todas las fuerzas políticas</option> {{#each this}} {{#if select}} <option value="{{@key}}">{{nombre_partido}} (interna)</option> {{/if}} {{/each}} {{!-- <option value="99">Listas únicas</option> --}}</script></select></section><section id=cont_data class=clearfix><article id=mapa_cont><div class=loader></div></article><div class=tooltip id=tooltip><script type=text/template id=tmpl_tooltip><h4>COMUNA {{id}}</h4> <p>{{barios_x_com}}</p> {{#each partidos}} <div class="fuerza"> <div class="candidato">{{nombre}}</div> <div class="candidatoBarra" style="width:{{get_width_bar p ../max}}%; background: {{color}}"></div> <div class="candidatoPorcentaje">{{toFixed_n p}}%</div> </div> {{/each}}</script><script type=text/template id=tmpl_tooltip_interna><h4>COMUNA {{id}}</h4> <p>{{barios_x_com}}</p> {{#each candidatos}} <div class="fuerza"> <div class="candidato">{{apellido}}</div> <div class="candidatoBarra" style="width:{{get_width_bar p ../max}}%; background: {{color}}; {{check_index_opacyti}}"></div> <div class="candidatoPorcentaje">{{toFixed_n p}}%</div> </div> {{/each}}</script></div><article id=results><script type=text/template id=tmpl_x_interna><div id="x_interna"> <div class="porc_text" {{#if is_99}}hidden{{/if}}> <div class="arrow-before"></div><div class="arrow-after"></div> <div class="porc_partido">Total fuerza </div> <div class="cant_v">{{toFixed_n_0 r.v}} votos</div> <div id="porPart">({{toFixed_n r.p}}% del total)</div> </div> <ul id="list_interna"> {{#each comuna}} <li class="candidato"> <div class="bg_li clearfix"> <input hidden type="radio" name="candidato" value="{{id}}" /> <div class="foto {{get_candidato_apellido_class}}">&nbsp;</div> <h5>{{get_candidato_nombre}}</h5> <div class="cant_v">{{toFixed_n_0 v}} votos</div> <div class="cont_barra"> <div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_candidato_color}}; {{check_index_opacyti}}"> <div class="porc">{{toFixed_n p}}%</div> </div> </div> </div> </li> {{/each}} </ul> </div></script><script type=text/template id=tmpl_li_partido><div id="x_fuerza"> <div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%; margin-left: calc({{get_width_bar 1.5 max}}% - 5.5px);"> <span>1,5%</span> <p>PISO ELECTORAL: Porcentaje que deben superar los partidos para acceder a la elección general</p> </div> <ul id="list"> {{#each data}} {{#if ../is_comuna}} <li> {{else}} <li class="{{chekIsLessThan15}}"> {{/if}} <h5 style="padding-left:{{#if ../is_comuna}} 1.8% {{else}} {{get_width_bar 1.8 ../../max}}% {{/if}};">{{get_partido}} <span>{{toFixed_n_0 v}} votos</span> </h5> <div class="cont_barra"> <div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_partido_color}}"> <div class="porc">{{toFixed_n p}}%</div> </div> </div> </li> {{/each}} </ul> <div id="line" style="width: {{get_width_bar 1.5 max}}%; width: calc({{get_width_bar 1.5 max}}% - 4px);"></div> </div></script></article></section><footer><div class=creditos>Créditos</div><div class=datos id=padron>Padrón total: <span></span></div><div class=datos id=votos>Votos escrutados: <span>%</span></div><div class=datos id=mesas style=border-left:0px>Mesas escrutadas: <span>%</span></div></footer><script src=js/vendor.v.b3c589d244.min.js?1430080358333></script><script src=js/all.v.b3c589d244.min.js?1430080358333></script></body></html>
