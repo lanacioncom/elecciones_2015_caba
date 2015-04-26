@@ -33,7 +33,7 @@ var isMobile = { //valida si es un dispositivo movil
 $(function(){
     
 	"use strict";
-    $.ajaxSetup({ cache: false }); 
+    $.ajaxSetup({ cache: true }); 
 	// load mapa
 	// var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
 	var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
