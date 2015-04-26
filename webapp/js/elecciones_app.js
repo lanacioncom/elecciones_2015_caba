@@ -64,6 +64,14 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 };
 
 
+
+ElecionesApp.prototype.animate_barras = function(){
+	$("#results .cont_barra .barra").each(function(i, el){
+		var $el = $(this);
+		$el.delay(500).animate({width: $el.data("width")}, {duration: 900, queue:false});
+	});
+};
+
 ElecionesApp.prototype.get_mesas_escrutadas = function(data){
 	var s = this; 
 	$.get(s.path_to_data+"resumen.json", function(resumen){
@@ -208,6 +216,8 @@ ElecionesApp.prototype.draw_ul_list = function(id){ // si no viene data, escribe
 	};
 
 	this.cont_results.html(this.tmpl_li_partido(l));
+	this.animate_barras();
+
 	if(is_comuna){ $(".help_text, #line").hide();}else{$(".help_text, #line").show();}
 
 // start niceScroll
@@ -252,6 +262,7 @@ ElecionesApp.prototype.run_interna = function(key_cache, comuna){
 	s.cont_results.html(s.tmpl_x_interna(data));
 	s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
 		
+	s.animate_barras();
 	
 	// bind events for inputs
 	var candidato_btn = $('input[type="radio"]');

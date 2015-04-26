@@ -164,8 +164,7 @@
 				<h5>{{get_candidato_nombre}}</h5>
 				<div class="cant_v">{{toFixed_n_0 v}} votos</div>
 				<div class="cont_barra">
-					{{!-- clase barra + style de partido--}}
-					<div class="barra" style="width:{{get_width_bar p ../max}}%; background: {{get_candidato_color}}; {{check_index_opacyti}}">
+					<div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_candidato_color}}; {{check_index_opacyti}}">
 						<div class="porc">{{toFixed_n p}}%</div>
 					</div>
 					
@@ -200,8 +199,7 @@
 							{{/if}};">{{get_partido}} <span>{{toFixed_n_0 v}} votos</span>
 					</h5>
 					<div class="cont_barra">
-						<!-- clase barra + style de partido-->
-						<div class="barra" style="width:{{get_width_bar p ../max}}%; background: {{get_partido_color}}">
+						<div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_partido_color}}">
 							<div class="porc">{{toFixed_n p}}%</div>
 						</div>
 					</div>
