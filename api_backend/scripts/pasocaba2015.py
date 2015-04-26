@@ -37,9 +37,8 @@ def run():
     init()
     log.debug("Start time %s" % (start_time))
     log.debug("Checking for new data")
-    # TODO: CHANGE THIS
-    # if not is_new_data_available():
-    #     return
+    if not is_new_data_available():
+        return
     log.debug("New data detected getting results from API")
     # New data detected run the API comsuption process
     if not get_results_API(tmp_storage):
