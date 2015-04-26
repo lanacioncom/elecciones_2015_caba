@@ -151,7 +151,7 @@
 		<div class="porc_text" {{#if is_99}}hidden{{/if}}>
 			<div class="arrow-before"></div><div class="arrow-after"></div>
 			<div class="porc_partido">Total fuerza </div>
-			<div class="cant_v">{{r.v}} votos</div>
+			<div class="cant_v">{{toFixed_n_0 r.v}} votos</div>
 			<div id="porPart">({{toFixed_n r.p}}% del total)</div>
 		</div>
 
@@ -162,7 +162,7 @@
 				<input hidden type="radio" name="candidato" value="{{id}}" />
 				<div class="foto {{get_candidato_apellido_class}}">&nbsp;</div>
 				<h5>{{get_candidato_nombre}}</h5>
-				<div class="cant_v">{{v}} votos</div>
+				<div class="cant_v">{{toFixed_n_0 v}} votos</div>
 				<div class="cont_barra">
 					{{!-- clase barra + style de partido--}}
 					<div class="barra" style="width:{{get_width_bar p ../max}}%; background: {{get_candidato_color}}; {{check_index_opacyti}}">
@@ -197,7 +197,7 @@
 								1.8%
 							{{else}}
 								{{get_width_bar 1.8 ../../max}}%
-							{{/if}};">{{get_partido}} <span>{{v}} votos</span>
+							{{/if}};">{{get_partido}} <span>{{toFixed_n_0 v}} votos</span>
 					</h5>
 					<div class="cont_barra">
 						<!-- clase barra + style de partido-->

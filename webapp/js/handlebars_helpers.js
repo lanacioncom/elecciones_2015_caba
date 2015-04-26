@@ -33,7 +33,13 @@ Handlebars.registerHelper( "lower", function ( _str ){
 });
 
 Handlebars.registerHelper( "toFixed_n", function ( n ){
-	return (+n).toFixed(1);
+	// return (+n).toFixed(1);
+	return (+n).format(1, ",", '.');
+});
+
+Handlebars.registerHelper( "toFixed_n_0", function ( n ){
+	// return (+n).toFixed(1);
+	return (+n).format(0, ",", '.');
 });
 
 Handlebars.registerHelper( "get_partido", function ( options ){
