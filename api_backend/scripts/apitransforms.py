@@ -7,7 +7,7 @@ from utils import get_percentage, format_percentage, sort_results_by_percentage
 from config import JSON_EXAMPLE_PATH, SPECIAL_PARTIES, PASS_THRESHOLD
 log = logging.getLogger('paso.%s' % (__name__))
 
-PERC_KEY = "pct"
+PERC_KEYS = ["pct", "pct_total"]
 
 RESUMEN_RENAME = {
   'Electores': 'e',
@@ -20,7 +20,8 @@ RESUMEN_RENAME = {
 RESULTS_CAND_RENAME = {
     "id_candidato": "id",
     "votos": "v",
-    "pct": "p"
+    "pct": "p",
+    "pct_total": "pt"
 }
 
 RESULTS_PARTY_RENAME = {
@@ -44,12 +45,12 @@ def to_json(fname=None, d=None):
         f.write(json.dumps(d, ensure_ascii=False))
 
 
-def t_rename_data(d=None, translation=None, p_key=None):
+def t_rename_data(d=None, translation=None, p_keys=None):
     '''translate desired data'''
     target_dict = {}
     try:
         for k, v in translation.iteritems():
-            if (k == p_key):
+            if (k in p_keys):
                 d[k] = format_percentage(d[k])
             target_dict[v] = d[k]
     except KeyError:
@@ -98,21 +99,23 @@ def t_results_section_API(d=None, comuna=None, dest_dict=None):
         # 0 stores the global results for the election
     try:
         for idx, row in enumerate(data):
-            a00.append(t_rename_data(row, RESULTS_PARTY_RENAME, PERC_KEY))
+            a00.append(t_rename_data(row, RESULTS_PARTY_RENAME, PERC_KEYS))
             if len(row["listas"]) == 1:
                 # Do not include special parties inside "Listas únicas"
                 if row["id_partido"] not in SPECIAL_PARTIES:
-                    a99.append(t_rename_data(row, RESULTS_PARTY_RENAME, PERC_KEY))
+                    a99.append(t_rename_data(row,
+                                             RESULTS_PARTY_RENAME,
+                                             PERC_KEYS))
             else:
                 # Create transformed array for parties with many candidates
-                t_a = [t_rename_data(l, RESULTS_CAND_RENAME, PERC_KEY)
+                t_a = [t_rename_data(l, RESULTS_CAND_RENAME, PERC_KEYS)
                        for l in row["listas"]]
                 if not comuna:
                     # First time we see the party create a dictionary for it
                     # and append results
                     t_d = {"r": t_rename_data(row,
                                               RESULTS_PARTY_SUMM_RENAME,
-                                              PERC_KEY),
+                                              PERC_KEYS),
                            "c_%02d" % (comuna): t_a}
                     # Create the key for the policitical party
                     # inside the target dict
@@ -139,7 +142,8 @@ def t_sort_results_API(d_d=None):
     ''' sort the results by descending percentage
         taking into account special parties at the bottom'''
     for k, v in d_d.iteritems():
-        if k == "resumen": continue
+        if k == "resumen":
+            continue
         if k == "partido_00":
             if not sort_results_by_percentage(v, special=True):
                 return False
@@ -197,3 +201,41 @@ def t_candidates_percentage(d=None):
     cand_list.sort(key=lambda x: float(x['p']), reverse=True)
     result["candidatos"] = cand_list
     return result
+
+
+def t_ranking(d_d=None):
+    '''Transformation to obtain the ranking data for
+       the front page'''
+    data_parties = d_d["partido_00"]["c_00"]
+    data_summary = d_d["resumen"]
+
+    result = {}
+    # Get the summary of avaible voting tables
+    result["mp"] = data_summary["mp"]
+    # Get the top three parties
+    parties_list = []
+    for row in data_parties[0:3]:
+        party = {"id": row["id"], "p": row["p"]}
+        candidates_list = []
+        try:
+            data_primary = d_d["partido_%s" % (row["id"])]["c_00"]
+            for c in data_primary[0:2]:
+                candidates_list.append({"id": c["id"], "pt": c["pt"]})
+        except KeyError:
+            # Did not find party try over the rest of "listas únicas"
+            try:
+                data_primary = d_d["partido_99"]["c_00"]
+                # Inside "Listas únicas there is only one percentage"
+                candidates_list.append({"id": c["id"], "pt": c["p"]})
+            except Exception, e:
+                log.error("Did not find the party. Reason %s"
+                          % (str(e)))
+                return None
+        party["candidatos"] = candidates_list
+        parties_list.append(party)
+    result["partidos"] = parties_list
+    return result
+
+
+
+
