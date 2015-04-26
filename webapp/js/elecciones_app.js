@@ -46,23 +46,41 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 		// s.pintar_mapa();
 		
 		s.draw_ul_list();
-
+		s.get_mesas_escrutadas();
 
 		// template tooltip
 		s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
 		s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
+		s.tmpl_tooltip_interna = Handlebars.compile($('#tmpl_tooltip_interna').html());
 
 		s.on_click_comuna();
 		
 // ***********
 		tooltip(); // esta en scripts.js
 
-
 	})();
 
 	this.set_data_active = set_data_active;
 };
 
+
+
+ElecionesApp.prototype.animate_barras = function(){
+	$("#results .cont_barra .barra").each(function(i, el){
+		var $el = $(this);
+		$el.delay(500).animate({width: $el.data("width")}, {duration: 900, queue:false});
+	});
+};
+
+ElecionesApp.prototype.get_mesas_escrutadas = function(data){
+	var s = this; 
+	$.get(s.path_to_data+"resumen.json", function(resumen){
+		s.resumen = resumen;
+		$('#mesas span').html(s.resumen.mp+'%');
+		$('#votos span').html(s.resumen.vp+'%');
+		$('#padron span').html((+s.resumen.e).format(0, ",", '.'));
+	});
+};
 
 ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
 	// toma todos los ganadores por comuna y pinta el mapa
@@ -88,20 +106,17 @@ ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
 
 ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 	var s = this;
+
 	var id = polygon.id.replace(/c/i, "");
 	var com_name = "Comuna "+ id;
 	s.set_data_active(com_name);
+	
+	var comuna = "c_"+(id < 10 ? "0"+(+id) : id);
+	var key_cache = 'partido_'+ s.filtro_activo;
+	s.run_interna(key_cache, comuna);
 
 	s.q.set("comuna", id);
-
-	// data temporal
-	var data = {
-		total:s.internas.comunas["comuna_"+id],
-		porcentaje: 33.5
-	};
-	// !data temporal
-	
-	s.draw_x_interna(data);
+	s.set_comuna_active_path(polygon);
 
 };
 
@@ -153,7 +168,7 @@ ElecionesApp.prototype.reset = function (){
 		s.q.kill("comuna");
 
 	}else{ // dropdown x interna o listas únicas
-		s.draw_x_interna();
+		s.draw_x_interna(this.filtro_activo);
 
 	}
 	// clear radio btn
@@ -201,6 +216,8 @@ ElecionesApp.prototype.draw_ul_list = function(id){ // si no viene data, escribe
 	};
 
 	this.cont_results.html(this.tmpl_li_partido(l));
+	this.animate_barras();
+
 	if(is_comuna){ $(".help_text, #line").hide();}else{$(".help_text, #line").show();}
 
 // start niceScroll
@@ -218,42 +235,52 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 		
 		$.get(s.path_to_data + key_cache + ".json", function(data){
 			s.cache_ajax[key_cache] = data;
-			run_interna(key_cache);
+			s.run_interna(key_cache);
 		});
 
 	}else{	
-			run_interna(key_cache);
+			s.run_interna(key_cache);
 	}
 
-	function run_interna(key_cache){
-		var data = {
-			comunas : s.cache_ajax[key_cache],
-			is_99: val == "99",
-			max: s.cache_ajax[key_cache].c_00[0].p,
-			dict_candidatos: s.dict_candidatos
-		};
-		s.cont_results.html(s.tmpl_x_interna(data));
-		s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
-			
-		
-		// bind events for inputs
-		var candidato_btn = $('input[type="radio"]');
-		candidato_btn.on('click.select_condidato', function(el){
-			var $el = $(this);
-			$('li.active:has(input)').removeClass('active');
-			$el.closest('li').addClass('active');
-
-			s.set_data_active(this.value);
-			s.q.set("candidato", this.value);
-		});
-
-		// start niceScroll
-		s.start_niceScroll('#list_interna');
-	}
 };
 
-ElecionesApp.prototype.draw_tooltip = function(data){
-	this.tooltip.html(this.tmpl_tooltip(data));
+ElecionesApp.prototype.run_interna = function(key_cache, comuna){
+	var s = this;
+	if(!comuna){ comuna = 'c_00';}
+
+	var interna = s.cache_ajax[key_cache];
+
+	var data = {
+		interna: interna,
+		comuna : interna[comuna],
+		r : s.cache_ajax[key_cache].r,
+		is_99: s.filtro_activo == "99",
+		max: s.cache_ajax[key_cache][comuna][0].p,
+		dict_candidatos: s.dict_candidatos
+	};
+
+	s.cont_results.html(s.tmpl_x_interna(data));
+	s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
+		
+	s.animate_barras();
+	
+	// bind events for inputs
+	var candidato_btn = $('input[type="radio"]');
+	candidato_btn.on('click.select_condidato', function(el){
+		var $el = $(this);
+		$('li.active:has(input)').removeClass('active');
+		$el.closest('li').addClass('active');
+
+		s.set_data_active(this.value);
+		s.q.set("candidato", this.value);
+	});
+
+	// start niceScroll
+	s.start_niceScroll('#list_interna');
+};
+
+ElecionesApp.prototype.draw_tooltip = function(html){
+	this.tooltip.html(html);
 };
 
 ElecionesApp.prototype.remove_comuna_active_path = function(){
@@ -275,7 +302,7 @@ ElecionesApp.prototype.set_comuna_active_path = function(polygon){
 ElecionesApp.prototype.change_dropdown = function(val){
 	var s = this;
 	s.filtro_activo = val;
-	
+	s.reset();
 	$('#ayud1').hide();
 	$('.compartir').show();
 
@@ -338,12 +365,6 @@ ElecionesApp.prototype.pintar_mapa = function(){
 		if(s.ganadores_comunas.length < 15){ 
 			$("path, polygon").css({ stroke: '#ccc'});
 		}
-		// var x = s.ganadores_comunas[0];
-		// fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
-		// setar el color del partido para los patterns
-		// $("path, polygon").css({ fill: fill});
-		// $("#refes rect#masVotos").css({ fill: fill});
-		// $("line").css({ stroke: fill});
 
 	}
 };
@@ -353,18 +374,18 @@ ElecionesApp.prototype.barios_x_com = {
 	  "c01": "Constitución, Monserrat, Puerto Madero, Retiro, San Nicolás, San Telmo",
 	  "c02": "Recoleta",
 	  "c03": "Balvanera, San Cristobal",
-	  "c04": "Barracas, Boca, Nueva Pompeya, Parque Patricios",
+	  "c04": "Barracas, La Boca, Nueva Pompeya, Parque Patricios",
 	  "c05": "Almagro, Boedo",
 	  "c06": "Caballito",
 	  "c07": "Flores, Parque Chacabuco",
 	  "c08": "Villa Lugano, Villa Riachuelo, Villa Soldati",
 	  "c09": "Liniers, Mataderos, Parque Avellaneda",
-	  "c10": "Floresta, Monte Castro, Velez Sarsfield, Versalles, Villa Luro, Villa Real",
+	  "c10": "Floresta, Monte Castro, Vélez Sarsfield, Versalles, Villa Luro, Villa Real",
 	  "c11": "Villa Del Parque, Villa  Devoto, Villa Gral. Mitre, Villa Santa Rita",
 	  "c12": "Coghlan, Saavedra, Villa Pueyrredón, Villa Urquiza",
-	  "c13": "Belgrano, Colegiales, Nuñez",
+	  "c13": "Belgrano, Colegiales, Núñez",
 	  "c14": "Palermo",
-	  "c15": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortuzar"
+	  "c15": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortúzar"
 	};
 
 ElecionesApp.prototype.q = new PermanentLinkJS();

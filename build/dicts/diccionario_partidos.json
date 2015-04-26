@@ -97,25 +97,25 @@
 	},
 	"BLC": {
 		"nombre_partido": "En blanco",
-		"color_partido": "#7E7E7F",
+		"color_partido": "#BDBB86",
 		"select": "",
 		"especial": "true"
 	},
 	"NUL": {
 		"nombre_partido": "Nulos",
-		"color_partido": "#7E7E7F",
+		"color_partido": "#BDBB86",
 		"select": "",
 		"especial": "true"
 	},
 	"REC": {
 		"nombre_partido": "Recurridos",
-		"color_partido": "#7E7E7F",
+		"color_partido": "#BDBB86",
 		"select": "",
 		"especial": "true"
 	},
 	"IMP": {
 		"nombre_partido": "Impugnados",
-		"color_partido": "#7E7E7F",
+		"color_partido": "#BDBB86",
 		"select": "",
 		"especial": "true"
 	},

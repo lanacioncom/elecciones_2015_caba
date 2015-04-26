@@ -15,7 +15,7 @@ var gulp = require('gulp'),
 
 
 var t = new Date().getTime();
-var v = "0.3"
+var v = "0.5";
 
 
 var js_all = 'js/all'+v+'.min.js';
@@ -29,12 +29,13 @@ gulp.task('get_id_git', function () {
 	// var swig = require('gulp-swig');
 	var data = require('gulp-data');
 	// var fm = require('front-matter');
-	gulp.src(file_path)
-	.pipe(
-		data(function(file) {
-		console.log(file.contents);
-	  	return { 'foo': file.data }
-	}));
+	v = fs.readFileSync(file_path, 'utf-8');
+	console.log(v.slice(20))
+	// .pipe(
+	// 	data(function(file) {
+	// 	console.log(file.contents);
+	//   	return { 'foo': file.data }
+	// }));
 	
 	// // fs.readFileSync(filePath, function (err, resolvedPath) {
 	// //   if (err) throw err;

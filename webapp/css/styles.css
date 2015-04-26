@@ -407,7 +407,7 @@ div.ayuda3 {
 	background-color: rgba(255, 255, 255, 0.81);
     padding: 8px;
     border-radius: 3px;
-    display: none;
+    
 }
 
 
@@ -457,7 +457,7 @@ section {
 	
 	.tooltip .candidatoBarra {
 		height: 11px;
-		width:100%;
+		width:0%;
 		max-width:117px;
 		float:left;
 		margin-right:10px;
@@ -597,7 +597,7 @@ path, polygon {
 	stroke: white;
 	stroke-width: 1.2px;
 	cursor: pointer;
-	fill: #fff;
+	/*fill: #fff;*/
 }
 path, polygon, rect{	
     -webkit-transition: fill .4s ease;
@@ -619,7 +619,7 @@ svg defs patternsvg#pattern2 line{
 
 
 svg .comuna_active_path { 	
-	stroke: black;
+	stroke: #000 !important;
 	stroke-width: 1px;
 	cursor: default;
 }
@@ -650,9 +650,9 @@ svg .comuna_active_path {
 }
 
 #mapa_cont svg g#refes{
-	transform: translateX(0px) translateY(0px)  scale(1);
+	/*transform: translateX(0px) translateY(0px)  scale(1);*/
+	display: none;
 }
-
 
 #results {
 	border-left: solid 1px #dadada;
@@ -757,7 +757,7 @@ svg .comuna_active_path {
 
 
 .porc_text div.porc_partido {
-	font-size: 14px;
+	font-size: 15px;
   	color: #000;
    float: left;
 
@@ -798,11 +798,11 @@ svg .comuna_active_path {
 	border-bottom: 1px dotted #A0A0A0;
 	padding-top: 0px;
 	margin-bottom: 3px;
-	cursor:pointer;
+	/*cursor:pointer;*/
 }
 
 #results ul li.candidato:hover {
-	background-color: #f9f9f9;
+	/*background-color: #f9f9f9;*/
 }
 
 
@@ -820,15 +820,15 @@ svg .comuna_active_path {
 	width: calc(100% - 75px); /*background: rgba(200, 200, 200, .1);*/
 }
 .cont_barra .barra {
-	/*width: 100%;*/
-	height: 22px;
+	width: 0%;
+	height: 16px;
 	position: relative;
 }
 
 
 .cont_barra .barra .porc {
 	position: absolute;
-	top: 1px;
+	top: -1px;
 	right: -60px;
 	font: 18px arial;
 	font-weight: bold;
@@ -856,24 +856,24 @@ li.no_pasa .cont_barra .barra .porc {
 	left: 43px
 }
 li.no_pasa .cont_barra .barra .porc:after {
-	  content: "";
-	  width: 20px;
-	  height: 20px;
-	  color: #fff;
-	  display: inline-block;
-	  /*background: #C6373D;*/
-	  text-indent: 25px;
-	  background-image:url(../img/sprite.png); 
-	  Background-position: -8px 61px;
-	  /*border-radius: 50%;*/
-	  padding: 2px 3px;
-	  width: 13px;
-	  height: 13px;
-	  text-align: center;
-	  line-height: 11px;
-	  position: absolute;
-	  top: 0px;
-	  right: -27px;
+  content: "";
+  width: 62px;
+  height: 20px;
+  color: #fff;
+  display: inline-block;
+  /* background: #C6373D; */
+  text-indent: 25px;
+  background-image: url(../img/sprite.png);
+  Background-position: 142px 78px;
+  /* border-radius: 50%; */
+  padding: 2px 3px;
+  width: 134px;
+  height: 14px;
+  text-align: center;
+  line-height: 11px;
+  position: absolute;
+  top: 0px;
+  right: -149px;
 }
 
 /* internas */
@@ -942,7 +942,7 @@ ul#list_interna li div.cant_v {
 }
 
 footer{
-	width: 100%;
+	width: 98.5%;
 	padding:10px;
 	max-width: 990px;
 	color:#999;
@@ -1050,7 +1050,7 @@ footer div.datos span{
 
 	ul#list_interna li div.cant_v {
 	  color:#808080;
-	  text-indent: 0px;
+	  text-indent: 14px;
 	}
 
 	.cont_barra .barra {
@@ -1147,7 +1147,8 @@ footer div.datos span{
   	div.ayuda3 {
 	  width: 43%;
 	  position: absolute;
-	  bottom: 12px
+	  bottom: 12px;
+	  display: block;
 	}
 
 	section#cont_data {
@@ -1169,6 +1170,10 @@ footer div.datos span{
 	#results ul .cont_barra {
 	  width: calc(100% - 70px);
 	  margin-top: 2px;
+	}
+
+	ul#list_interna .cont_barra {
+	  width: calc(100% - 140px);
 	}
 
 

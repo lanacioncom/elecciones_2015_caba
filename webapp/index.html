@@ -71,9 +71,9 @@
 	<div class="ayuda" id="ayud1">FILTRAR POR INTERNA</div>
 
 	<div class="compartir">
-		<a href="mailto:?subject=Quién es quién en las PASO porteñas&body=Elecciones 2015 en lanacion.com, toda la cobertura --> http://www.lanacion.com.ar/elecciones-2015-t50499" class="btn" id="mail" title="Compartir por mail"></a>
+		<a href="mailto:?subject=Mirá el mapa de resultados de las PASO en CABA&body=Elecciones primarias 2015 en lanacion.com, toda la cobertura --> http://www.lanacion.com.ar/elecciones-2015-t50499" class="btn" id="mail" title="Compartir por mail"></a>
 		<a target="_blank" href="#" onclick="myPopup('https://plus.google.com/share?url=http://www.lanacion.com.ar/elecciones-2015-t50499')" class="btn" id="google" title="Compartir en Google+"></a>
-		<a target="_blank" href="#" onclick="myPopup('http://twitter.com/share?text=Toda la cobertura de las Elecciones 2015 - @lanacioncom&url=http://www.lanacion.com.ar/elecciones-2015-t50499&hashtags=lanacioncom,elecciones2015')" class="btn" id="twit" title="Compartir en Twitter"></a>
+		<a target="_blank" href="#" onclick="myPopup('http://twitter.com/share?text=Mirá el mapa de resultados de las PASO en CABA de @lanacioncom&url=http://www.lanacion.com.ar/elecciones-2015-t50499&hashtags=lanacioncom,elecciones2015')" class="btn" id="twit" title="Compartir en Twitter"></a>
 		<a target="_blank" href="#" onclick="myPopup('https://www.facebook.com/sharer/sharer.php?u=http://www.lanacion.com.ar/elecciones-2015-t50499')" class="btn" id="facebook" title="Compartir en Facebook"></a>
 	</div>
 
@@ -97,7 +97,9 @@
 				<option value="{{@key}}">{{nombre_partido}} (interna)</option>
 				{{/if}}
 			{{/each}}
+			{{!--
 			<option value="99">Listas únicas</option>
+			--}}
 		</script>
 	<!--<option value="x_fuerza">Todas las fuerzas políticas</option>
 		<option value="pro">Pro (interna)</option>
@@ -127,18 +129,17 @@
 			<div class="candidatoPorcentaje">{{toFixed_n p}}%</div>
 		</div>
 		{{/each}}
-		{{!--
+	</script>
+	<script type="text/template" id="tmpl_tooltip_interna">
+		<h4>COMUNA {{id}}</h4>
+		<p>{{barios_x_com}}</p>
+		{{#each candidatos}}
 		<div class="fuerza">
-			<div class="candidato">Partido id {{comuna.1.id}}</div>
-			<div class="candidatoBarra bk_fpv"  style="width:{{get_width_bar comuna.1.porcentaje max}}%;"></div>
-			<div class="candidatoPorcentaje">{{comuna.1.porcentaje}}%</div>
+			<div class="candidato">{{apellido}}</div>
+			<div class="candidatoBarra" style="width:{{get_width_bar p ../max}}%; background: {{color}}; {{check_index_opacyti}}"></div>
+			<div class="candidatoPorcentaje">{{toFixed_n p}}%</div>
 		</div>
-		<div class="fuerza">
-			<div class="candidato">Partido id {{comuna.2.id}}</div>
-			<div class="candidatoBarra bk_eco" style="width:{{get_width_bar comuna.2.porcentaje max}}%;"></div>
-			<div class="candidatoPorcentaje">{{comuna.2.porcentaje}}%</div>
-		</div>	
-			--}}
+		{{/each}}
 	</script>
 	</div>
 
@@ -150,22 +151,21 @@
 	<div id="x_interna">
 		<div class="porc_text" {{#if is_99}}hidden{{/if}}>
 			<div class="arrow-before"></div><div class="arrow-after"></div>
-			<div class="porc_partido">TOTAL FUERZA </div>
-			<div class="cant_v">{{r.v}} votos</div>
-			<div id="porPart">({{toFixed_n comunas.r.p}}% del total) {{interna}}</div>
+			<div class="porc_partido">Total fuerza </div>
+			<div class="cant_v">{{toFixed_n_0 r.v}} votos</div>
+			<div id="porPart">({{toFixed_n r.p}}% del total)</div>
 		</div>
 
 		<ul id="list_interna">
-			{{#each comunas.c_00}}
+			{{#each comuna}}
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="{{id}}">
+				<input hidden type="radio" name="candidato" value="{{id}}" />
 				<div class="foto {{get_candidato_apellido_class}}">&nbsp;</div>
 				<h5>{{get_candidato_nombre}}</h5>
-				<div class="cant_v">{{v}} votos</div>
+				<div class="cant_v">{{toFixed_n_0 v}} votos</div>
 				<div class="cont_barra">
-					{{!-- clase barra + style de partido--}}
-					<div class="barra" style="width:{{get_width_bar p ../max}}%; background: {{get_candidato_color}}; {{check_index_opacyti}}">
+					<div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_candidato_color}}; {{check_index_opacyti}}">
 						<div class="porc">{{toFixed_n p}}%</div>
 					</div>
 					
@@ -180,23 +180,27 @@
 		
 	<script type="text/template" id="tmpl_li_partido">
 	<div id="x_fuerza">
-		<div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%;">
+		<div class="help_text" style="margin-left:{{get_width_bar 1.5 max}}%; margin-left: calc({{get_width_bar 1.5 max}}% - 5.5px);">
 			<span>1,5%</span>
 			<p>PISO ELECTORAL: Porcentaje que deben superar los partidos para acceder a la elección general</p>
 		</div>
 		<ul id="list">
 			{{#each data}}
-				<li class="{{#isLessThan p 1.5}}no_pasa{{/isLessThan}}">
+			
+			{{#if ../is_comuna}}
+				<li>
+			{{else}}
+				<li class="{{chekIsLessThan15}}">
+			{{/if}}
 					<h5 
 						style="padding-left:{{#if ../is_comuna}}
 								1.8%
 							{{else}}
-								{{get_width_bar 1.8 ../max}}%
-							{{/if}};">{{get_partido}} <span>{{v}} votos</span>
+								{{get_width_bar 1.8 ../../max}}%
+							{{/if}};">{{get_partido}} <span>{{toFixed_n_0 v}} votos</span>
 					</h5>
 					<div class="cont_barra">
-						<!-- clase barra + style de partido-->
-						<div class="barra" style="width:{{get_width_bar p ../max}}%; background: {{get_partido_color}}">
+						<div class="barra" data-width="{{get_width_bar p ../max}}%" style="width:0; background: {{get_partido_color}}">
 							<div class="porc">{{toFixed_n p}}%</div>
 						</div>
 					</div>
@@ -213,9 +217,9 @@
 </section>
 <footer>
 	<div class="creditos">Créditos</div>
-	<div class="datos" id="padron">Padrón total: <span>1.020.020</span></div>
-	<div class="datos" id="votos">Votos escrutados: <span>25%</span></div>
-	<div class="datos" id="mesas" style="border-left:0px">Mesas escrutadas: <span>25%</span></div>
+	<div class="datos" id="padron">Padrón total: <span></span></div>
+	<div class="datos" id="votos">Votos escrutados: <span>%</span></div>
+	<div class="datos" id="mesas" style="border-left:0px">Mesas escrutadas: <span>%</span></div>
 </footer>
 
 <!-- build:js -->
