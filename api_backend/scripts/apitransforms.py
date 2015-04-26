@@ -5,6 +5,7 @@ import json
 import io
 from utils import get_percentage, format_percentage, sort_results_by_percentage
 from config import JSON_EXAMPLE_PATH, SPECIAL_PARTIES, PASS_THRESHOLD
+from config import Paso2015
 log = logging.getLogger('paso.%s' % (__name__))
 
 PERC_KEYS = ["pct", "pct_total"]
@@ -53,10 +54,9 @@ def t_rename_data(d=None, translation=None, p_keys=None):
             if (k in p_keys):
                 d[k] = format_percentage(d[k])
             target_dict[v] = d[k]
-    except KeyError:
+    except KeyError, e:
         log.error("Could not find required key %s in %s" % (k, d))
-        # Stop execution abruptly
-        exit(1)
+        raise Paso2015(__name__)
     return target_dict
 
 
@@ -68,22 +68,15 @@ def t_resumen_API(origin_dict=None):
             target_dict[v] = origin_dict['resumen'][k]
     except KeyError:
         log.error("Could not find required key %s in %s" % (k, origin_dict))
-        # Stop execution abruptly
-        exit(1)
+        raise Paso2015(__name__)
 
     # Calculate table percentage
     mp = get_percentage(target_dict, 'mi', 'mt')
-    if mp:
-        target_dict["mp"] = mp
-    else:
-        return None
+    target_dict["mp"] = mp
 
     # Calculate voting percentage
     vp = get_percentage(target_dict, 'v', 'e')
-    if vp:
-        target_dict["vp"] = vp
-    else:
-        return None
+    target_dict["vp"] = vp
     return target_dict
 
 
@@ -92,11 +85,16 @@ def t_results_section_API(d=None, comuna=None, dest_dict=None):
        to the desired format'''
     a99 = []
     a00 = []
-    if not comuna:
-        data = d["general"][0]["partidos"]
-    else:
-        data = d["general"][0]["comunas"]["partidos"]
-        # 0 stores the global results for the election
+    try:
+        if not comuna:
+            # 0 stores the global results for the election
+            data = d["general"][0]["partidos"]
+        else:
+            data = d["general"][0]["comunas"]["partidos"]
+    except (KeyError, IndexError), e:
+        log.error("Did not find data in memory. Reason" % (str(e)))
+        raise Paso2015(__name__)
+
     try:
         for idx, row in enumerate(data):
             a00.append(t_rename_data(row, RESULTS_PARTY_RENAME, PERC_KEYS))
@@ -128,14 +126,13 @@ def t_results_section_API(d=None, comuna=None, dest_dict=None):
                     dest_dict["partido_%s"
                               % (row["id_partido"])]["c_%02d" % (comuna)] = t_a
     except KeyError, e:
-        log.error("Error processing key reason %s" % (str(e)))
-        return False
+        log.error("Error processing key. Reason %s" % (str(e)))
+        raise Paso2015(__name__)
     except IndexError, e:
-        log.error("Error processing index reason %s" % (str(e)))
-        return False
+        log.error("Error processing index. Reason %s" % (str(e)))
+        raise Paso2015(__name__)
     dest_dict["partido_99"]["c_%02d" % (comuna)] = a99
     dest_dict["partido_00"]["c_%02d" % (comuna)] = a00
-    return True
 
 
 def t_sort_results_API(d_d=None):
@@ -145,12 +142,9 @@ def t_sort_results_API(d_d=None):
         if k == "resumen":
             continue
         if k == "partido_00":
-            if not sort_results_by_percentage(v, special=True):
-                return False
+            sort_results_by_percentage(v, special=True)
         else:
-            if not sort_results_by_percentage(v, special=False):
-                return False
-    return True
+            sort_results_by_percentage(v, special=False)
 
 
 def t_results_API(origin_list=None, dest_dict=None):
@@ -159,27 +153,31 @@ def t_results_API(origin_list=None, dest_dict=None):
        to political party driven data'''
     for i, v in enumerate(origin_list):
         log.debug("transform results for section %s" % (i))
-        if not t_results_section_API(v, i, dest_dict):
-            return False
+        t_results_section_API(v, i, dest_dict)
+
     # Sort special party results
-    if not t_sort_results_API(dest_dict):
-        return False
+    t_sort_results_API(dest_dict)
     # Write to file to preview intermediate result
     # to_json("datos_completos",dest_dict)
-    return True
 
 
+# QeQ candidates transformations
 def t_candidates_percentage(d=None):
     '''Transform candidates percentage for piece automation'''
-    data = d["general"][0]["partidos"]
+    try:
+        data = d[0]["general"][0]["partidos"]
+    except (KeyError, IndexError), e:
+        log.error("Error getting data from memory. Reason %s"
+                  % (str(e)))
+        raise Paso2015(__name__)
 
     result = {}
     cand_list = []
     for row in data:
         # Skip special political parties
-        if row["id_partido"] in SPECIAL_PARTIES:
-            continue
         try:
+            if row["id_partido"] in SPECIAL_PARTIES:
+                continue
             if (float(row["pct"]) >= PASS_THRESHOLD):
                 party_passed = True
             else:
@@ -193,49 +191,56 @@ def t_candidates_percentage(d=None):
                             "g": "1" if (int(c_d["votos"]) == max_v) else "0",
                             "pp": "1" if party_passed else "0"}
                 cand_list.append(tmp_cand)
-        except Exception as e:
+        except (KeyError, ValueError, IndexError), e:
             log.error("Failed to get the candidate percentage. Reason: %s"
                       % (str(e)))
-            return None
+            raise Paso2015(__name__)
     # Order candidate list by descending percentage
     cand_list.sort(key=lambda x: float(x['p']), reverse=True)
     result["candidatos"] = cand_list
     return result
 
 
+# Front page ranking transformations
 def t_ranking(d_d=None):
     '''Transformation to obtain the ranking data for
        the front page'''
-    data_parties = d_d["partido_00"]["c_00"]
-    data_summary = d_d["resumen"]
+    try:
+        data_parties = d_d["partido_00"]["c_00"]
+        data_summary = d_d["resumen"]
+    except KeyError, e:
+        log.error("Error getting data from memory. Reason %s"
+                  % (str(e)))
+        raise Paso2015(__name__)
 
     result = {}
     # Get the summary of avaible voting tables
     result["mp"] = data_summary["mp"]
     # Get the top three parties
     parties_list = []
-    for row in data_parties[0:3]:
-        party = {"id": row["id"], "p": row["p"]}
-        candidates_list = []
-        try:
-            data_primary = d_d["partido_%s" % (row["id"])]["c_00"]
-            for c in data_primary[0:2]:
-                candidates_list.append({"id": c["id"], "pt": c["pt"]})
-        except KeyError:
-            # Did not find party try over the rest of "listas únicas"
+    try:
+        for row in data_parties[0:3]:
+            party = {"id": row["id"], "p": row["p"]}
+            candidates_list = []
             try:
-                data_primary = d_d["partido_99"]["c_00"]
-                # Inside "Listas únicas there is only one percentage"
-                candidates_list.append({"id": c["id"], "pt": c["p"]})
-            except Exception, e:
-                log.error("Did not find the party. Reason %s"
-                          % (str(e)))
-                return None
-        party["candidatos"] = candidates_list
-        parties_list.append(party)
+                data_primary = d_d["partido_%s" % (row["id"])]["c_00"]
+                for c in data_primary[0:2]:
+                    candidates_list.append({"id": c["id"], "pt": c["pt"]})
+            except KeyError:
+                # Did not find party try over the rest of "listas únicas"
+                try:
+                    data_primary = d_d["partido_99"]["c_00"]
+                    # Inside "Listas únicas there is only one percentage"
+                    candidates_list.append({"id": c["id"], "pt": c["p"]})
+                except (KeyError, ValueError, IndexError), e:
+                    log.error("Did not find the party. Reason %s"
+                              % (str(e)))
+                    raise Paso2015(__name__)
+            party["candidatos"] = candidates_list
+            parties_list.append(party)
+    except IndexError, e:
+        log.error("Did not find at least 3 parties. Reason %s"
+                  % (str(e)))
+        raise Paso2015(__name__)
     result["partidos"] = parties_list
     return result
-
-
-
-

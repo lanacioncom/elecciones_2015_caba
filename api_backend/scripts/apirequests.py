@@ -1,10 +1,10 @@
 # coding: utf-8
 import logging
-import requests
+from requests import exceptions, get
 from config import BASE_URL, HEADERS, TIMEOUT
 from config import GENERALES_SERVICE, COMUNA_SERVICE
-from config import PRODUCTION
-# For testing with no data
+from config import PRODUCTION, Paso2015
+# For testing with simulated data
 import json
 import io
 from config import SIMULATE, JSON_EXAMPLE_PATH
@@ -15,13 +15,19 @@ log = logging.getLogger('paso.%s' % (__name__))
 def get_data_API(url=None, fname=None):
     if PRODUCTION or not SIMULATE:
         log.debug("Get url %s" % (url))
-        response = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        try:
+            response = get(url, headers=HEADERS, timeout=TIMEOUT)
+        except exceptions.RequestException, e:
+            log.error("Exception in requests get %s. Reason %s" %
+                      (url, str(e)))
+            raise Paso2015(__name__)
+
         if response.status_code == 200:
             return response.json()
         else:
             log.error("API responded with code %s" %
                       (response.status_code))
-            return None
+            raise Paso2015(__name__)
     else:
         log.warning('Simulating API data for url %s' % (url))
         try:
@@ -31,7 +37,7 @@ def get_data_API(url=None, fname=None):
             return j
         except (IOError):
             log.error("Did not find JSON example file")
-            return None
+            raise Paso2015(__name__)
 
 
 def get_results_API(o_l=None):
@@ -46,7 +52,4 @@ def get_results_API(o_l=None):
             suffix = COMUNA_SERVICE + "?id=%s" % (i)
         url = BASE_URL + suffix
         r = get_data_API(url, 'comuna%d' % (i))
-        if not r:
-            return False
         o_l.append(r)
-    return True
