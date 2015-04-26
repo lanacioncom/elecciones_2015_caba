@@ -1,9 +1,13 @@
 <svg version="1.1" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="513px" height="562.246px" viewBox="26.01 0 513 562.246" xml:space="preserve">
 	 <defs>
+<<<<<<< HEAD
+	  <pattern id="pattern1" x="10" y="10" width="10" height="10">
+=======
 	  <pattern id="pattern1"
 	           x="10" y="10" width="10" height="10" 
 	           >
+>>>>>>> b07101bf01b85fd2e3e6f879cacc7e4bda2b4e43
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="158.418" y1="-183.791" x2="-184.5" y2="159.127"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="163.255" y1="-178.983" x2="-179.664" y2="163.935"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="168.091" y1="-174.176" x2="-174.827" y2="168.743"/>
@@ -42,7 +46,7 @@
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="327.689" y1="-15.525" x2="-15.229" y2="327.393"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="332.526" y1="-10.718" x2="-10.393" y2="332.201"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="337.362" y1="-5.911" x2="-5.557" y2="337.009"/>
-			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="342.199" y1="-1.103" x2="-0.72" y2="341.816"/>
+			<line fill="#FFFFFF" stroke="#000000" stroke-mitrlimit="10" x1="342.199" y1="-1.103" x2="-0.72" y2="341.816"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="347.035" y1="3.704" x2="4.116" y2="346.624"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="351.871" y1="8.513" x2="8.953" y2="351.432"/>
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="356.707" y1="13.32" x2="13.789" y2="356.238"/>
@@ -68,7 +72,7 @@
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="453.434" y1="109.471" x2="110.515" y2="452.391"/>
 	  </pattern>
 
-	  <pattern id="pattern2"
+	  <pattern id="pattern2" patternUnits="userSpaceOnUse"
 	           x="10" y="10" width="10" height="10"
 	           >
 			<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" x1="158.418" y1="-183.791" x2="-184.5" y2="159.127"/>
@@ -140,7 +144,7 @@
 	<text transform="matrix(1 0 0 1 335 515)" fill="#7F7F7F" font-family="arial" font-size="12">+ votos</text>
 	<text transform="matrix(1 0 0 1 483.9883 515)" fill="#7F7F7F" font-family="arial" font-size="12">- votos</text>
 	<g>
-		<rect id="masVotos" x="335" y="527" fill="#666666" width="61" height="8"/>
+		<rect id="masVotos" x="335" y="527" fill="#666666" width="61" height="8" />
 		<rect id="mediosVotos" x="398" y="527" fill="#666666" width="60" height="8"/>
 		<rect id="menosVotos" x="461" y="527" fill="#666666" width="59" height="8"/>
 	</g>

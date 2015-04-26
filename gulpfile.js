@@ -10,40 +10,35 @@ var gulp = require('gulp'),
 	htmlreplace = require('gulp-html-replace'),
 	stylish = require('jshint-stylish'),
 	gutil = require('gulp-util'),
-	ftp = require('gulp-ftp');
     merge = require('merge-stream');
 
+var rimraf = require('gulp-rimraf');
 
 var t = new Date().getTime();
 var v = "0.5";
 
 
-var js_all = 'js/all'+v+'.min.js';
-var js_vendor = 'js/vendor'+v+'.min.js';
-var css_file_min = 'all'+v+'.min.css';
-
-gulp.task('get_id_git', function () {
+function get_id_git() {
 	var fs = require('fs');
 	var path = require('path');
 	var file_path = path.join(__dirname, '.git/refs/remotes/origin/master');
-	// var swig = require('gulp-swig');
-	var data = require('gulp-data');
-	// var fm = require('front-matter');
 	v = fs.readFileSync(file_path, 'utf-8');
-	console.log(v.slice(20))
-	// .pipe(
-	// 	data(function(file) {
-	// 	console.log(file.contents);
-	//   	return { 'foo': file.data }
-	// }));
-	
-	// // fs.readFileSync(filePath, function (err, resolvedPath) {
-	// //   if (err) throw err;
-	// //   v = resolvedPath;
-	// // });
-	// var text = fs.readFileSync('foo.tx', 'utf8');
-	// console.log(text);
-	 
+	return v.slice(0,10);
+};
+
+var js_all = 'js/all.v.'+get_id_git()+'.min.js';
+var js_vendor = 'js/vendor.v.'+get_id_git()+'.min.js';
+var css_file_min = 'all.v.'+get_id_git()+'.min.css';
+
+
+// Clear build directory
+// gulp.task('clear_build', function () {
+// 	// console.log(cd);
+// 	rimraf('./build/*');
+// });
+gulp.task('clear_build', function() {
+  return gulp.src('./build/', { }) // much faster 
+    .pipe(rimraf());
 });
 
 // build tasks
@@ -113,7 +108,7 @@ gulp.task('copy', function () {
 		.pipe(gulp.dest('build/dicts'));
 });
 
-gulp.task('build', ['minify-css', 'js', 'copy']);
+gulp.task('build', ['clear_build', 'minify-css', 'js', 'copy']);
 
 
 // SERVER
@@ -146,21 +141,4 @@ gulp.task('server_pro', function() {
 gulp.task('default', function() {
 
   console.log("Elecciones 2015 CABA");
-});
-
-
-//  push build to FTP
-gulp.task('deploy_ftp', function () {
-    var keys = require('./keys_ftp');
-    return gulp.src('**/*', { cwd: 'build' })
-        .pipe(ftp({
-            host: keys.host,
-            user: keys.user,
-            pass: keys.pass,
-            remotePath: keys.remotePath,
-        }))
-        // you need to have some kind of stream after gulp-ftp to make sure it's flushed 
-        // this can be a gulp plugin, gulp.dest, or any kind of stream 
-        // here we use a passthrough stream 
-        .pipe(gutil.noop());
 });
