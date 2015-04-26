@@ -5,9 +5,11 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 	var s = this;
 	s.dict_partidos = dict_partidos;
 	s.dict_candidatos = dict_candidatos;
+	s.path_to_data = path_to_data;
+	
+	// data dinamica
 	s.r_general = results;
 	s.internas = results.interna;
-	s.path_to_data = path_to_data;
 	s.comuna_active_path = null;
 	s.filtro_home = "00"; // filtro seteado por default
 	s.filtro_activo = "00";
@@ -57,12 +59,65 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 		
 // ***********
 		tooltip(); // esta en scripts.js
+		setInterval(function(){s.reload_app();}, 1200000);
 
 	})();
 
 	this.set_data_active = set_data_active;
 };
 
+
+
+ElecionesApp.prototype.cache_ajax = {};
+
+ElecionesApp.prototype.reset_cache_ajax = function(){
+	this.cache_ajax = {};
+};
+
+ElecionesApp.prototype.reload_app = function(){
+	console.log("reload data!");
+	var s = this;
+	s.reset_cache_ajax();
+
+};
+
+ElecionesApp.prototype.get_r_general = function(callback){
+	var s = this; 
+	$.get(s.path_to_data+"partido_00.json", function(results){
+		s.r_general = results;
+		
+		if(callback){callback();}
+	});
+};
+
+ElecionesApp.prototype.get_mesas_escrutadas = function(callback){
+	var s = this; 
+	$.get(s.path_to_data+"resumen.json", function(resumen){
+		s.resumen = resumen;
+		$('#mesas span').html(s.resumen.mp+'%');
+		$('#votos span').html(s.resumen.vp+'%');
+		$('#padron span').html((+s.resumen.e).format(0, ",", '.'));
+
+		if(callback){callback();}
+	});
+};
+
+
+ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del partido requerido
+	var s = this;
+	var key_cache = "partido_" + val;
+	if(!s.cache_ajax[key_cache]){ // si no esta en cache lo va a buscar...
+		
+		$.get(s.path_to_data + key_cache + ".json", function(data){
+			s.cache_ajax[key_cache] = data;
+			s.run_interna(key_cache);
+		});
+
+	}else{	
+			s.run_interna(key_cache);
+	}
+
+};
 
 
 ElecionesApp.prototype.animate_barras = function(){
@@ -72,15 +127,6 @@ ElecionesApp.prototype.animate_barras = function(){
 	});
 };
 
-ElecionesApp.prototype.get_mesas_escrutadas = function(data){
-	var s = this; 
-	$.get(s.path_to_data+"resumen.json", function(resumen){
-		s.resumen = resumen;
-		$('#mesas span').html(s.resumen.mp+'%');
-		$('#votos span').html(s.resumen.vp+'%');
-		$('#padron span').html((+s.resumen.e).format(0, ",", '.'));
-	});
-};
 
 ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
 	// toma todos los ganadores por comuna y pinta el mapa
@@ -225,24 +271,6 @@ ElecionesApp.prototype.draw_ul_list = function(id){ // si no viene data, escribe
 
 };
 
-
-ElecionesApp.prototype.cache_ajax = {};
-
-ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del partido requerido
-	var s = this;
-	var key_cache = "partido_" + val;
-	if(!s.cache_ajax[key_cache]){ // si no esta en cache lo va a buscar...
-		
-		$.get(s.path_to_data + key_cache + ".json", function(data){
-			s.cache_ajax[key_cache] = data;
-			s.run_interna(key_cache);
-		});
-
-	}else{	
-			s.run_interna(key_cache);
-	}
-
-};
 
 ElecionesApp.prototype.run_interna = function(key_cache, comuna){
 	var s = this;

@@ -33,10 +33,9 @@ var isMobile = { //valida si es un dispositivo movil
 $(function(){
     
 	"use strict";
-    $.ajaxSetup({ cache: true }); 
 	// load mapa
-	// var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
-	var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
+	var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
+	// var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
 		$.get("dicts/diccionario_partidos.json", function(dict_partidos){
@@ -46,20 +45,7 @@ $(function(){
 
 					$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
 					
-					var xmlns = "http://www.w3.org/2000/svg";
-					$('polygon, path').each(function(i, el){
-						var bbox = el.getBBox();
-						var t = document.createElementNS(xmlns, "text");
-						t.setAttributeNS(null,"x",bbox.x + (bbox.width/2)-5);		
-						t.setAttributeNS(null,"y",bbox.y + (bbox.height/2));		
-						t.setAttributeNS(null,"font-size",15);
-						t.setAttributeNS(null,"fill",'#fff');
-						var txt = document.createTextNode(el.id.replace("c", ""));
-						t.appendChild(txt);
-						$("#mapa_cont svg").append(t);
-						
-					});
-				// init app
+					// init app
 					app = new ElecionesApp(dict_partidos, dict_candidatos, results, path_to_data);
 
 					$("#opts").select2({
@@ -67,11 +53,48 @@ $(function(){
 				        val: "x_fuerza"
 				    });
 
-				
 
-					
+					// append nombres comunas
+					var xmlns = "http://www.w3.org/2000/svg";
+					function get_polygon_centroid(pts) {
+					   var twicearea=0,
+					   x=0, y=0,
+					   nPts = pts.length,
+					   p1, p2, f;
+					   for ( var i=0, j=nPts-1 ; i<nPts ; j=i++ ) {
+					      p1 = pts[i]; p2 = pts[j];
+					      f = p1.x*p2.y - p2.x*p1.y;
+					      twicearea += f;          
+					      x += ( p1.x + p2.x ) * f;
+					      y += ( p1.y + p2.y ) * f;
+					   }
+					   f = twicearea * 3;
+					   return { x:x/f, y:y/f };
+					}
+					function append_path(x, y, el){
+						var t = document.createElementNS(xmlns, "text");
+						t.setAttributeNS(null,"x", x);		
+						t.setAttributeNS(null,"y",y);		
+						t.setAttributeNS(null,"font-size",15);
+						t.setAttributeNS(null,"fill",'#fff');
+						var txt = document.createTextNode(el.id.replace("c", ""));
+						t.appendChild(txt);
+						$("#mapa_cont svg").append(t);
+					}	
 
-					
+					$('polygon').each(function(i, el){
+						var cid = get_polygon_centroid(el.points);
+						var bbox = el.getBBox();
+						append_path(cid.x, cid.y, el);
+						
+					});
+
+					$('path').each(function(i, el){
+						var bbox = el.getBBox();
+						append_path((bbox.x +bbox.width/2-10), (bbox.y+bbox.height/2+10), el);
+						
+					});
+
 				});
 			});
 		});
