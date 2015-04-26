@@ -3,7 +3,7 @@ import logging
 from config import init, BASE_URL, RESUMEN_SERVICE, JSON_DATA_PATH
 from apirequests import get_data_API, get_results_API
 from apitransforms import t_resumen_API, t_results_API
-from apitransforms import t_candidates_percentage
+from apitransforms import t_candidates_percentage, t_ranking
 from apiio import write_API_data, get_stored_json, write_JSON_file
 from utils import update_time_increased
 from time import time
@@ -60,6 +60,15 @@ def run():
     log.debug("Finished transforming candidates file")
     write_JSON_file(JSON_DATA_PATH, "candidatesQeQ", candidatesQeQ)
     log.debug("Finished generating QeQ JSON file")
+
+    # FrontPage Ranking vizualization
+    log.debug("Start transforming front page file")
+    front_page_ranking = t_ranking(final_dictionaries)
+    if not front_page_ranking:
+        return
+    log.debug("Finished transforming ranking file")
+    write_JSON_file(JSON_DATA_PATH, "anexo", front_page_ranking)
+    log.debug("Finished generating ranking JSON file")
     log.info("Execution time: %s seconds ---" % (time() - start_time))
 
 

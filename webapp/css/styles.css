@@ -755,7 +755,7 @@ svg .comuna_active_path {
 
 
 .porc_text div.porc_partido {
-	font-size: 14px;
+	font-size: 15px;
   	color: #000;
    float: left;
 
@@ -819,14 +819,14 @@ svg .comuna_active_path {
 }
 .cont_barra .barra {
 	width: 0%;
-	height: 22px;
+	height: 16px;
 	position: relative;
 }
 
 
 .cont_barra .barra .porc {
 	position: absolute;
-	top: 1px;
+	top: -1px;
 	right: -60px;
 	font: 18px arial;
 	font-weight: bold;
@@ -1048,7 +1048,7 @@ footer div.datos span{
 
 	ul#list_interna li div.cant_v {
 	  color:#808080;
-	  text-indent: 0px;
+	  text-indent: 14px;
 	}
 
 	.cont_barra .barra {
