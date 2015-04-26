@@ -8,11 +8,16 @@ log = logging.getLogger('paso.%s' % (__name__))
 def update_time_increased(od=None, nd=None):
     '''Compare times to determine if it has increased from
        last execution. Take into account midnight change'''
-    ot = od["ut"]
-    nt = nd["ut"]
-    omp = od["mp"]
-    nmp = nd["mp"]
+    
     updated = False
+    try:
+        ot = od["ut"]
+        nt = nd["ut"]
+        omp = od["mp"]
+        nmp = nd["mp"]
+    except KeyError, e:
+        log.error("Could not retrieve keys. Reason %s" % (str(e)))
+        raise Paso2015(__name__)
 
     try:
         d_old = strptime(ot, "%Y-%m-%d %H:%M:%S")
