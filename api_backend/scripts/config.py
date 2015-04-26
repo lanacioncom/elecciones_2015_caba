@@ -44,8 +44,17 @@ SPECIAL_PARTIES = {
     "REC": 1
 }
 
-#QeQ config
+# QeQ config
 PASS_THRESHOLD = 1.5
+
+
+# Exception Handling
+class Paso2015(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
 
 
 def create_folder_structure():
@@ -59,21 +68,24 @@ def create_folder_structure():
 
 def init():
     # Create folder structure
-    create_folder_structure()
-    # Configure logging
-    if PRODUCTION:
-        log.setLevel(logging.INFO)
-        #log.setLevel(logging.DEBUG)
-        #log.setLevel(logging.ERROR)
-    else:
-        log.setLevel(logging.DEBUG)
-     
-    # Add the log message handler to the logger
-    handler = logging.handlers.RotatingFileHandler('%s/%s' %
-                                                   (REL_LOGS_PATH,
-                                                    LOG_FILENAME),
-                                                   maxBytes=1048576,
-                                                   backupCount=5)
-    log_format = logging.Formatter(LOG_FORMAT_DATA)
-    handler.setFormatter(log_format)
-    log.addHandler(handler)
+    try:
+        create_folder_structure()
+        # Configure logging
+        if PRODUCTION:
+            log.setLevel(logging.INFO)
+            # log.setLevel(logging.DEBUG)
+            # log.setLevel(logging.ERROR)
+        else:
+            log.setLevel(logging.DEBUG)
+        # Add the log message handler to the logger
+        handler = logging.handlers.RotatingFileHandler('%s/%s' %
+                                                       (REL_LOGS_PATH,
+                                                        LOG_FILENAME),
+                                                       maxBytes=1048576,
+                                                       backupCount=5)
+        log_format = logging.Formatter(LOG_FORMAT_DATA)
+        handler.setFormatter(log_format)
+        log.addHandler(handler)
+    except Exception, e:
+        log.error("Error during initialization. Reason: %s" % (str(e)))
+        raise Paso2015(__name__)
