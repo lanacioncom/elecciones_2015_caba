@@ -820,14 +820,14 @@ svg .comuna_active_path {
 }
 .cont_barra .barra {
 	width: 0%;
-	height: 22px;
+	height: 16px;
 	position: relative;
 }
 
 
 .cont_barra .barra .porc {
 	position: absolute;
-	top: 1px;
+	top: -1px;
 	right: -60px;
 	font: 18px arial;
 	font-weight: bold;
