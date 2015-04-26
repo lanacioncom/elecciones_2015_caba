@@ -44,6 +44,9 @@ SPECIAL_PARTIES = {
     "REC": 1
 }
 
+#QeQ config
+PASS_THRESHOLD = 1.5
+
 
 def create_folder_structure():
     if not os.path.exists(REL_LOGS_PATH):

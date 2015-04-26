@@ -4,7 +4,7 @@ import logging
 import json
 import io
 from utils import get_percentage, format_percentage, sort_results_by_percentage
-from config import JSON_EXAMPLE_PATH, SPECIAL_PARTIES
+from config import JSON_EXAMPLE_PATH, SPECIAL_PARTIES, PASS_THRESHOLD
 log = logging.getLogger('paso.%s' % (__name__))
 
 PERC_KEY = "pct"
@@ -161,5 +161,39 @@ def t_results_API(origin_list=None, dest_dict=None):
     if not t_sort_results_API(dest_dict):
         return False
     # Write to file to preview intermediate result
-    #to_json("datos_completos",dest_dict)
+    # to_json("datos_completos",dest_dict)
     return True
+
+
+def t_candidates_percentage(d=None):
+    '''Transform candidates percentage for piece automation'''
+    data = d["general"][0]["partidos"]
+
+    result = {}
+    cand_list = []
+    for row in data:
+        # Skip special political parties
+        if row["id_partido"] in SPECIAL_PARTIES:
+            continue
+        try:
+            if (float(row["pct"]) >= PASS_THRESHOLD):
+                party_passed = True
+            else:
+                party_passed = False
+            # Get maximum number of votes for a party primary
+            max_v = int(max(row["listas"],
+                            key=lambda x: int(x["votos"]))["votos"])
+            for c_d in row["listas"]:
+                tmp_cand = {"id": c_d["id_candidato"],
+                            "p": format_percentage(c_d["pct_total"]),
+                            "g": "1" if (int(c_d["votos"]) == max_v) else "0",
+                            "pp": "1" if party_passed else "0"}
+                cand_list.append(tmp_cand)
+        except Exception as e:
+            log.error("Failed to get the candidate percentage. Reason: %s"
+                      % (str(e)))
+            return None
+    # Order candidate list by descending percentage
+    cand_list.sort(key=lambda x: float(x['p']), reverse=True)
+    result["candidatos"] = cand_list
+    return result
