@@ -53,7 +53,7 @@ def run():
         log.debug("Start transforming candidates file")
         candidatesQeQ = t_candidates_percentage(tmp_storage)
         log.debug("Finished transforming candidates file")
-        write_JSON_file(JSON_DATA_PATH, "candidatesQeQ", candidatesQeQ)
+        write_JSON_file(JSON_DATA_PATH, "quienesquien", candidatesQeQ)
         log.debug("Finished generating QeQ JSON file")
 
         # FrontPage Ranking vizualization
