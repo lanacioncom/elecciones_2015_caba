@@ -296,7 +296,6 @@ ElecionesApp.prototype.set_comuna_active_path = function(polygon){
 	this.comuna_active_path.attr("class","comuna_active_path");
 	this.comuna_active_path.css("fill-opacity","0");
 	$("svg").append(this.comuna_active_path);
-
 };
 
 

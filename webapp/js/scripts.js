@@ -45,8 +45,20 @@ $(function(){
 				$.get(path_to_data+"partido_00.json", function(results){
 
 					$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
-								
 					
+					var xmlns = "http://www.w3.org/2000/svg";
+					$('polygon, path').each(function(i, el){
+						var bbox = el.getBBox();
+						var t = document.createElementNS(xmlns, "text");
+						t.setAttributeNS(null,"x",bbox.x + (bbox.width/2)-5);		
+						t.setAttributeNS(null,"y",bbox.y + (bbox.height/2));		
+						t.setAttributeNS(null,"font-size",15);
+						t.setAttributeNS(null,"fill",'#fff');
+						var txt = document.createTextNode(el.id.replace("c", ""));
+						t.appendChild(txt);
+						$("#mapa_cont svg").append(t);
+						
+					});
 				// init app
 					app = new ElecionesApp(dict_partidos, dict_candidatos, results, path_to_data);
 
