@@ -46,7 +46,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 		// s.pintar_mapa();
 		
 		s.draw_ul_list();
-
+		s.get_mesas_escrutadas();
 
 		// template tooltip
 		s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
@@ -58,12 +58,21 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 // ***********
 		tooltip(); // esta en scripts.js
 
-
 	})();
 
 	this.set_data_active = set_data_active;
 };
 
+
+ElecionesApp.prototype.get_mesas_escrutadas = function(data){
+	var s = this; 
+	$.get(s.path_to_data+"resumen.json", function(resumen){
+		s.resumen = resumen;
+		$('#mesas span').html(s.resumen.mp+'%');
+		$('#votos span').html(s.resumen.vp+'%');
+		$('#padron span').html(s.resumen.e);
+	});
+};
 
 ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
 	// toma todos los ganadores por comuna y pinta el mapa
@@ -93,12 +102,13 @@ ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 	var id = polygon.id.replace(/c/i, "");
 	var com_name = "Comuna "+ id;
 	s.set_data_active(com_name);
-
-	s.q.set("comuna", id);
-	s.set_comuna_active_path(polygon);
+	
 	var comuna = "c_"+(id < 10 ? "0"+(+id) : id);
 	var key_cache = 'partido_'+ s.filtro_activo;
 	s.run_interna(key_cache, comuna);
+
+	s.q.set("comuna", id);
+	s.set_comuna_active_path(polygon);
 
 };
 
@@ -281,7 +291,7 @@ ElecionesApp.prototype.set_comuna_active_path = function(polygon){
 ElecionesApp.prototype.change_dropdown = function(val){
 	var s = this;
 	s.filtro_activo = val;
-	
+	s.reset();
 	$('#ayud1').hide();
 	$('.compartir').show();
 
@@ -344,12 +354,6 @@ ElecionesApp.prototype.pintar_mapa = function(){
 		if(s.ganadores_comunas.length < 15){ 
 			$("path, polygon").css({ stroke: '#ccc'});
 		}
-		// var x = s.ganadores_comunas[0];
-		// fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
-		// setar el color del partido para los patterns
-		// $("path, polygon").css({ fill: fill});
-		// $("#refes rect#masVotos").css({ fill: fill});
-		// $("line").css({ stroke: fill});
 
 	}
 };

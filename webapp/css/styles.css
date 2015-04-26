@@ -596,7 +596,7 @@ path, polygon {
 	stroke: white;
 	stroke-width: 1.2px;
 	cursor: pointer;
-	fill: #fff;
+	/*fill: #fff;*/
 }
 path, polygon, rect{	
     -webkit-transition: fill .4s ease;
@@ -646,12 +646,11 @@ svg .comuna_active_path {
 #mapa_cont svg #menosVotos{
 	fill: url(#pattern1);
 }
-/*
+
 #mapa_cont svg g#refes{
-	transform: translateX(0px) translateY(0px)  scale(1);
+	/*transform: translateX(0px) translateY(0px)  scale(1);*/
 	display: none;
 }
-*/
 
 #results {
 	border-left: solid 1px #dadada;
@@ -797,11 +796,11 @@ svg .comuna_active_path {
 	border-bottom: 1px dotted #A0A0A0;
 	padding-top: 0px;
 	margin-bottom: 3px;
-	cursor:pointer;
+	/*cursor:pointer;*/
 }
 
 #results ul li.candidato:hover {
-	background-color: #f9f9f9;
+	/*background-color: #f9f9f9;*/
 }
 
 

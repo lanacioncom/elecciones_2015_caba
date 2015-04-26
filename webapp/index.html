@@ -96,7 +96,9 @@
 				<option value="{{@key}}">{{nombre_partido}} (interna)</option>
 				{{/if}}
 			{{/each}}
+			{{!--
 			<option value="99">Listas únicas</option>
+			--}}
 		</script>
 	<!--<option value="x_fuerza">Todas las fuerzas políticas</option>
 		<option value="pro">Pro (interna)</option>
@@ -157,7 +159,7 @@
 			{{#each comuna}}
 			<li class="candidato">
 			<div class="bg_li clearfix">
-				<input type="radio" name="candidato" value="{{id}}">
+				<input hidden type="radio" name="candidato" value="{{id}}" />
 				<div class="foto {{get_candidato_apellido_class}}">&nbsp;</div>
 				<h5>{{get_candidato_nombre}}</h5>
 				<div class="cant_v">{{v}} votos</div>
@@ -216,9 +218,9 @@
 </section>
 <footer>
 	<div class="creditos">Créditos</div>
-	<div class="datos" id="padron">Padrón total: <span>1.020.020</span></div>
-	<div class="datos" id="votos">Votos escrutados: <span>25%</span></div>
-	<div class="datos" id="mesas" style="border-left:0px">Mesas escrutadas: <span>25%</span></div>
+	<div class="datos" id="padron">Padrón total: <span></span></div>
+	<div class="datos" id="votos">Votos escrutados: <span>%</span></div>
+	<div class="datos" id="mesas" style="border-left:0px">Mesas escrutadas: <span>%</span></div>
 </footer>
 
 <!-- build:js -->

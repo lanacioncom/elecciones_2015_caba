@@ -38,16 +38,18 @@ $(function(){
 				$.get(path_to_data+"partido_00.json", function(results){
 
 					$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
-					// init app
+								
 					
+				// init app
 					app = new ElecionesApp(dict_partidos, dict_candidatos, results, path_to_data);
 
-					/* select */
-					
 					$("#opts").select2({
 				        minimumResultsForSearch: -1,
 				        val: "x_fuerza"
 				    });
+
+				/* select */
+					
 
 					
 				});
