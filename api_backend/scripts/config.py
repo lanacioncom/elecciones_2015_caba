@@ -44,6 +44,9 @@ SPECIAL_PARTIES = {
     "REC": 1
 }
 
+#QeQ config
+PASS_THRESHOLD = 1.5
+
 
 def create_folder_structure():
     if not os.path.exists(REL_LOGS_PATH):
@@ -74,5 +77,3 @@ def init():
     log_format = logging.Formatter(LOG_FORMAT_DATA)
     handler.setFormatter(log_format)
     log.addHandler(handler)
-    if PRODUCTION:
-        log.info("Production environment detected")

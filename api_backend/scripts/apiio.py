@@ -23,9 +23,6 @@ def write_API_data(d_d=None):
     '''Write the transformed JSON to disk'''
     for fname, d in d_d.iteritems():
         try:
-            # with io.open('%s/%s.json'
-            #              % (JSON_DATA_PATH, fname),
-            #              'wb') as f:
             with io.open('%s/%s.json'
                          % (JSON_DATA_PATH, fname),
                          'w', encoding='utf8') as f:
@@ -35,3 +32,12 @@ def write_API_data(d_d=None):
             log.error("Failed to save JSON file %s" % (fname))
             return False
     return True
+
+
+def write_JSON_file(path=None, fname=None, data=None):
+    '''Write JSON files to disk'''
+    with io.open('%s/%s.json'
+                 % (JSON_DATA_PATH, fname),
+                 'wb') as f:
+        log.debug("writing output JSON: %s.json" % (fname))
+        f.write(json.dumps(data, ensure_ascii=False))

@@ -1,8 +1,9 @@
 # coding: utf-8
 import logging
 from time import strptime
-log = logging.getLogger('paso.%s' % (__name__))
 from config import SPECIAL_PARTIES
+log = logging.getLogger('paso.%s' % (__name__))
+
 
 def update_time_increased(od=None, nd=None):
     '''Compare times to determine if it has increased from
@@ -32,7 +33,7 @@ def update_time_increased(od=None, nd=None):
                       % (f_omp, f_nmp))
 
     if not updated:
-        logging.debug('Did not find updated data, going back to sleep')
+        log.info('Did not find updated data, going back to sleep')
     return updated
 
 

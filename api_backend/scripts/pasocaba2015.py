@@ -1,9 +1,10 @@
 # coding: utf-8
 import logging
-from config import init, BASE_URL, RESUMEN_SERVICE
+from config import init, BASE_URL, RESUMEN_SERVICE, JSON_DATA_PATH
 from apirequests import get_data_API, get_results_API
 from apitransforms import t_resumen_API, t_results_API
-from apiio import write_API_data, get_stored_json
+from apitransforms import t_candidates_percentage
+from apiio import write_API_data, get_stored_json, write_JSON_file
 from utils import update_time_increased
 from time import time
 log = logging.getLogger('paso.%s' % (__name__))
@@ -50,6 +51,15 @@ def run():
     if not write_API_data(final_dictionaries):
         return
     log.debug("Finished writing the JSON results")
+
+    # QuienEsQuien functionality
+    log.debug("Start transforming candidates file")
+    candidatesQeQ = t_candidates_percentage(tmp_storage[0])
+    if not candidatesQeQ:
+        return
+    log.debug("Finished transforming candidates file")
+    write_JSON_file(JSON_DATA_PATH, "candidatesQeQ", candidatesQeQ)
+    log.debug("Finished generating QeQ JSON file")
     log.info("Execution time: %s seconds ---" % (time() - start_time))
 
 
