@@ -256,8 +256,9 @@ div.titulos {
 
 h1 {
 	font-family: 'TheSansSemi', arial, Helvetica, sans-serif;
-	font-size: 30px;
-	color: #29ABE2;
+	font-size: 23px;
+	/*color: #29ABE2;*/
+	color:#000;
 	display: inline-block;
 	letter-spacing: -1px;
 }
@@ -369,7 +370,7 @@ div.ayuda {
 	width: 94px;
 	height: 70px;
 	position: absolute;
-	top:15px;
+	top:0px;
 	right:5px;
 	font-family: 'TheSansSemi';
 	font-size: 15px;
@@ -606,12 +607,12 @@ path, polygon, rect{
 }
 
 
-svg #pattern1 line{
+svg defs pattern#pattern1 line{
 	stroke:#2D9FDA;
 	stroke-width:5px;
 }
 
-svg #pattern2 line{
+svg defs patternsvg#pattern2 line{
 	stroke:#2D9FDA;
 	stroke-width:2px;
 }
@@ -639,12 +640,13 @@ svg .comuna_active_path {
 	fill: #FEDB30;
 }
 
+
 #mapa_cont svg #mediosVotos{
-	fill: url(#pattern2);
+	fill: url("#pattern2");
 }
 
 #mapa_cont svg #menosVotos{
-	fill: url(#pattern1);
+	fill: url('#pattern1');
 }
 
 #mapa_cont svg g#refes{
@@ -851,7 +853,7 @@ li.no_pasa .cont_barra .barra {
 li.no_pasa .cont_barra .barra .porc {
 	color: #999;
 	right: auto;
-	left: 15px
+	left: 43px
 }
 li.no_pasa .cont_barra .barra .porc:after {
 	  content: "";
