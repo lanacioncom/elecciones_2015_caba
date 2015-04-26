@@ -854,24 +854,24 @@ li.no_pasa .cont_barra .barra .porc {
 	left: 15px
 }
 li.no_pasa .cont_barra .barra .porc:after {
-	  content: "";
-	  width: 20px;
-	  height: 20px;
-	  color: #fff;
-	  display: inline-block;
-	  /*background: #C6373D;*/
-	  text-indent: 25px;
-	  background-image:url(../img/sprite.png); 
-	  Background-position: -8px 61px;
-	  /*border-radius: 50%;*/
-	  padding: 2px 3px;
-	  width: 13px;
-	  height: 13px;
-	  text-align: center;
-	  line-height: 11px;
-	  position: absolute;
-	  top: 0px;
-	  right: -27px;
+  content: "";
+  width: 62px;
+  height: 20px;
+  color: #fff;
+  display: inline-block;
+  /* background: #C6373D; */
+  text-indent: 25px;
+  background-image: url(../img/sprite.png);
+  Background-position: 142px 78px;
+  /* border-radius: 50%; */
+  padding: 2px 3px;
+  width: 134px;
+  height: 14px;
+  text-align: center;
+  line-height: 11px;
+  position: absolute;
+  top: 0px;
+  right: -149px;
 }
 
 /* internas */
