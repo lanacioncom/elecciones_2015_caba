@@ -70,7 +70,7 @@ ElecionesApp.prototype.get_mesas_escrutadas = function(data){
 		s.resumen = resumen;
 		$('#mesas span').html(s.resumen.mp+'%');
 		$('#votos span').html(s.resumen.vp+'%');
-		$('#padron span').html(s.resumen.e);
+		$('#padron span').html((+s.resumen.e).format(0, ",", '.'));
 	});
 };
 
