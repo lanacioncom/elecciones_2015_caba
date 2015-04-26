@@ -15,7 +15,7 @@ var gulp = require('gulp'),
 
 
 var t = new Date().getTime();
-var v = "0.4";
+var v = "0.5";
 
 
 var js_all = 'js/all'+v+'.min.js';

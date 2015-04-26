@@ -1,7 +1,7 @@
 # coding: utf-8
 import logging
 from time import strptime
-from config import SPECIAL_PARTIES
+from config import SPECIAL_PARTIES, Paso2015
 log = logging.getLogger('paso.%s' % (__name__))
 
 
@@ -21,6 +21,7 @@ def update_time_increased(od=None, nd=None):
             updated = True
     except ValueError:
         log.error("Could not parse dates %s - %s" % (ot, nt))
+        raise Paso2015(__name__)
 
     if not updated:
         try:
@@ -31,6 +32,7 @@ def update_time_increased(od=None, nd=None):
         except ValueError:
             log.error("Could not parse table percentage %s - %s"
                       % (f_omp, f_nmp))
+            raise Paso2015(__name__)
 
     if not updated:
         log.info('Did not find updated data, going back to sleep')
@@ -43,8 +45,7 @@ def format_percentage(num=None):
             num = float(num)
         except ValueError, e:
             log.error("Could not convert to number reason %s" % (str(e)))
-            # Exit abruptly
-            exit(1)
+            raise Paso2015(__name__)
     return "{0:.1f}".format(num)
 
 
@@ -55,8 +56,10 @@ def get_percentage(dict=None, key1=None, key2=None):
         value = int(dict[key1])
     except KeyError, e:
         log.error("Did not find key: %s" % (key2))
+        raise Paso2015(__name__)
     except ValueError, e:
         log.error("Could not convert to number reason %s" % (str(e)))
+        raise Paso2015(__name__)
 
     p = value / total
     result = format_percentage(100 * p)
@@ -79,41 +82,11 @@ def sort_results_by_percentage(d=None, special=False):
                         tmp.append(row)
                         indexes.append(idx)
                 # Remove indexes in inverse order not to generate
-                # IndexOutOfBounds 
+                # IndexOutOfBounds
                 for i in reversed(indexes):
                     l.pop(i)
                 tmp.sort(key=lambda x: SPECIAL_PARTIES[x["id"]], reverse=False)
                 l.extend(tmp)
         except KeyError:
             log.error("Did not find key c_%02d in dict %s" % (i, d))
-            return False
-    return True
-
-# def clean_integer_data(s):
-#     '''Get rid of spaces and spanish
-#        number formatting and convert to integer'''
-#     if (type(s) != int):
-#         if (type(s) == str or type(s) == unicode):
-#             s = s.strip().replace(".", "").replace(",", ".")
-#             result = int(s)
-#         else:
-#             logging.error("Unexpected data type %s" % (s))
-#     else:
-#         result = s
-#     return result
-
-
-# def normalize_names(s):
-#     '''Get rid of all spaces and lowercase'''
-#     s = s.strip().replace(" ", "").lower()
-#     return s
-
-
-def sort_data(l=None, key='p', desc=True):
-    '''sort data by key to ease frontend display'''
-    return l.sort(key=lambda x: float(x[key]), reverse=desc)
-
-# logging.basicConfig(filename='%s/LOG_FILENAME' % (REL_LOGS_PATH),
-#                     level=logging.DEBUG,
-#                     format='%(asctime)s %(levelname)s: %(message)s',
-#                     datefmt='%Y%m%d-%H:%M:%S')
+            raise Paso2015(__name__)
