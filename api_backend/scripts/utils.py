@@ -19,11 +19,8 @@ def update_time_increased(od=None, nd=None):
         d_new = strptime(nt, "%Y-%m-%d %H:%M:%S")
         if (d_old < d_new):
             updated = True
-    except ValueError:
+    except TypeError:
         log.error("Could not parse dates %s - %s" % (ot, nt))
-        raise Paso2015(__name__)
-
-    if not updated:
         try:
             f_omp = float(omp)
             f_nmp = float(nmp)
