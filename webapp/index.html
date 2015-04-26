@@ -150,11 +150,11 @@
 			<div class="arrow-before"></div><div class="arrow-after"></div>
 			<div class="porc_partido">TOTAL FUERZA </div>
 			<div class="cant_v">{{r.v}} votos</div>
-			<div id="porPart">({{toFixed_n comunas.r.p}}% del total) {{interna}}</div>
+			<div id="porPart">({{toFixed_n r.p}}% del total)</div>
 		</div>
 
 		<ul id="list_interna">
-			{{#each comunas.c_00}}
+			{{#each comuna}}
 			<li class="candidato">
 			<div class="bg_li clearfix">
 				<input type="radio" name="candidato" value="{{id}}">
@@ -184,12 +184,17 @@
 		</div>
 		<ul id="list">
 			{{#each data}}
-				<li class="{{#isLessThan p 1.5}}no_pasa{{/isLessThan}}">
+			
+			{{#if ../is_comuna}}
+				<li>
+			{{else}}
+				<li class="{{chekIsLessThan15}}">
+			{{/if}}
 					<h5 
 						style="padding-left:{{#if ../is_comuna}}
 								1.8%
 							{{else}}
-								{{get_width_bar 1.8 ../max}}%
+								{{get_width_bar 1.8 ../../max}}%
 							{{/if}};">{{get_partido}} <span>{{v}} votos</span>
 					</h5>
 					<div class="cont_barra">

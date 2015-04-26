@@ -96,19 +96,9 @@ ElecionesApp.prototype.select_comuna_interna = 	function(polygon){
 
 	s.q.set("comuna", id);
 	s.set_comuna_active_path(polygon);
-	
-	console.log(s.filtro_activo)
-	var interna = s.cache_ajax['partido_'+s.filtro_activo]
-	var comuna = interna['c_'+id]
-	console.log(com)
-	// data temporal
-	var data = {
-		total:s.internas.comunas["comuna_"+id],
-		porcentaje: 33.5
-	};
-	// !data temporal
-	
-	// s.draw_x_interna(data);
+	var comuna = "c_"+(id < 10 ? "0"+(+id) : id);
+	var key_cache = 'partido_'+ s.filtro_activo;
+	s.run_interna(key_cache, comuna);
 
 };
 
@@ -160,7 +150,7 @@ ElecionesApp.prototype.reset = function (){
 		s.q.kill("comuna");
 
 	}else{ // dropdown x interna o listas únicas
-		s.draw_x_interna();
+		s.draw_x_interna(this.filtro_activo);
 
 	}
 	// clear radio btn
@@ -225,38 +215,47 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 		
 		$.get(s.path_to_data + key_cache + ".json", function(data){
 			s.cache_ajax[key_cache] = data;
-			run_interna(key_cache);
+			s.run_interna(key_cache);
 		});
 
 	}else{	
-			run_interna(key_cache);
+			s.run_interna(key_cache);
 	}
 
-	function run_interna(key_cache){
-		var data = {
-			comunas : s.cache_ajax[key_cache],
-			is_99: val == "99",
-			max: s.cache_ajax[key_cache].c_00[0].p,
-			dict_candidatos: s.dict_candidatos
-		};
-		s.cont_results.html(s.tmpl_x_interna(data));
-		s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
-			
+};
+
+ElecionesApp.prototype.run_interna = function(key_cache, comuna){
+	var s = this;
+	if(!comuna){ comuna = 'c_00';}
+
+	var interna = s.cache_ajax[key_cache];
+
+	var data = {
+		interna: interna,
+		comuna : interna[comuna],
+		r : s.cache_ajax[key_cache].r,
+		is_99: s.filtro_activo == "99",
+		max: s.cache_ajax[key_cache][comuna][0].p,
+		dict_candidatos: s.dict_candidatos
+	};
+
+	s.cont_results.html(s.tmpl_x_interna(data));
+	s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
 		
-		// bind events for inputs
-		var candidato_btn = $('input[type="radio"]');
-		candidato_btn.on('click.select_condidato', function(el){
-			var $el = $(this);
-			$('li.active:has(input)').removeClass('active');
-			$el.closest('li').addClass('active');
+	
+	// bind events for inputs
+	var candidato_btn = $('input[type="radio"]');
+	candidato_btn.on('click.select_condidato', function(el){
+		var $el = $(this);
+		$('li.active:has(input)').removeClass('active');
+		$el.closest('li').addClass('active');
 
-			s.set_data_active(this.value);
-			s.q.set("candidato", this.value);
-		});
+		s.set_data_active(this.value);
+		s.q.set("candidato", this.value);
+	});
 
-		// start niceScroll
-		s.start_niceScroll('#list_interna');
-	}
+	// start niceScroll
+	s.start_niceScroll('#list_interna');
 };
 
 ElecionesApp.prototype.draw_tooltip = function(html){

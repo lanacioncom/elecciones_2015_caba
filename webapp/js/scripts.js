@@ -26,9 +26,10 @@ var isMobile = { //valida si es un dispositivo movil
 $(function(){
     
 	"use strict";
-    // $.ajaxSetup({ cache: false }); 
+    $.ajaxSetup({ cache: false }); 
 	// load mapa
-	var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
+	// var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
+	var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
 		$.get("dicts/diccionario_partidos.json", function(dict_partidos){
@@ -119,6 +120,7 @@ function tooltip(){
 						id: ide,
 						max: data[0].p,
 						candidatos: data,
+						interna: app.cache_ajax['partido_'+partido_id],
 						barios_x_com: app.barios_x_com["c"+ide]
 					});
 		}

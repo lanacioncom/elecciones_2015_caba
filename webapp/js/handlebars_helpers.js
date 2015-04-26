@@ -17,11 +17,14 @@ Handlebars.registerHelper('ifNotCond', function(v1, v2, options) {
   return options.inverse(this);
 });
 
-Handlebars.registerHelper('isLessThan', function(v1, v2, options) {
-  if(+v1 < +v2) {
-	return options.fn(this);
-  }
-  return options.inverse(this);
+Handlebars.registerHelper('chekIsLessThan15', function(options) {
+	if(options.data.root.is_comuna) {
+		return "";
+	}else if(/[a-z]/gi.test(this.id)){
+		return "";
+	}else if(this.p < 1.5){
+		return "no_pasa";
+	}
 });
 
 
@@ -71,9 +74,12 @@ Handlebars.registerHelper( "get_width_bar", function ( porcentaje, max, options 
 
 Handlebars.registerHelper( "check_index_opacyti", function ( options ){
 	var r = "";
-	if(!options.data.first){
+	var win1 = options.data.root.interna.c_00[0].id;
+	var win2 = options.data.root.interna.c_00[1].id;
+
+	if(this.id != win1){
 		r = "opacity: .4;";		
-		if(options.data.index != 1){
+		if(this.id != win2){
 			r += "background: #ccc;";		
 		}
 	}

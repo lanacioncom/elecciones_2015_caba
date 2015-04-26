@@ -646,11 +646,12 @@ svg .comuna_active_path {
 #mapa_cont svg #menosVotos{
 	fill: url(#pattern1);
 }
-
+/*
 #mapa_cont svg g#refes{
 	transform: translateX(0px) translateY(0px)  scale(1);
+	display: none;
 }
-
+*/
 
 #results {
 	border-left: solid 1px #dadada;
@@ -1145,7 +1146,8 @@ footer div.datos span{
   	div.ayuda3 {
 	  width: 43%;
 	  position: absolute;
-	  bottom: 12px
+	  bottom: 12px;
+	  display: block;
 	}
 
 	section#cont_data {
