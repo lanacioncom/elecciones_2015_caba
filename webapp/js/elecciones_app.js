@@ -59,7 +59,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 		
 // ***********
 		tooltip(); // esta en scripts.js
-		setInterval(function(){s.reload_app();}, 1200000);
+		// setInterval(function(){s.reload_app();}, 1200000);
 
 	})();
 
@@ -333,7 +333,7 @@ ElecionesApp.prototype.change_dropdown = function(val){
 	s.reset();
 	$('#ayud1').hide();
 	$('.compartir').show();
-
+	s.q.kill("comuna");
 	if(s.filtro_home == s.filtro_activo){
 		s.get_ganadores_x_comuna(s.r_general);
 		s.draw_ul_list();
