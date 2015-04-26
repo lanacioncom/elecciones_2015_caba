@@ -5,6 +5,8 @@ import logging.handlers
 import socket
 
 # Detection of production server environment
+# By default enter PRODUCTION MODE
+PRODUCTION = True
 if socket.gethostname() in ['ip-10-236-191-179', 'ip-10-138-52-236']:
     PRODUCTION = True
 else:
