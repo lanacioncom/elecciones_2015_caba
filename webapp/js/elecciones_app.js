@@ -60,7 +60,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 		
 // ***********
 		tooltip(); // esta en scripts.js
-		setInterval(function(){s.reload_app();}, 6000);
+		setInterval(function(){s.reload_app();}, 120000);
 
 	})();
 
@@ -76,12 +76,8 @@ ElecionesApp.prototype.reset_cache_ajax = function(){
 };
 
 ElecionesApp.prototype.reload_app = function(){
-	console.log("reload data!");
 	var s = this;
-	s.reset_cache_ajax();
-	s.get_r_general(function(){
-		
-		console.log("callback!");
+	s.get_r_general(function(){		
 		s.start_app();
 		s.get_mesas_escrutadas();
 	});
@@ -95,8 +91,8 @@ ElecionesApp.prototype.start_app = function(){
 	
 	$('select#opts').select2("val", s.filtro_activo);
 	
+	s.reset_cache_ajax();
 	s.filtro_activo = q.fuerza || s.filtro_home;
-	console.log(s.filtro_activo);
 	s.change_dropdown(s.filtro_activo);
 	// s.draw_ul_list();
 };
