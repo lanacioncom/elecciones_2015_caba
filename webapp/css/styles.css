@@ -646,6 +646,10 @@ svg .comuna_active_path {
 	cursor: default;
 }
 
+svg .comuna_active_path, svg text{ 	
+	pointer-events: none;
+}
+
 #mapa_cont svg path:hover, polygon:hover {
 	fill-opacity: 0.9;
 }
