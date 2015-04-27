@@ -95,6 +95,16 @@ $(function(){
 						
 					});
 
+					$(".creditos").click(function(){
+						$(".creVent").fadeIn(200);
+						$(".creVent .txts").delay(300).fadeIn(200);
+					});
+
+					$(".cerrar").click(function(){
+						$(".creVent .txts").fadeOut(200);
+						$(".creVent").delay(300).fadeOut(200);
+					});
+
 				});
 			});
 		});
