@@ -395,7 +395,7 @@ div.ayuda {
 	font-family: 'TheSansSemi';
 	font-size: 15px;
 	padding-left: 90px;
-	background-image: url(../img/sprite.png);
+	background-image: url(../img/sprite3.png);
 	background-repeat: no-repeat;
 	background-position: 28px 8px;
     background-size: 50%;
@@ -410,7 +410,7 @@ div.ayuda2 {
 	font-family: 'TheSansSemi';
 	font-size: 15px;
 	padding-top: 90px;
-	background-image: url(../img/sprite.png);
+	background-image: url(../img/sprite3.png);
 	background-repeat: no-repeat;
 	background-position: -30px -55px;
   	background-size: 140%;
@@ -885,7 +885,7 @@ li.no_pasa .cont_barra .barra .porc:after {
   display: inline-block;
   /* background: #C6373D; */
   text-indent: 25px;
-  background-image: url(../img/sprite.png);
+  background-image: url(../img/sprite3.png);
   Background-position: 142px 78px;
   /* border-radius: 50%; */
   padding: 2px 3px;
@@ -994,6 +994,76 @@ footer div.datos span{
 	color:#29B5EA;
 	font-weight: bold;
 } 
+
+div.creVent{
+	width: 100%;
+	max-width: 990px;
+	height: 100%;
+	position: absolute;
+	top:52px;
+	left:0px;
+	background-color: rgba(255, 255, 255, 0.8);
+	z-index: 6000;
+	text-align: center;
+	display: none;
+}
+
+
+div.creVent div.titu{
+	width: 98%;
+	padding: 10px;
+	  padding-bottom: 3px;
+	color:#000;
+	font-family: "TheSansBold";
+	background-color:#fff;
+	font-size: 18px;
+}
+
+div.creVent div.txts{
+	margin: 20px auto;
+	width: 95%;
+	max-width: 400px;
+	background-color: #fff;
+	padding: 15px;
+	border-radius: 3px;
+	border: 1px solid #D8D8D8; 
+	position: relative;
+	display: none;
+}
+
+
+div.creVent div.txts div.cerrar{
+	color:#fff;
+	 padding: 8px 10px;
+	border-radius: 100px;
+	background-color: #000;
+	position: absolute;
+	top:-15px;
+	right:-15px;
+	cursor: pointer;
+}
+
+div.creVent div.txts div.cate{
+	font-weight: bold;
+	padding: 8px 0px;
+	margin-top:20px;
+}
+
+div.creVent div.txts div.nombre{
+	line-height: 1.5;
+	color:#474747;
+}
+
+div.creVent div.txts div.nombre a{
+	text-decoration: none;
+	color:#474747;
+	font-weight: bold;
+}
+
+div.creVent div.txts div.nombre a:hover{
+	color:#29ABE2;
+}
+
 
 @media (max-width: 850px) {
 
@@ -1167,10 +1237,11 @@ footer div.datos span{
 	}
 
   	div.ayuda3 {
-	  width: 43%;
+	  width: 33%;
 	  position: absolute;
 	  bottom: 12px;
 	  display: block;
+	  right: 30px;
 	}
 
 	section#cont_data {
@@ -1219,6 +1290,14 @@ footer div.datos span{
 
 	#results ul li h5 {
 	  font-size: 16px;
+	}
+
+	div.creVent {
+		top: 39px;
+	}
+
+	div.creVent div.txts div.cate {
+		  margin-top: 16px;
 	}
 
 }

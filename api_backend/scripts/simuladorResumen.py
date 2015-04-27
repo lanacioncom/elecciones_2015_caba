@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Genera un JSON del tipo
+''' Genera un JSON del tipo
 {  
    "resumen":{  
       "Electores":"2475000",
@@ -21,88 +21,86 @@ aumenta en pasos aleatorios entre 0 y 100 en cada ejecución.
 
 No es necesario crear un ningún directorio ya que en caso de no existir los directorios necesarios 
 estos son creados por el script.
-"""
+'''
 
-import json, random, os, time
+import json
+import random
+import time
 from os.path import exists
+from os import makedirs
 
 
-directorio = "auxiliar"
-directorioOut = "resumen"
+folder_aux = "aux"
+folder_out = "resumen"
 
-# si no existe el directorio lo crea
-if not os.path.exists(directorio):
-    os.makedirs(directorio)    
-    f = open('%s/contadores.txt'%directorio, 'w+')
+# Create folder if it does not exists
+if not exists(folder_aux):
+    makedirs(folder_aux)
+    # Auxliary file to generate target JSON
+    f = open('%s/counters.txt' % (folder_aux), 'w+')
     f.write("0\n")
     f.write("0\n")
     f.write("0\n")
     f.write("0\n")
     f.close()
 
-NumElectores = 2475000
-NumMesas = 7151
+NUM_ELECTORES = 2475000
+NUM_MESAS = 7151
 
-f = open('%s/contadores.txt'%directorio, 'r+')
+f = open('%s/counters.txt' % (folder_aux), 'r+')
 contador = f.readline()
-VotantesJef =  f.readline()
-VotantesLeg =  f.readline()
-VotantesCom =  f.readline()
+VotantesJef = f.readline()
+VotantesLeg = f.readline()
+VotantesCom = f.readline()
 
 
 contadorNum = int(contador)
-VotantesJefNum =  int(VotantesJef)
-VotantesLegNum =  int(VotantesLeg)
-VotantesComNum =  int(VotantesCom)
+VotantesJefNum = int(VotantesJef)
+VotantesLegNum = int(VotantesLeg)
+VotantesComNum = int(VotantesCom)
 
 
-if contadorNum < NumMesas:
-	contadorNum += random.randrange(0,2)
-	
+if contadorNum < NUM_MESAS:
+    contadorNum += random.randrange(0, 2)
 
-if VotantesJefNum < NumElectores-100:
-	VotantesJefNum += random.randrange(0,101)
+if VotantesJefNum < NUM_ELECTORES-100:
+    VotantesJefNum += random.randrange(0, 101)
 else:
-	VotantesJefNum = NumElectores
+    VotantesJefNum = NUM_ELECTORES
 
-if VotantesLegNum < NumElectores-100:
-	VotantesLegNum += random.randrange(0,101)
+if VotantesLegNum < NUM_ELECTORES-100:
+    VotantesLegNum += random.randrange(0, 101)
 else:
-	VotantesLegNum = NumElectores
+    VotantesLegNum = NUM_ELECTORES
 
-if VotantesComNum < NumElectores-100:
-	VotantesComNum += random.randrange(0,101)
+if VotantesComNum < NUM_ELECTORES-100:
+    VotantesComNum += random.randrange(0, 101)
 else:
-	VotantesComNum = NumElectores
+    VotantesComNum = NUM_ELECTORES
 
-f.seek(0)	
+f.seek(0)
 f.write(str(contadorNum)+"\n")
 f.write(str(VotantesJefNum)+"\n")
 f.write(str(VotantesLegNum)+"\n")
 f.write(str(VotantesComNum)+"\n")
-
+f.close()
 
 data = dict(
-			resumen = dict(
-				Electores = str(NumElectores),
-				VotantesJef = str(VotantesJefNum),
-				VotantesLeg = str(VotantesLegNum),
-				VotantesCom = str(VotantesComNum),
-				Mesas = str(NumMesas),
-				MesasInformadas = str(contadorNum),
-				UltimaActualizacion = time.strftime("%Y-%m-%d %H:%M:%S")  #2015-04-24 21:05:01
-			)
-		)
+            resumen=dict(
+                Electores=str(NUM_ELECTORES),
+                VotantesJef=str(VotantesJefNum),
+                VotantesLeg=str(VotantesLegNum),
+                VotantesCom=str(VotantesComNum),
+                Mesas=str(NUM_MESAS),
+                MesasInformadas=str(contadorNum),
+                UltimaActualizacion=time.strftime("%Y-%m-%d %H:%M:%S")  #2015-04-24 21:05:01
+            )
+        )
 
-f.close()
+if not exists(folder_out):
+    makedirs(folder_out)
 
-if not os.path.exists(directorioOut):
-    os.makedirs(directorioOut)    
+with open('%s/resumen.json' % (folder_out), 'w') as f:
+    f.write(json.dumps(data))
 
-f = open('%s/resumen.json'% directorioOut, 'w')
-f.write(json.dumps(data))
-f.close()
-
-
-print json.dumps(data)
-
+print data

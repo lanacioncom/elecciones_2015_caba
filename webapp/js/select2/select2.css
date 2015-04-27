@@ -691,7 +691,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 
     .select2-container{
-      width: 39.9%;
+      width: 39.5%;
       height: 31px;
       color: #000;
       margin-left: 19px;
@@ -738,7 +738,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
         color:#000;
         background-color: #fff;
         font-size: 16px;
-        top: 93px !important;
+        top: 110px !important;
     }
 
     .select2-results{
@@ -776,11 +776,6 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
     .select2-drop-active{
         top: 82px !important;
     }
-
-    .select2-container .select2-choice > .select2-chosen, .select2-drop-active {
-      font-size: 14px;
-    }
-
 }
 
 @media (max-width: 640px) {
