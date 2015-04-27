@@ -362,13 +362,13 @@ ElecionesApp.prototype.change_dropdown = function(val, id_url){
 	$('#ayud1').hide();
 	$('.compartir').show();
 	if(s.filtro_home == s.filtro_activo){
+		$("polygon, path").css('fill-opacity', "1" );
 		s.draw_ul_list(null, id_url);
 	}else{	
 		s.draw_x_interna(val);
 	}
 	// set path
 	s.q.set('fuerza', val);
-
 
 };
 
