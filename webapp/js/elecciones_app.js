@@ -92,7 +92,11 @@ ElecionesApp.prototype.start_app = function(){
 	
 	s.filtro_activo = q.fuerza || s.filtro_home;
 	
-		s.change_dropdown(s.filtro_activo, q.comuna);
+	s.change_dropdown(s.filtro_activo, q.comuna);
+
+	if(q.comuna){
+		$("#selected h4").html("Comuna "+q.comuna).fadeIn();
+	}
 	
 };
 
@@ -319,7 +323,7 @@ ElecionesApp.prototype.run_interna = function(key_cache, comuna){
 	
 	// bind events for inputs
 	var candidato_btn = $('input[type="radio"]');
-	candidato_btn.on('click.select_condidato', function(el){
+	candidato_btn.on('click', function(el){
 		var $el = $(this);
 		$('li.active:has(input)').removeClass('active');
 		$el.closest('li').addClass('active');
