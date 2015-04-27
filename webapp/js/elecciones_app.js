@@ -83,6 +83,7 @@ ElecionesApp.prototype.reload_app = function(){
 		
 		console.log("callback!");
 		s.start_app();
+		s.get_mesas_escrutadas();
 	});
 
 };
