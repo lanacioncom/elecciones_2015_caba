@@ -405,8 +405,9 @@ ElecionesApp.prototype.pintar_mapa = function(){
 		var interna = this.cache_ajax["partido_"+this.filtro_activo].c_00;
 
 		s.ganadores_comunas.forEach(function(x){
+
 			fill = s.dict_candidatos[x.id] ? s.dict_candidatos[x.id].color_candidato : "#ccc";
-			var style = { fill: fill};
+			var style = { fill: fill, 'fill-opacity': "1"};
 			if (x.id != interna[0].id){
 				style["fill-opacity"] = ".4";
 				if (x.id != interna[1].id){
