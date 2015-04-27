@@ -16,7 +16,7 @@ def get_data_API(url=None, fname=None):
     if PRODUCTION or not SIMULATE:
         log.debug("Get url %s" % (url))
         try:
-            response = get(url, headers=HEADERS, timeout=TIMEOUT)
+            response = get(url, headers=HEADERS, timeout=TIMEOUT, verify=False)
         except exceptions.RequestException, e:
             log.error("Exception in requests get %s. Reason %s" %
                       (url, str(e)))
