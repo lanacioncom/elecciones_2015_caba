@@ -34,8 +34,8 @@ $(function(){
     
 	"use strict";
 	// load mapa
-	var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
-	// var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
+	// var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
+	var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
 		$.get("dicts/diccionario_partidos.json", function(dict_partidos){

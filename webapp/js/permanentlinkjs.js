@@ -32,10 +32,11 @@ var PermanentLinkJS = function() {
 	function get_parameters(str) {
 		str = str || location.hash;
 		return str.replace("#", "").split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this;}.bind({}))[0];
+	
 	}
 
 	function set_from_location(){
-		return (query = get_parameters());
+		return (this.query = get_parameters());
 	}
 
 	function kill(k){ 
@@ -70,5 +71,6 @@ var PermanentLinkJS = function() {
 	this.set = set;
 	this.kill = kill;
 	this.set_from_location = set_from_location;
+	this.query = query;
 };
 
