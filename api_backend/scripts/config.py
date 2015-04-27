@@ -32,7 +32,7 @@ LOG_FORMAT_DATA = '%(asctime)s %(name)-8s %(levelname)s: %(message)s'
 BASE_URL = 'https://apipaso.buenosaires.gob.ar/api'
 HEADERS = {'user-agent': 'Mozilla/5.0'}
 # Wait n seconds for socket data
-TIMEOUT = 5
+TIMEOUT = 10
 
 
 GENERALES_SERVICE = '/generalesJef'
