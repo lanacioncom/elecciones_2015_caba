@@ -60,7 +60,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, path_to_dat
 		
 // ***********
 		tooltip(); // esta en scripts.js
-		// setInterval(function(){s.reload_app();}, 6000);
+		setInterval(function(){s.reload_app();}, 6000);
 
 	})();
 
@@ -78,7 +78,9 @@ ElecionesApp.prototype.reset_cache_ajax = function(){
 ElecionesApp.prototype.reload_app = function(){
 	console.log("reload data!");
 	var s = this;
+	s.reset_cache_ajax();
 	s.get_r_general(function(){
+		
 		console.log("callback!");
 		s.start_app();
 	});
@@ -87,13 +89,15 @@ ElecionesApp.prototype.reload_app = function(){
 
 ElecionesApp.prototype.start_app = function(){
 	var s = this;
-	s.reset_cache_ajax();
-
-	if(s.q.query.fuerza == s.filtro_home){
-		s.draw_ul_list();
-	}else{
-		s.draw_x_interna(s.q.query.fuerza);
-	}
+	
+	var q = s.q.get_query();
+	
+	$('select#opts').select2("val", s.filtro_activo);
+	
+	s.filtro_activo = q.fuerza || s.filtro_home;
+	console.log(s.filtro_activo);
+	s.change_dropdown(s.filtro_activo);
+	// s.draw_ul_list();
 };
 
 ElecionesApp.prototype.get_r_general = function(callback){
