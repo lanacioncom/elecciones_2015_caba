@@ -268,7 +268,7 @@ header {
 }
 
 div.titulos {
-	width: 320px;
+	/*width: 320px;*/
 	font-size: 15px;
 	overflow: hidden;
 	float: left;
@@ -1068,11 +1068,11 @@ div.creVent div.txts div.nombre a:hover{
 	color:#29ABE2;
 }
 
-
+p.provisorios {font-size: 12px; margin-top: 4px}
 @media (max-width: 850px) {
 
 	div.titulos {
-		width: 250px;
+		/*width: 250px;*/
 	}
 
 	h1 {
