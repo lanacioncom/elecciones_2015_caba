@@ -2,7 +2,7 @@ Deployment usage
 ================
 
 ## Requirements
-* Have [_nodejs_](https://nodejs.org/) installed
+* Have [_nodejs_](https://nodejs.org/) && [_bower_](http://bower.io/) installed
 
 ## Production deployment process
 1. Go to the deploy folder
@@ -11,7 +11,7 @@ Deployment usage
 
 2. Install dependencies
 
-        $ npm install
+        $ npm install && bower install
 
 3. Clean pevious builds (_optional_)
 

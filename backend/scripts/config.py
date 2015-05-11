@@ -18,8 +18,8 @@ if PRODUCTION:
     JSON_DATA_PATH = '/var/www/paso2015/json_data'
     JSON_EXAMPLE_PATH = '/var/www/paso2015/sim_input'
 else:
-    JSON_DATA_PATH = os.path.join(dir, '../data')
-    JSON_EXAMPLE_PATH = os.path.join(dir, '../examples/marta_API')
+    JSON_DATA_PATH = os.path.join(dir, '../data/output')
+    JSON_EXAMPLE_PATH = os.path.join(dir, '../data/sim_input')
 
 # PAY ATTENTION TO THIS ON PRODUCTION ############################
 SIMULATE = False
