@@ -82,7 +82,7 @@ gulp.task('copy', function () {
             js:['libs/'+js_vendor, 'js/'+js_all],
             css: ['css/'+css_file_min]
         }))
-        //.pipe(minifyHTML(opts))
+        .pipe(minifyHTML(opts))
         .pipe(gulp.dest('../build'));
 
     

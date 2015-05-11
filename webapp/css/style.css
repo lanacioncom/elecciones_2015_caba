@@ -268,7 +268,7 @@ header {
 }
 
 div.titulos {
-	width: 320px;
+	/*width: 320px;*/
 	font-size: 15px;
 	overflow: hidden;
 	float: left;
@@ -399,6 +399,7 @@ div.ayuda {
 	background-repeat: no-repeat;
 	background-position: 28px 8px;
     background-size: 50%;
+    display: none;
 }
 
 div.ayuda2 {
@@ -644,6 +645,10 @@ svg .comuna_active_path {
 	stroke: #000 !important;
 	stroke-width: 1px;
 	cursor: default;
+}
+
+svg .comuna_active_path, svg text{ 	
+	pointer-events: none;
 }
 
 #mapa_cont svg path:hover, polygon:hover {
@@ -1004,7 +1009,7 @@ div.creVent{
 	max-width: 990px;
 	height: 100%;
 	position: absolute;
-	top:52px;
+	top:72px;
 	left:0px;
 	background-color: rgba(255, 255, 255, 0.8);
 	z-index: 6000;
@@ -1068,11 +1073,16 @@ div.creVent div.txts div.nombre a:hover{
 	color:#29ABE2;
 }
 
+p.provisorios {
+	font-size: 12px; 
+	margin-top: 4px; 
+	padding: 3px 0px;
+}
 
 @media (max-width: 850px) {
 
 	div.titulos {
-		width: 250px;
+		/*width: 250px;*/
 	}
 
 	h1 {
@@ -1174,7 +1184,7 @@ div.creVent div.txts div.nombre a:hover{
 
 	header {
 		padding: 6px 0px;
-		height: 25px;
+		height: 42px;
 		margin-bottom: 10px;
 	}
 
@@ -1297,7 +1307,7 @@ div.creVent div.txts div.nombre a:hover{
 	}
 
 	div.creVent {
-		top: 39px;
+		top: 56px;
 	}
 
 	div.creVent div.txts div.cate {
@@ -1319,6 +1329,10 @@ div.creVent div.txts div.nombre a:hover{
 	header {
 	  border-bottom:0px;
 	  margin-bottom: 0px
+	}
+
+	p.provisorios {
+		padding: 7px 0px;
 	}
 
 
