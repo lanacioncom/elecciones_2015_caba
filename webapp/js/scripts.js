@@ -38,8 +38,8 @@ $(function(){
 	// var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
 	$.get("img/caba_ilus.txt", function(mapa){
 		// get list partidos
-		$.get("dicts/diccionario_partidos.json", function(dict_partidos){
-			$.get("dicts/diccionario_candidatos.json", function(dict_candidatos){
+		$.get("data/diccionario_partidos.json", function(dict_partidos){
+			$.get("data/diccionario_candidatos.json", function(dict_candidatos){
 				
 				$.get(path_to_data+"partido_00.json", function(results){
 
