@@ -36,17 +36,17 @@ $(function(){
 	// load mapa
 	var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
 	// var path_to_data = "http://datapaso.lanacion.com.ar/sim_output/"; // url de test
-	$.get("img/caba_ilus.txt", function(mapa){
+	$.get("data/BsAstopo.json", function(mapa){
 		// get list partidos
 		$.get("data/diccionario_partidos.json", function(dict_partidos){
 			$.get("data/diccionario_candidatos.json", function(dict_candidatos){
 				
 				$.get(path_to_data+"partido_00.json", function(results){
 
-					$("#mapa_cont").html(mapa + '<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
+					$("#mapa_cont").html('<div class="ayuda2">FILTRAR POR CANDIDATO</div><div class="ayuda3">Clickeá en las comunas para ver los resultados en detalle.</div></div>');
 					
 					// init app
-					app = new ElecionesApp(dict_partidos, dict_candidatos, results, path_to_data);
+					app = new ElecionesApp(dict_partidos, dict_candidatos, results, mapa, path_to_data, "article#mapa_cont");
 
 					$("#opts").select2({
 				        minimumResultsForSearch: -1,

@@ -608,7 +608,7 @@ div.loader{
 	float: left;
 	margin-bottom: 15px;
 }
-#mapa_cont svg {
+/*#mapa_cont svg {
 	width: 100%;
 	height: 100%;
 }
@@ -620,7 +620,7 @@ path, polygon {
 	stroke: white;
 	stroke-width: 1.2px;
 	cursor: pointer;
-	/*fill: #fff;*/
+	/*fill: #fff;
 }
 path, polygon, rect{	
     -webkit-transition: fill .4s ease;
@@ -677,14 +677,14 @@ svg .comuna_active_path, svg text{
 }
 
 #mapa_cont svg g#refes{
-	/*transform: translateX(0px) translateY(0px)  scale(1);*/
+	transform: translateX(0px) translateY(0px)  scale(1);
 	display: none;
 }
 
 #mapa_cont svg text{
 	pointer-events: none;
 }
-
+*/
 #results {
 	border-left: solid 1px #dadada;
 	width: 40%;
