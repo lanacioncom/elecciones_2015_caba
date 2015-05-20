@@ -608,6 +608,65 @@ div.loader{
 	float: left;
 	margin-bottom: 15px;
 }
+
+#mapa_cont rect.background {
+  fill: none;
+  pointer-events: all;
+}
+
+#mapa_cont path.feature {
+  fill: #ccc;
+  cursor: pointer;
+}
+
+#mapa_cont path.feature.active {
+  fill: orange;
+}
+
+#mapa_cont path.mesh {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#mapa_cont text.feature-label {
+  fill: #777;
+  fill-opacity: .5;
+  font-size: 12px;
+  font-weight: 300;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+#mapa_cont path.barrio {
+  fill: #ccc;
+  fill-opacity: .2;
+  pointer-events: none; 
+}
+
+#mapa_cont text.barrio-label {
+  fill: #777;
+  fill-opacity: .5;
+  font-size: 6px;
+  font-weight: 300;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+
+#mapa_cont path.barrio-mesh {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#mapa_cont .disabled {
+  display: none;
+}
+
+
 /*#mapa_cont svg {
 	width: 100%;
 	height: 100%;

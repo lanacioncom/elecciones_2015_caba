@@ -31,7 +31,6 @@ var isMobile = { //valida si es un dispositivo movil
 };
 
 $(function(){
-    
 	"use strict";
 	// load mapa
 	var path_to_data = "http://datapaso.lanacion.com.ar/json_data/"; 
@@ -53,48 +52,6 @@ $(function(){
 				        val: "x_fuerza"
 				    });
 
-
-					// append nombres comunas
-					var xmlns = "http://www.w3.org/2000/svg";
-					function get_polygon_centroid(pts) {
-					   var twicearea=0,
-					   x=0, y=0,
-					   nPts = pts.length,
-					   p1, p2, f;
-					   for ( var i=0, j=nPts-1 ; i<nPts ; j=i++ ) {
-					      p1 = pts[i]; p2 = pts[j];
-					      f = p1.x*p2.y - p2.x*p1.y;
-					      twicearea += f;          
-					      x += ( p1.x + p2.x ) * f;
-					      y += ( p1.y + p2.y ) * f;
-					   }
-					   f = twicearea * 3;
-					   return { x:x/f, y:y/f };
-					}
-					function append_path(x, y, el){
-						var t = document.createElementNS(xmlns, "text");
-						t.setAttributeNS(null,"x", x);		
-						t.setAttributeNS(null,"y",y);		
-						t.setAttributeNS(null,"font-size",15);
-						t.setAttributeNS(null,"fill",'#fff');
-						var txt = document.createTextNode(el.id.replace("c", ""));
-						t.appendChild(txt);
-						$("#mapa_cont svg").append(t);
-					}	
-
-					$('polygon').each(function(i, el){
-						var cid = get_polygon_centroid(el.points);
-						var bbox = el.getBBox();
-						append_path(cid.x, cid.y, el);
-						
-					});
-
-					$('path').each(function(i, el){
-						var bbox = el.getBBox();
-						append_path((bbox.x +bbox.width/2-10), (bbox.y+bbox.height/2+10), el);
-						
-					});
-
 					$(".creditos").click(function(){
 						$(".creVent").fadeIn(200);
 						$(".creVent .txts").delay(300).fadeIn(200);
@@ -108,15 +65,7 @@ $(function(){
 				});
 			});
 		});
-
-		// tooltip(); lo llama elecciones_app.js
-	
 	});
-
-	 
-	  
-		
-
 });
 
 
@@ -130,7 +79,7 @@ function myPopup(url) {
 	/* // tooltip /*/
 function tooltip(){
 
-	var comu = $("polygon, path");
+	var comu = $("path.feature");
 	var toolip = $(".tooltip");
 	var html = "";
 	var data;

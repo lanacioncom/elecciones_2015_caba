@@ -18,6 +18,8 @@
     "jquery": "1.11.2",
     "handlebars": "~3.0.2",
     "jquery.nicescroll": "~3.6.0",
-    "select2": "~3.5.2"
+    "select2": "~3.5.2",
+    "d3": "~3.5.5",
+    "topojson": "~1.6.19"
   }
 }

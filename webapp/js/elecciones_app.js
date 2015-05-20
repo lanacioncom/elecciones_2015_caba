@@ -5,9 +5,19 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, mapa, path_
     var s = this;
     s.dict_partidos = dict_partidos;
     s.dict_candidatos = dict_candidatos;
-    s.mapa = mapa;
-    s.container_sel = container_sel;
     s.path_to_data = path_to_data;
+    // JET: nuevo
+    s.mapa = mapa;
+    s.map_container_sel = container_sel;
+    s.map_width = $(container_sel).width();
+    s.map_height = $(container_sel).height();
+    s.map_featureActive = d3.select(null);
+    // From http://stackoverflow.com/questions/14492284/center-a-map-in-d3-given-a-geojson-object/14691788#14691788
+    s.map_projection = d3.geo.mercator().scale(1).translate([0, 0]);
+    s.map_path = d3.geo.path().projection(s.map_projection);
+    s.map_svg = null;
+    s.map_g = null;
+    s.map_zoom = null;
     // data dinamica
     s.r_general = results;
     s.internas = results.interna;
@@ -31,7 +41,7 @@ var ElecionesApp = function(dict_partidos, dict_candidatos, results, mapa, path_
         });
         $('h3').on('click', function(){ // volver a la home 
             s.filtro_activo = s.filtro_home;
-            s.reset();
+            s.reset_state();
             $('select#opts').select2("val", s.filtro_home);
         });
         
@@ -85,43 +95,166 @@ ElecionesApp.prototype.reload_app = function(){
 
 ElecionesApp.prototype.draw_map = function(){
     var app = this;
-    var container = $(app.container_sel);
-    var width = container.width();
-    var height = container.height();
+    var container = $(app.map_container_sel);
+    var width = app.map_width;
+    var height = app.map_height;
+
+    // JET: Closure is there a better way to do this?
+    var reset = app.map_reset();
+    var zoomed = app.map_zoomed();
+    var clicked = app.map_feature_clicked();
+    var stopped = app.map_stopped();
+
+    app.map_zoom = d3.behavior.zoom()
+                 .translate([0, 0])
+                 .scale(1)
+                 .scaleExtent([1, 8])
+                 .on("zoom", zoomed);
 
     var comunas = topojson.feature(app.mapa, app.mapa.objects.comunas);
-    // From http://stackoverflow.com/questions/14492284/center-a-map-in-d3-given-a-geojson-object/14691788#14691788
-    var projection = d3.geo.mercator() //albers()
-                       .scale(1)
-                       .translate([0, 0]);
 
-    // Create a path generator.
-    var path = d3.geo.path().projection(projection);
-
-    // Compute the bounds of a feature of interest, then derive scale & translate.
-    var b = path.bounds(comunas);
-    //var b = path.bounds(comunas.features[0]);
-    var s = 0.95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
-    var t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
+    var bounds = app.map_path.bounds(comunas),
+      dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
+      scale = 0.9 / Math.max(dx / width, dy / height),
+      translate = [width / 2 - scale * x, height / 2 - scale * y];
 
     // Update the projection to use computed scale & translate.
-    projection.scale(s).translate(t);
+    app.map_projection.scale(scale).translate(translate);
 
-    var svg_mapa = d3.select(app.container_sel)
+    app.map_svg = d3.select(app.map_container_sel)
                .append("svg")
-               .attr("width", container.width())
-               .attr("height", container.height());
-    var g_comunas = svg_mapa.append("g").attr("id","comunas");
+               .attr("width", width)
+               .attr("height", height)
+               .on("click", stopped, true);
+
+    app.map_svg.append("rect")
+            .attr("class", "background")
+            .attr("width", width)
+            .attr("height", height)
+            .on("click", reset);
     
-    g_comunas.selectAll("path.comuna")
+    app.map_g = app.map_svg.append("g").attr("id","comunas");
+
+    app.map_svg.call(app.map_zoom) // delete this line to disable free zooming
+       .call(app.map_zoom.event);
+    
+    app.map_g.selectAll("path")
              .data(comunas.features)
              .enter()
              .append("path")
-             .attr("class", "comuna")
+             .attr("class", "feature")
              .attr("id", function(d) {return d.id;})
-             .attr("d", path);
+             .attr("d", app.map_path)
+             .on("click", clicked);
 
-    console.log($("path#2").position());
+
+    app.map_g.selectAll(".feature-label")
+             .data(comunas.features)
+             .enter().append("text")
+             .attr("class", function(d) { return "feature-label " + d.id; })
+             .attr("transform", function(d) { return "translate(" + app.map_path.centroid(d) + ")"; })
+             .attr("dy", ".35em")
+             .text(function(d) { return d.id; });
+
+
+    app.map_g.append("path")
+      .datum(topojson.mesh(app.mapa, app.mapa.objects.comunas, function(a, b) { return a !== b; }))
+      .attr("class", "mesh")
+      .attr("d", app.map_path);
+};
+
+ElecionesApp.prototype.map_feature_clicked = function() {
+    var _this = this;
+    // JET: Another closure to access the reset function
+    var reset = _this.map_reset();
+    var clicked = function(d) {
+        var width = _this.map_width;
+        var height = _this.map_height;
+        if (_this.map_featureActive.node() === this) return reset();
+        _this.map_featureActive.classed("active", false);
+        _this.map_featureActive = d3.select(this).classed("active", true);
+
+        var bounds = _this.map_path.bounds(d),
+          dx = bounds[1][0] - bounds[0][0],
+          dy = bounds[1][1] - bounds[0][1],
+          x = (bounds[0][0] + bounds[1][0]) / 2,
+          y = (bounds[0][1] + bounds[1][1]) / 2,
+          scale = 0.9 / Math.max(dx / width, dy / height),
+          translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+        var barrios = topojson.feature(_this.mapa, _this.mapa.objects.barrios);
+        var barrios_mesh = topojson.mesh(_this.mapa, _this.mapa.objects.barrios, function(a, b) { return a !== b; })
+        //var g_barrios = _this.map_svg.append("g").attr("id","barrios");
+        
+        var pb = _this.map_g.selectAll("path.barrio");
+        pb.classed("disabled", false);
+        var lb = _this.map_g.selectAll("text.barrio-label");
+        lb.classed("disabled", false);
+        var mb = _this.map_g.selectAll("path.barrio-mesh");
+        mb.classed("disabled", false);
+        pb.data(barrios.features)
+             .enter()
+             .append("path")
+             .attr("class", "barrio")
+             .attr("id", function(d) {return d.id;})
+             .attr("d", app.map_path);
+
+        
+        lb.data(barrios.features).enter().append("text")
+             .attr("class", function(d) { return "barrio-label " + d.id; })
+             .attr("transform", function(d) { return "translate(" + app.map_path.centroid(d) + ")"; })
+             .attr("dy", ".35em")
+             .text(function(d) { return d.id; });
+
+        
+        mb.data(barrios_mesh).enter().append("path")
+          .attr("class", "barrio-mesh")
+          .attr("d", app.map_path);
+
+        _this.map_svg.transition()
+          .duration(750)
+          .call(_this.map_zoom.translate(translate).scale(scale).event);
+    };
+    return clicked;
+};
+
+ElecionesApp.prototype.map_stopped = function() {
+    var _this = this;
+    var stopped = function() {
+        if (d3.event.defaultPrevented) d3.event.stopPropagation();
+    };
+    return stopped;
+};
+
+ElecionesApp.prototype.map_zoomed = function() {
+    var _this = this;
+    var zoomed = function() {
+        _this.map_g.style("stroke-width", 1.5 / d3.event.scale + "px");
+        _this.map_g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    };
+    return zoomed;
+};
+
+ElecionesApp.prototype.map_reset = function() {
+    var _this = this;
+    var reset = function() {
+        _this.map_featureActive.classed("active", false);
+        _this.map_featureActive = d3.select(null);
+
+        //JET: Handle lower level paths
+        _this.map_g.selectAll("path.barrio").classed("disabled", true);
+        _this.map_g.selectAll("text.barrio-label").classed("disabled", true);
+        _this.map_g.select("path.barrio-mesh").classed("disabled", true);
+
+
+        _this.map_svg.transition()
+           .duration(750)
+           .call(_this.map_zoom.translate([0, 0]).scale(1).event);
+    };
+    return reset;
 };
 
 ElecionesApp.prototype.start_app = function(){
@@ -263,7 +396,7 @@ ElecionesApp.prototype.on_click_comuna = function (){
 };
 
 
-ElecionesApp.prototype.reset = function (){
+ElecionesApp.prototype.reset_state = function (){
     var s = this;
     // resetea el los filtros
     $("#selected h4").hide().html("");
@@ -402,13 +535,13 @@ ElecionesApp.prototype.change_dropdown = function(val, id_url){
     var s = this;
     s.filtro_activo = val;
     if(!id_url){
-        s.reset();
+        s.reset_state();
         s.remove_comuna_active_path();
     }
     $('#ayud1').hide();
     $('.compartir').show();
     if(s.filtro_home == s.filtro_activo){
-        $("polygon, path").css('fill-opacity', "1" );
+        //$("polygon, path").css('fill-opacity', "1" );
         s.draw_ul_list(null, id_url);
     }else{    
         s.draw_x_interna(val);
