@@ -654,14 +654,6 @@ div.loader{
   pointer-events: none;
 }
 
-
-#mapa_cont path.barrio-mesh {
-  fill: none;
-  stroke: #fff;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 #mapa_cont .disabled {
   display: none;
 }

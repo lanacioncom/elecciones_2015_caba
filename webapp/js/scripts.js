@@ -76,7 +76,7 @@ function myPopup(url) {
     return false;
 }
 
-    /* // tooltip /*/
+/* // tooltip /*/
 function tooltip(){
 
     var comu = $("path.feature");
@@ -186,3 +186,9 @@ Number.prototype.format = function(c, d, t){
         var nn = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
         return nn;
 };
+
+function pad(num, size) {
+          var s = num+"";
+          while (s.length < size) s = "0" + s;
+          return s;
+}

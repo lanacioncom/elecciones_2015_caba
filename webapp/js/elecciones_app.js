@@ -15,6 +15,7 @@ var EleccionesApp = function(dict_partidos, dict_candidatos, results, mapa, path
     // From http://stackoverflow.com/questions/14492284/center-a-map-in-d3-given-a-geojson-object/14691788#14691788
     _self.map_projection = d3.geo.mercator().scale(1).translate([0, 0]);
     _self.map_path = d3.geo.path().projection(_self.map_projection);
+    _self.map_current_level = 1;
     _self.map_svg = null;
     _self.map_g = null;
     _self.map_zoom = null;
@@ -28,7 +29,7 @@ var EleccionesApp = function(dict_partidos, dict_candidatos, results, mapa, path
     (function init(){
 
         // Draw BsAs departments map
-        _self.draw_map(_self.map_width, _self.map_width, 
+        _self.draw_map(_self.map_width, _self.map_height, 
                        _self.map_container_selector);
 
         // change dropdown
@@ -58,7 +59,6 @@ var EleccionesApp = function(dict_partidos, dict_candidatos, results, mapa, path
         _self.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
         _self.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
         _self.tmpl_tooltip_interna = Handlebars.compile($('#tmpl_tooltip_interna').html());
-        _self.on_click_comuna();
         
 // ***********
         tooltip(); // esta en scripts.js
@@ -81,7 +81,7 @@ EleccionesApp.prototype.clear_cache_ajax = function(){
 
 EleccionesApp.prototype.set_data_active = function(str){
     $("#selected h4").html(str).fadeIn();
-}
+};
 
 EleccionesApp.prototype.reload_app = function(){
     var _self = this;
@@ -99,17 +99,11 @@ EleccionesApp.prototype.reload_app = function(){
 EleccionesApp.prototype.draw_map = function(width, height, sel){
     var _self = this;
 
-    // JET: Closure is there a better way to do this?
-    var reset = _self.map_reset();
-    var zoomed = _self.map_zoomed();
-    var clicked = _self.map_feature_clicked();
-    var stopped = _self.map_stopped();
-
     _self.map_zoom = d3.behavior.zoom()
                  .translate([0, 0])
                  .scale(1)
                  .scaleExtent([1, 8])
-                 .on("zoom", zoomed);
+                 .on("zoom", function(d,i) {_self.map_zoomed(d,i,this);});
 
     var comunas = topojson.feature(_self.map_data, _self.map_data.objects.comunas);
 
@@ -127,17 +121,18 @@ EleccionesApp.prototype.draw_map = function(width, height, sel){
     _self.map_svg = sel.append("svg")
                       .attr("width", width)
                       .attr("height", height)
-                      .on("click", stopped, true);
+                      .on("click", _self.map_stopped, true);
 
     _self.map_svg.append("rect")
             .attr("class", "background")
             .attr("width", width)
             .attr("height", height)
-            .on("click", reset);
+            .on("click", function() {_self.map_reset();});
     
     _self.map_g = _self.map_svg.append("g").attr("id","comunas");
 
-    _self.map_svg.call(_self.map_zoom) // delete this line to disable free zooming
+    // delete this line to disable free zooming and panning
+    _self.map_svg.call(_self.map_zoom) 
        .call(_self.map_zoom.event);
     
     _self.map_g.selectAll("path")
@@ -147,7 +142,7 @@ EleccionesApp.prototype.draw_map = function(width, height, sel){
              .attr("class", "feature")
              .attr("id", function(d) {return d.id;})
              .attr("d", _self.map_path)
-             .on("click", clicked);
+             .on("click", function(d,i) {_self.map_feature_clicked(d,i,this);});
 
 
     _self.map_g.selectAll(".feature-label")
@@ -161,137 +156,120 @@ EleccionesApp.prototype.draw_map = function(width, height, sel){
 
     _self.map_g.append("path")
       .datum(topojson.mesh(_self.map_data, _self.map_data.objects.comunas, function(a, b) { return a !== b; }))
-      .attr("class", "mesh")
+      .attr("class", "mesh l1")
+      .attr("d", _self.map_path);
+
+    _self.map_g.append("path")
+      .datum(topojson.mesh(_self.map_data, _self.map_data.objects.barrios, function(a, b) { return a !== b; }))
+      .attr("class", "mesh l2 disabled")
+      .attr("d", _self.map_path);
+
+    _self.map_g.append("path")
+      .datum(topojson.mesh(_self.map_data, _self.map_data.objects.circuitos, function(a, b) { return a !== b; }))
+      .attr("class", "mesh l3 disabled")
       .attr("d", _self.map_path);
 };
 
-EleccionesApp.prototype.map_feature_clicked = function() {
+EleccionesApp.prototype.map_feature_clicked = function(d, i, el) {
     var _self = this;
-    // JET: Another closure to access the reset function
-    var reset = _self.map_reset();
-    var clicked = function(d) {
-        var width = _self.map_width;
-        var height = _self.map_height;
-        if (_self.map_featureActive.node() === this) return reset();
-        _self.map_featureActive.classed("active", false);
-        _self.map_featureActive = d3.select(this).classed("active", true);
+    var width = _self.map_width;
+    var height = _self.map_height;
 
-        var bounds = _self.map_path.bounds(d),
-          dx = bounds[1][0] - bounds[0][0],
-          dy = bounds[1][1] - bounds[0][1],
-          x = (bounds[0][0] + bounds[1][0]) / 2,
-          y = (bounds[0][1] + bounds[1][1]) / 2,
-          scale = 0.9 / Math.max(dx / width, dy / height),
-          translate = [width / 2 - scale * x, height / 2 - scale * y];
+    if (_self.map_featureActive.node() === el) return _self.reset_state();
+    _self.map_current_level += 1;
+    _self.map_featureActive.classed("active", false);
+    _self.map_featureActive = d3.select(el).classed("active", true);
 
-        var barrios = topojson.feature(_self.map_data, _self.map_data.objects.barrios);
-        var barrios_mesh = topojson.mesh(_self.map_data, _self.map_data.objects.barrios, function(a, b) { return a !== b; })
-        //var g_barrios = _self.map_svg.append("g").attr("id","barrios");
-        
-        var pb = _self.map_g.selectAll("path.barrio");
-        pb.classed("disabled", false);
-        var lb = _self.map_g.selectAll("text.barrio-label");
-        lb.classed("disabled", false);
-        var mb = _self.map_g.selectAll("path.barrio-mesh");
-        mb.classed("disabled", false);
-        pb.data(barrios.features)
-             .enter()
-             .append("path")
-             .attr("class", "barrio")
-             .attr("id", function(d) {return d.id;})
-             .attr("d", app.map_path);
+    var bounds = _self.map_path.bounds(d),
+      dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
+      scale = 0.9 / Math.max(dx / width, dy / height),
+      translate = [width / 2 - scale * x, height / 2 - scale * y];
 
-        
-        lb.data(barrios.features).enter().append("text")
-             .attr("class", function(d) { return "barrio-label " + d.id; })
-             .attr("transform", function(d) { return "translate(" + app.map_path.centroid(d) + ")"; })
-             .attr("dy", ".35em")
-             .text(function(d) { return d.id; });
+    var barrios = topojson.feature(_self.map_data, _self.map_data.objects.barrios);
+    var barrios_mesh = topojson.mesh(_self.map_data, _self.map_data.objects.barrios, function(a, b) { return a !== b; });
+    //var g_barrios = _self.map_svg.append("g").attr("id","barrios");
+    
+    //disable higher levels labels
+    _self.map_g.selectAll("text.feature-label").classed("disabled", true);
+    var pb = _self.map_g.selectAll("path.barrio");
+    pb.classed("disabled", false);
+    var lb = _self.map_g.selectAll("text.barrio-label");
+    lb.classed("disabled", false);
+    var mb = _self.map_g.selectAll("path.mesh.l2");
+    mb.classed("disabled", false);
+    pb.data(barrios.features)
+         .enter()
+         .append("path")
+         .attr("class", "barrio")
+         .attr("id", function(d) {return d.id;})
+         .attr("d", app.map_path);
 
-        
-        mb.data(barrios_mesh).enter().append("path")
-          .attr("class", "barrio-mesh")
-          .attr("d", app.map_path);
+    lb.data(barrios.features).enter().append("text")
+         .attr("class", function(d) { return "barrio-label " + d.id; })
+         .attr("transform", function(d) { return "translate(" + app.map_path.centroid(d) + ")"; })
+         .attr("dy", ".35em")
+         .text(function(d) { return d.id; });
 
-        _self.map_svg.transition()
-          .duration(750)
-          .call(_self.map_zoom.translate(translate).scale(scale).event);
-    };
-    return clicked;
+    _self.map_svg.transition()
+      .duration(750)
+      .call(_self.map_zoom.translate(translate).scale(scale).event);
+
+    if(_self.filtro_activo == _self.filtro_home){ // dropdown x fuerza
+        _self.select_comuna_general(d.id);
+    }else{ // dropdown x interna o listas únicas
+        _self.select_comuna_interna(d.id);
+    }
 };
 
 EleccionesApp.prototype.map_stopped = function() {
-    var _self = this;
-    var stopped = function() {
-        if (d3.event.defaultPrevented) d3.event.stopPropagation();
-    };
-    return stopped;
+    if (d3.event.defaultPrevented) d3.event.stopPropagation();
 };
 
-EleccionesApp.prototype.map_zoomed = function() {
+EleccionesApp.prototype.map_zoomed = function(d, i, el) {
     var _self = this;
-    var zoomed = function() {
-        _self.map_g.style("stroke-width", 1.5 / d3.event.scale + "px");
-        _self.map_g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-    };
-    return zoomed;
-};
-
-EleccionesApp.prototype.map_reset = function() {
-    var _self = this;
-    var reset = function() {
-        _self.map_featureActive.classed("active", false);
-        _self.map_featureActive = d3.select(null);
-
-        //JET: Handle lower level paths
-        _self.map_g.selectAll("path.barrio").classed("disabled", true);
-        _self.map_g.selectAll("text.barrio-label").classed("disabled", true);
-        _self.map_g.select("path.barrio-mesh").classed("disabled", true);
-
-
-        _self.map_svg.transition()
-           .duration(750)
-           .call(_self.map_zoom.translate([0, 0]).scale(1).event);
-    };
-    return reset;
+    _self.map_g.style("stroke-width", 1.5 / d3.event.scale + "px");
+    _self.map_g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 };
 
 EleccionesApp.prototype.start_app = function(){
-    var s = this;
-    s.q.set_from_location();
-    
-    var q = $.extend(true, {}, s.q.get_query());
-    
-    s.clear_cache_ajax();
-    
-    s.filtro_activo = q.fuerza || s.filtro_home;
-    
-    s.change_dropdown(s.filtro_activo, q.comuna);
+    var _self = this;
 
+    _self.q.set_from_location();
+    var q = $.extend(true, {}, _self.q.get_query());
+    _self.clear_cache_ajax();
+    _self.filtro_activo = q.fuerza || _self.filtro_home;
+    _self.change_dropdown(_self.filtro_activo, q.comuna);
     if(q.comuna){
         $("#selected h4").html("Comuna "+q.comuna).fadeIn();
     }
-    
 };
 
 EleccionesApp.prototype.get_r_general = function(callback){
-    var s = this; 
-    $.get(s.path_to_data+"partido_00.json", function(results){
-        s.r_general = results;
+    var _self = this; 
+
+    $.get(_self.path_to_data+"partido_00.json", function(results){
+        _self.r_general = results;
         
-        if(callback){callback();}
+        if(callback) {
+            callback();
+        }
     });
 };
 
 EleccionesApp.prototype.get_mesas_escrutadas = function(callback){
-    var s = this; 
-    $.get(s.path_to_data+"resumen.json", function(resumen){
-        s.resumen = resumen;
-        $('#mesas span').html(s.resumen.mp+'%');
-        $('#votos span').html(s.resumen.vp+'%');
-        $('#padron span').html((+s.resumen.e).format(0, ",", '.'));
+    var _self = this; 
+    $.get(_self.path_to_data+"resumen.json", function(resumen){
+        _self.resumen = resumen;
+        $('#mesas span').html(_self.resumen.mp+'%');
+        $('#votos span').html(_self.resumen.vp+'%');
+        $('#padron span').html((+_self.resumen.e).format(0, ",", '.'));
 
-        if(callback){callback();}
+        if(callback) {
+            callback();
+        }
     });
 };
 
@@ -343,77 +321,66 @@ EleccionesApp.prototype.get_ganadores_x_comuna = function(data){
     s.pintar_mapa();
 };
 
-EleccionesApp.prototype.select_comuna_interna =     function(polygon){
-    var s = this;
-
-    var id = polygon.id.replace(/c/i, "");
+EleccionesApp.prototype.select_comuna_interna = function(id){
+    var _self = this;
     var com_name = "Comuna "+ id;
-    s.set_data_active(com_name);
-    
-    var comuna = "c_"+(id < 10 ? "0"+(+id) : id);
-    var key_cache = 'partido_'+ s.filtro_activo;
-    s.run_interna(key_cache, comuna);
+    _self.set_data_active(com_name);
 
-    s.q.set("comuna", id);
-    s.set_comuna_active_path(polygon);
+    var comuna = "c_"+pad(id);
+    var key_cache = 'partido_'+ _self.filtro_activo;
+    _self.run_interna(key_cache, comuna);
+
+    _self.q.set("comuna", id);
 
 };
 
 
-EleccionesApp.prototype.select_comuna_general =     function(polygon){
-    var s = this;
-
-    var id = polygon.id.replace(/c/i, "");
+EleccionesApp.prototype.select_comuna_general = function(id){
+    var _self = this;
     var com_name = "Comuna "+ id;
-    s.set_data_active(com_name);
 
-    s.set_comuna_active_path(polygon);
-
-    s.q.set("comuna", id);
+    _self.set_data_active(com_name);
+    _self.q.set("comuna", id);
 
     // lista de partidos x comuna
-    s.draw_ul_list(id);
+    _self.draw_ul_list(id);
 };
-
-
-EleccionesApp.prototype.on_click_comuna = function (){
-    var s = this;
-    // click mapa
-    $('polygon, path').on('click', function(e){
-        
-        if(s.filtro_activo == s.filtro_home){ // dropdown x fuerza
-            
-            s.select_comuna_general(this);
-        
-        }else{ // dropdown x interna o listas únicas
-            s.select_comuna_interna(this);
-
-        
-        }
-
-    });
-};
-
 
 EleccionesApp.prototype.reset_state = function (){
-    var s = this;
-    // resetea el los filtros
+    var _self = this;
+    // reset map
+    _self.map_reset();
+    // resetea los filtros
     $("#selected h4").hide().html("");
-    
-    s.remove_comuna_active_path();
-    if(this.filtro_activo == this.filtro_home){ // dropdown x fuerza
-        // s.get_ganadores_x_comuna(s.r_general);
-        s.draw_ul_list();
-        s.q.kill("comuna");
-
+    if(_self.filtro_activo == _self.filtro_home){ // dropdown x fuerza
+        _self.draw_ul_list();
+        _self.q.kill("comuna");
     }else{ // dropdown x interna o listas únicas
-        s.draw_x_interna(this.filtro_activo);
-
+        _self.draw_x_interna(this.filtro_activo);
     }
+
     // clear radio btn
     $('li.candidato.active input').prop('checked', false);
     $('li.candidato.active').removeClass('active');
     
+};
+
+EleccionesApp.prototype.map_reset = function() {
+    var _self = this;
+    _self.map_featureActive.classed("active", false);
+    _self.map_featureActive = d3.select(null);
+
+    // Show higher level texts
+    _self.map_g.selectAll("text.feature-label").classed("disabled", false);
+
+    //JET: Hide lower level paths and texts
+    _self.map_g.selectAll("path.barrio").classed("disabled", true);
+    _self.map_g.selectAll("text.barrio-label").classed("disabled", true);
+    _self.map_g.select("path.l2.mesh").classed("disabled", true);
+
+    _self.map_svg.transition()
+       .duration(750)
+       .call(_self.map_zoom.translate([0, 0]).scale(1).event);
 };
 
 EleccionesApp.prototype.get_max_obj = function(arr, key){ 
@@ -441,7 +408,6 @@ EleccionesApp.prototype.draw_ul_list = function(id, id_url){ // si no viene data
     if(id_url){ 
         id = id_url;
         var c = document.getElementById("c"+id);
-        this.set_comuna_active_path(c);
     }
     if(!id){
         data = this.r_general.c_00;
@@ -460,18 +426,13 @@ EleccionesApp.prototype.draw_ul_list = function(id, id_url){ // si no viene data
         max : this.get_max_obj(data, "p")
     };
 
-    $("results").html(this.tmpl_li_partido(l));
+    $("#results").html(this.tmpl_li_partido(l));
     this.animate_barras();
 
     if(is_comuna){ $(".help_text, #line").hide();}else{$(".help_text, #line").show();}
 
 // start niceScroll
     this.start_niceScroll("#list");
-    if(id_url){ 
-        var comu = document.getElementById("c"+id);
-        this.set_comuna_active_path(comu);
-    }
-
 };
 
 
@@ -514,33 +475,15 @@ EleccionesApp.prototype.draw_tooltip = function(html){
     this.tooltip.html(html);
 };
 
-EleccionesApp.prototype.remove_comuna_active_path = function(){
-    if(this.comuna_active_path){
-        this.comuna_active_path.remove();
-    }
-
-};
-
-EleccionesApp.prototype.set_comuna_active_path = function(polygon){
-    this.remove_comuna_active_path();
-    this.comuna_active_path = $(polygon).clone();
-    this.comuna_active_path.attr("class","comuna_active_path");
-    this.comuna_active_path.css("fill-opacity","0");
-    $("svg").append(this.comuna_active_path);
-};
-
-
 EleccionesApp.prototype.change_dropdown = function(val, id_url){
     var s = this;
     s.filtro_activo = val;
     if(!id_url){
         s.reset_state();
-        s.remove_comuna_active_path();
     }
-    $('#ayud1').hide();
+    $('#ayuda1').hide();
     $('.compartir').show();
     if(s.filtro_home == s.filtro_activo){
-        //$("polygon, path").css('fill-opacity', "1" );
         s.draw_ul_list(null, id_url);
     }else{    
         s.draw_x_interna(val);
