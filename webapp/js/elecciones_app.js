@@ -1,119 +1,119 @@
 // Elecciones class
-var ElecionesApp = function(dict_partidos, dict_candidatos, results, mapa, path_to_data, container_sel){
+var EleccionesApp = function(dict_partidos, dict_candidatos, results, mapa, path_to_data, container_sel){
     "use strict";
     // set self class var
-    var s = this;
-    s.dict_partidos = dict_partidos;
-    s.dict_candidatos = dict_candidatos;
-    s.path_to_data = path_to_data;
+    var _self = this;
+    _self.dict_partidos = dict_partidos;
+    _self.dict_candidatos = dict_candidatos;
+    _self.path_to_data = path_to_data;
     // JET: nuevo
-    s.mapa = mapa;
-    s.map_container_sel = container_sel;
-    s.map_width = $(container_sel).width();
-    s.map_height = $(container_sel).height();
-    s.map_featureActive = d3.select(null);
+    _self.map_data = mapa;
+    _self.map_container_selector = d3.select(container_sel);
+    _self.map_width = $(container_sel).width();
+    _self.map_height = $(container_sel).height();
+    _self.map_featureActive = d3.select(null);
     // From http://stackoverflow.com/questions/14492284/center-a-map-in-d3-given-a-geojson-object/14691788#14691788
-    s.map_projection = d3.geo.mercator().scale(1).translate([0, 0]);
-    s.map_path = d3.geo.path().projection(s.map_projection);
-    s.map_svg = null;
-    s.map_g = null;
-    s.map_zoom = null;
+    _self.map_projection = d3.geo.mercator().scale(1).translate([0, 0]);
+    _self.map_path = d3.geo.path().projection(_self.map_projection);
+    _self.map_svg = null;
+    _self.map_g = null;
+    _self.map_zoom = null;
     // data dinamica
-    s.r_general = results;
-    s.internas = results.interna;
-    s.comuna_active_path = null;
-    s.filtro_home = "00"; // filtro seteado por default
-    s.filtro_activo = "00";
-    // s.r_internas = results.inernas;
-    
-    function set_data_active(str){
-        $("#selected h4").html(str).fadeIn();
-    }
-
+    _self.r_general = results;
+    _self.internas = results.interna;
+    _self.comuna_active_path = null;
+    _self.filtro_home = "00"; // default filter
+    _self.filtro_activo = "00";
 
     (function init(){
-        s.draw_map();
-        // bind events
+
+        // Draw BsAs departments map
+        _self.draw_map(_self.map_width, _self.map_width, 
+                       _self.map_container_selector);
 
         // change dropdown
         $('select#opts').change(function(e){
-            s.change_dropdown($(this).val());
+            _self.change_dropdown($(this).val());
         });
+
         $('h3').on('click', function(){ // volver a la home 
-            s.filtro_activo = s.filtro_home;
-            s.reset_state();
-            $('select#opts').select2("val", s.filtro_home);
+            _self.filtro_activo = _self.filtro_home;
+            _self.reset_state();
+            $('select#opts').select2("val", _self.filtro_home);
         });
         
         // template para el select de internas
-        s.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
-        $("#opts").html( s.tmpl_opts(s.dict_partidos) );
+        _self.tmpl_opts = Handlebars.compile($('#tmpl_opts').html());
+        $("#opts").html( _self.tmpl_opts(_self.dict_partidos));
         
         // template para listado de resultados por partido
-        s.cont_results = $("#results"); // contenedor ul para los partidos (barras)  
-        s.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
-        s.tmpl_x_interna = Handlebars.compile($('#tmpl_x_interna').html());
+        _self.tmpl_li_partido = Handlebars.compile($('#tmpl_li_partido').html());
+        _self.tmpl_x_interna = Handlebars.compile($('#tmpl_x_interna').html());
         
         // get query string
-        
-        s.start_app();
-        s.get_mesas_escrutadas();
+        _self.start_app();
+        _self.get_mesas_escrutadas();
 
         // template tooltip
-        s.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
-        s.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
-        s.tmpl_tooltip_interna = Handlebars.compile($('#tmpl_tooltip_interna').html());
-
-        s.on_click_comuna();
+        _self.tooltip = $("#tooltip"); // contenedor ul para los partidos (barras)  
+        _self.tmpl_tooltip = Handlebars.compile($('#tmpl_tooltip').html());
+        _self.tmpl_tooltip_interna = Handlebars.compile($('#tmpl_tooltip_interna').html());
+        _self.on_click_comuna();
         
 // ***********
         tooltip(); // esta en scripts.js
-        // setInterval(function(){s.reload_app();}, 6000);
+        // setInterval(function(){_self.reload_app();}, 6000);
 
     })();
-
-    this.set_data_active = set_data_active;
 };
 
 
+/* AJAX cache
+ * store requests in memory
+ */
+EleccionesApp.prototype.cache_ajax = {};
 
-ElecionesApp.prototype.cache_ajax = {};
-
-ElecionesApp.prototype.reset_cache_ajax = function(){
-    this.cache_ajax = {};
+EleccionesApp.prototype.clear_cache_ajax = function(){
+    var _self = this;
+    _self.cache_ajax = {};
 };
 
-ElecionesApp.prototype.reload_app = function(){
-    var s = this;
-    s.get_r_general(function(){
-        s.start_app();
-        s.get_mesas_escrutadas();
+
+EleccionesApp.prototype.set_data_active = function(str){
+    $("#selected h4").html(str).fadeIn();
+}
+
+EleccionesApp.prototype.reload_app = function(){
+    var _self = this;
+    _self.get_r_general(function(){
+        _self.start_app();
+        _self.get_mesas_escrutadas();
+        // JET: Para qué es esto?
         $('select#opts').select2("val", "16");
     });
-
 };
 
-ElecionesApp.prototype.draw_map = function(){
-    var app = this;
-    var container = $(app.map_container_sel);
-    var width = app.map_width;
-    var height = app.map_height;
+/**
+* Draws the map adjusting to container width and height
+*/
+EleccionesApp.prototype.draw_map = function(width, height, sel){
+    var _self = this;
 
     // JET: Closure is there a better way to do this?
-    var reset = app.map_reset();
-    var zoomed = app.map_zoomed();
-    var clicked = app.map_feature_clicked();
-    var stopped = app.map_stopped();
+    var reset = _self.map_reset();
+    var zoomed = _self.map_zoomed();
+    var clicked = _self.map_feature_clicked();
+    var stopped = _self.map_stopped();
 
-    app.map_zoom = d3.behavior.zoom()
+    _self.map_zoom = d3.behavior.zoom()
                  .translate([0, 0])
                  .scale(1)
                  .scaleExtent([1, 8])
                  .on("zoom", zoomed);
 
-    var comunas = topojson.feature(app.mapa, app.mapa.objects.comunas);
+    var comunas = topojson.feature(_self.map_data, _self.map_data.objects.comunas);
 
-    var bounds = app.map_path.bounds(comunas),
+    var bounds = _self.map_path.bounds(comunas),
       dx = bounds[1][0] - bounds[0][0],
       dy = bounds[1][1] - bounds[0][1],
       x = (bounds[0][0] + bounds[1][0]) / 2,
@@ -122,62 +122,61 @@ ElecionesApp.prototype.draw_map = function(){
       translate = [width / 2 - scale * x, height / 2 - scale * y];
 
     // Update the projection to use computed scale & translate.
-    app.map_projection.scale(scale).translate(translate);
+    _self.map_projection.scale(scale).translate(translate);
 
-    app.map_svg = d3.select(app.map_container_sel)
-               .append("svg")
-               .attr("width", width)
-               .attr("height", height)
-               .on("click", stopped, true);
+    _self.map_svg = sel.append("svg")
+                      .attr("width", width)
+                      .attr("height", height)
+                      .on("click", stopped, true);
 
-    app.map_svg.append("rect")
+    _self.map_svg.append("rect")
             .attr("class", "background")
             .attr("width", width)
             .attr("height", height)
             .on("click", reset);
     
-    app.map_g = app.map_svg.append("g").attr("id","comunas");
+    _self.map_g = _self.map_svg.append("g").attr("id","comunas");
 
-    app.map_svg.call(app.map_zoom) // delete this line to disable free zooming
-       .call(app.map_zoom.event);
+    _self.map_svg.call(_self.map_zoom) // delete this line to disable free zooming
+       .call(_self.map_zoom.event);
     
-    app.map_g.selectAll("path")
+    _self.map_g.selectAll("path")
              .data(comunas.features)
              .enter()
              .append("path")
              .attr("class", "feature")
              .attr("id", function(d) {return d.id;})
-             .attr("d", app.map_path)
+             .attr("d", _self.map_path)
              .on("click", clicked);
 
 
-    app.map_g.selectAll(".feature-label")
+    _self.map_g.selectAll(".feature-label")
              .data(comunas.features)
              .enter().append("text")
              .attr("class", function(d) { return "feature-label " + d.id; })
-             .attr("transform", function(d) { return "translate(" + app.map_path.centroid(d) + ")"; })
+             .attr("transform", function(d) { return "translate(" + _self.map_path.centroid(d) + ")"; })
              .attr("dy", ".35em")
              .text(function(d) { return d.id; });
 
 
-    app.map_g.append("path")
-      .datum(topojson.mesh(app.mapa, app.mapa.objects.comunas, function(a, b) { return a !== b; }))
+    _self.map_g.append("path")
+      .datum(topojson.mesh(_self.map_data, _self.map_data.objects.comunas, function(a, b) { return a !== b; }))
       .attr("class", "mesh")
-      .attr("d", app.map_path);
+      .attr("d", _self.map_path);
 };
 
-ElecionesApp.prototype.map_feature_clicked = function() {
-    var _this = this;
+EleccionesApp.prototype.map_feature_clicked = function() {
+    var _self = this;
     // JET: Another closure to access the reset function
-    var reset = _this.map_reset();
+    var reset = _self.map_reset();
     var clicked = function(d) {
-        var width = _this.map_width;
-        var height = _this.map_height;
-        if (_this.map_featureActive.node() === this) return reset();
-        _this.map_featureActive.classed("active", false);
-        _this.map_featureActive = d3.select(this).classed("active", true);
+        var width = _self.map_width;
+        var height = _self.map_height;
+        if (_self.map_featureActive.node() === this) return reset();
+        _self.map_featureActive.classed("active", false);
+        _self.map_featureActive = d3.select(this).classed("active", true);
 
-        var bounds = _this.map_path.bounds(d),
+        var bounds = _self.map_path.bounds(d),
           dx = bounds[1][0] - bounds[0][0],
           dy = bounds[1][1] - bounds[0][1],
           x = (bounds[0][0] + bounds[1][0]) / 2,
@@ -185,15 +184,15 @@ ElecionesApp.prototype.map_feature_clicked = function() {
           scale = 0.9 / Math.max(dx / width, dy / height),
           translate = [width / 2 - scale * x, height / 2 - scale * y];
 
-        var barrios = topojson.feature(_this.mapa, _this.mapa.objects.barrios);
-        var barrios_mesh = topojson.mesh(_this.mapa, _this.mapa.objects.barrios, function(a, b) { return a !== b; })
-        //var g_barrios = _this.map_svg.append("g").attr("id","barrios");
+        var barrios = topojson.feature(_self.map_data, _self.map_data.objects.barrios);
+        var barrios_mesh = topojson.mesh(_self.map_data, _self.map_data.objects.barrios, function(a, b) { return a !== b; })
+        //var g_barrios = _self.map_svg.append("g").attr("id","barrios");
         
-        var pb = _this.map_g.selectAll("path.barrio");
+        var pb = _self.map_g.selectAll("path.barrio");
         pb.classed("disabled", false);
-        var lb = _this.map_g.selectAll("text.barrio-label");
+        var lb = _self.map_g.selectAll("text.barrio-label");
         lb.classed("disabled", false);
-        var mb = _this.map_g.selectAll("path.barrio-mesh");
+        var mb = _self.map_g.selectAll("path.barrio-mesh");
         mb.classed("disabled", false);
         pb.data(barrios.features)
              .enter()
@@ -214,56 +213,56 @@ ElecionesApp.prototype.map_feature_clicked = function() {
           .attr("class", "barrio-mesh")
           .attr("d", app.map_path);
 
-        _this.map_svg.transition()
+        _self.map_svg.transition()
           .duration(750)
-          .call(_this.map_zoom.translate(translate).scale(scale).event);
+          .call(_self.map_zoom.translate(translate).scale(scale).event);
     };
     return clicked;
 };
 
-ElecionesApp.prototype.map_stopped = function() {
-    var _this = this;
+EleccionesApp.prototype.map_stopped = function() {
+    var _self = this;
     var stopped = function() {
         if (d3.event.defaultPrevented) d3.event.stopPropagation();
     };
     return stopped;
 };
 
-ElecionesApp.prototype.map_zoomed = function() {
-    var _this = this;
+EleccionesApp.prototype.map_zoomed = function() {
+    var _self = this;
     var zoomed = function() {
-        _this.map_g.style("stroke-width", 1.5 / d3.event.scale + "px");
-        _this.map_g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        _self.map_g.style("stroke-width", 1.5 / d3.event.scale + "px");
+        _self.map_g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     };
     return zoomed;
 };
 
-ElecionesApp.prototype.map_reset = function() {
-    var _this = this;
+EleccionesApp.prototype.map_reset = function() {
+    var _self = this;
     var reset = function() {
-        _this.map_featureActive.classed("active", false);
-        _this.map_featureActive = d3.select(null);
+        _self.map_featureActive.classed("active", false);
+        _self.map_featureActive = d3.select(null);
 
         //JET: Handle lower level paths
-        _this.map_g.selectAll("path.barrio").classed("disabled", true);
-        _this.map_g.selectAll("text.barrio-label").classed("disabled", true);
-        _this.map_g.select("path.barrio-mesh").classed("disabled", true);
+        _self.map_g.selectAll("path.barrio").classed("disabled", true);
+        _self.map_g.selectAll("text.barrio-label").classed("disabled", true);
+        _self.map_g.select("path.barrio-mesh").classed("disabled", true);
 
 
-        _this.map_svg.transition()
+        _self.map_svg.transition()
            .duration(750)
-           .call(_this.map_zoom.translate([0, 0]).scale(1).event);
+           .call(_self.map_zoom.translate([0, 0]).scale(1).event);
     };
     return reset;
 };
 
-ElecionesApp.prototype.start_app = function(){
+EleccionesApp.prototype.start_app = function(){
     var s = this;
     s.q.set_from_location();
     
     var q = $.extend(true, {}, s.q.get_query());
     
-    s.reset_cache_ajax();
+    s.clear_cache_ajax();
     
     s.filtro_activo = q.fuerza || s.filtro_home;
     
@@ -275,7 +274,7 @@ ElecionesApp.prototype.start_app = function(){
     
 };
 
-ElecionesApp.prototype.get_r_general = function(callback){
+EleccionesApp.prototype.get_r_general = function(callback){
     var s = this; 
     $.get(s.path_to_data+"partido_00.json", function(results){
         s.r_general = results;
@@ -284,7 +283,7 @@ ElecionesApp.prototype.get_r_general = function(callback){
     });
 };
 
-ElecionesApp.prototype.get_mesas_escrutadas = function(callback){
+EleccionesApp.prototype.get_mesas_escrutadas = function(callback){
     var s = this; 
     $.get(s.path_to_data+"resumen.json", function(resumen){
         s.resumen = resumen;
@@ -297,7 +296,7 @@ ElecionesApp.prototype.get_mesas_escrutadas = function(callback){
 };
 
 
-ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del partido requerido
+EleccionesApp.prototype.draw_x_interna = function(val){ // recive el id del partido requerido
     var s = this;
     var key_cache = "partido_" + val;
     if(!s.cache_ajax[key_cache]){ // si no esta en cache lo va a buscar...
@@ -314,7 +313,7 @@ ElecionesApp.prototype.draw_x_interna = function(val){ // recive el id del parti
 };
 
 
-ElecionesApp.prototype.animate_barras = function(){
+EleccionesApp.prototype.animate_barras = function(){
     $("#results .cont_barra .barra").each(function(i, el){
         var $el = $(this);
         $el.delay(500).animate({width: $el.data("width")}, {duration: 900, queue:false});
@@ -322,7 +321,7 @@ ElecionesApp.prototype.animate_barras = function(){
 };
 
 
-ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
+EleccionesApp.prototype.get_ganadores_x_comuna = function(data){
     // toma todos los ganadores por comuna y pinta el mapa
     var s = this;
     s.ganadores_comunas = [];
@@ -344,7 +343,7 @@ ElecionesApp.prototype.get_ganadores_x_comuna = function(data){
     s.pintar_mapa();
 };
 
-ElecionesApp.prototype.select_comuna_interna =     function(polygon){
+EleccionesApp.prototype.select_comuna_interna =     function(polygon){
     var s = this;
 
     var id = polygon.id.replace(/c/i, "");
@@ -361,7 +360,7 @@ ElecionesApp.prototype.select_comuna_interna =     function(polygon){
 };
 
 
-ElecionesApp.prototype.select_comuna_general =     function(polygon){
+EleccionesApp.prototype.select_comuna_general =     function(polygon){
     var s = this;
 
     var id = polygon.id.replace(/c/i, "");
@@ -377,7 +376,7 @@ ElecionesApp.prototype.select_comuna_general =     function(polygon){
 };
 
 
-ElecionesApp.prototype.on_click_comuna = function (){
+EleccionesApp.prototype.on_click_comuna = function (){
     var s = this;
     // click mapa
     $('polygon, path').on('click', function(e){
@@ -396,7 +395,7 @@ ElecionesApp.prototype.on_click_comuna = function (){
 };
 
 
-ElecionesApp.prototype.reset_state = function (){
+EleccionesApp.prototype.reset_state = function (){
     var s = this;
     // resetea el los filtros
     $("#selected h4").hide().html("");
@@ -417,13 +416,13 @@ ElecionesApp.prototype.reset_state = function (){
     
 };
 
-ElecionesApp.prototype.get_max_obj = function(arr, key){ 
+EleccionesApp.prototype.get_max_obj = function(arr, key){ 
     
     var max = arr.map(function(x){ return x[key]; });
     return Math.max.apply(null, max); 
 };
 
-ElecionesApp.prototype.sort_obj = function(arr, key){ 
+EleccionesApp.prototype.sort_obj = function(arr, key){ 
     function compare(a,b) {
       if (a[key] > b[key])
          return -1;
@@ -434,7 +433,7 @@ ElecionesApp.prototype.sort_obj = function(arr, key){
     return arr.sort(compare);
 };
 
-ElecionesApp.prototype.draw_ul_list = function(id, id_url){ // si no viene data, escribe la general
+EleccionesApp.prototype.draw_ul_list = function(id, id_url){ // si no viene data, escribe la general
     this.get_ganadores_x_comuna(this.r_general);
     var is_comuna = false;
     var data;
@@ -461,7 +460,7 @@ ElecionesApp.prototype.draw_ul_list = function(id, id_url){ // si no viene data,
         max : this.get_max_obj(data, "p")
     };
 
-    this.cont_results.html(this.tmpl_li_partido(l));
+    $("results").html(this.tmpl_li_partido(l));
     this.animate_barras();
 
     if(is_comuna){ $(".help_text, #line").hide();}else{$(".help_text, #line").show();}
@@ -476,7 +475,7 @@ ElecionesApp.prototype.draw_ul_list = function(id, id_url){ // si no viene data,
 };
 
 
-ElecionesApp.prototype.run_interna = function(key_cache, comuna){
+EleccionesApp.prototype.run_interna = function(key_cache, comuna){
     var s = this;
     if(!comuna){ comuna = 'c_00';}
 
@@ -491,7 +490,7 @@ ElecionesApp.prototype.run_interna = function(key_cache, comuna){
         dict_candidatos: s.dict_candidatos
     };
 
-    s.cont_results.html(s.tmpl_x_interna(data));
+    $("#results").html(s.tmpl_x_interna(data));
     s.get_ganadores_x_comuna(s.cache_ajax[key_cache]);
         
     s.animate_barras();
@@ -511,18 +510,18 @@ ElecionesApp.prototype.run_interna = function(key_cache, comuna){
     s.start_niceScroll('#list_interna');
 };
 
-ElecionesApp.prototype.draw_tooltip = function(html){
+EleccionesApp.prototype.draw_tooltip = function(html){
     this.tooltip.html(html);
 };
 
-ElecionesApp.prototype.remove_comuna_active_path = function(){
+EleccionesApp.prototype.remove_comuna_active_path = function(){
     if(this.comuna_active_path){
         this.comuna_active_path.remove();
     }
 
 };
 
-ElecionesApp.prototype.set_comuna_active_path = function(polygon){
+EleccionesApp.prototype.set_comuna_active_path = function(polygon){
     this.remove_comuna_active_path();
     this.comuna_active_path = $(polygon).clone();
     this.comuna_active_path.attr("class","comuna_active_path");
@@ -531,7 +530,7 @@ ElecionesApp.prototype.set_comuna_active_path = function(polygon){
 };
 
 
-ElecionesApp.prototype.change_dropdown = function(val, id_url){
+EleccionesApp.prototype.change_dropdown = function(val, id_url){
     var s = this;
     s.filtro_activo = val;
     if(!id_url){
@@ -551,7 +550,7 @@ ElecionesApp.prototype.change_dropdown = function(val, id_url){
 
 };
 
-ElecionesApp.prototype.start_niceScroll = function(selector){
+EleccionesApp.prototype.start_niceScroll = function(selector){
     $(selector).niceScroll({
         cursorcolor:"#d7d7d7",
         cursorborder:"0px solid #fff",
@@ -562,7 +561,7 @@ ElecionesApp.prototype.start_niceScroll = function(selector){
 };
 
 
-ElecionesApp.prototype.pintar_mapa = function(){
+EleccionesApp.prototype.pintar_mapa = function(){
     
     var s = this;
     var list_comunas = ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15"];
@@ -603,7 +602,7 @@ ElecionesApp.prototype.pintar_mapa = function(){
 };
 
 
-ElecionesApp.prototype.barios_x_com = {
+EleccionesApp.prototype.barios_x_com = {
       "c01": "Constitución, Monserrat, Puerto Madero, Retiro, San Nicolás, San Telmo",
       "c02": "Recoleta",
       "c03": "Balvanera, San Cristobal",
@@ -621,8 +620,8 @@ ElecionesApp.prototype.barios_x_com = {
       "c15": "Agronomía, Chacarita,  Parque Chas,  Paternal, Villa Crespo, Villa Ortúzar"
     };
 
-ElecionesApp.prototype.q = new PermanentLinkJS();
+EleccionesApp.prototype.q = new PermanentLinkJS();
 
-ElecionesApp.prototype.colores = ["#FEDB30","#1796D7","#7CC374","#F4987E","#B185B7","#B3B3B3"];
+EleccionesApp.prototype.colores = ["#FEDB30","#1796D7","#7CC374","#F4987E","#B185B7","#B3B3B3"];
 
 
