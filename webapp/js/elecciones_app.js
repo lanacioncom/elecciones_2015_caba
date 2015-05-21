@@ -13,7 +13,10 @@ var EleccionesApp = function(dict_partidos, dict_candidatos, results, mapa, path
     _self.map_height = $(container_sel).height();
     _self.map_featureActive = d3.select(null);
     // From http://stackoverflow.com/questions/14492284/center-a-map-in-d3-given-a-geojson-object/14691788#14691788
-    _self.map_projection = d3.geo.mercator().scale(1).translate([0, 0]);
+    // Official Projection for BsAs
+    _self.map_projection = d3.geo.transverseMercator()
+                                   .center([2.5, -34.65])
+                                   .rotate([61.5, 0]).scale(1).translate([0, 0]);
     _self.map_path = d3.geo.path().projection(_self.map_projection);
     _self.map_current_level = 1;
     _self.map_svg = null;
@@ -112,7 +115,7 @@ EleccionesApp.prototype.draw_map = function(width, height, sel){
       dy = bounds[1][1] - bounds[0][1],
       x = (bounds[0][0] + bounds[1][0]) / 2,
       y = (bounds[0][1] + bounds[1][1]) / 2,
-      scale = 0.9 / Math.max(dx / width, dy / height),
+      scale = 0.90 / Math.max(dx / width, dy / height),
       translate = [width / 2 - scale * x, height / 2 - scale * y];
 
     // Update the projection to use computed scale & translate.
@@ -132,8 +135,7 @@ EleccionesApp.prototype.draw_map = function(width, height, sel){
     _self.map_g = _self.map_svg.append("g").attr("id","comunas");
 
     // delete this line to disable free zooming and panning
-    _self.map_svg.call(_self.map_zoom) 
-       .call(_self.map_zoom.event);
+    //_self.map_svg.call(_self.map_zoom).call(_self.map_zoom.event);
     
     _self.map_g.selectAll("path")
              .data(comunas.features)
@@ -189,17 +191,19 @@ EleccionesApp.prototype.map_feature_clicked = function(d, i, el) {
       translate = [width / 2 - scale * x, height / 2 - scale * y];
 
     var barrios = topojson.feature(_self.map_data, _self.map_data.objects.barrios);
-    var barrios_mesh = topojson.mesh(_self.map_data, _self.map_data.objects.barrios, function(a, b) { return a !== b; });
+    //var barrios_mesh = topojson.mesh(_self.map_data, _self.map_data.objects.barrios, function(a, b) { return a !== b; });
     //var g_barrios = _self.map_svg.append("g").attr("id","barrios");
     
     //disable higher levels labels
     _self.map_g.selectAll("text.feature-label").classed("disabled", true);
+    //Add current level visuals
     var pb = _self.map_g.selectAll("path.barrio");
     pb.classed("disabled", false);
     var lb = _self.map_g.selectAll("text.barrio-label");
     lb.classed("disabled", false);
     var mb = _self.map_g.selectAll("path.mesh.l2");
     mb.classed("disabled", false);
+
     pb.data(barrios.features)
          .enter()
          .append("path")
