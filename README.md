@@ -23,12 +23,12 @@ The visualization also let's readers drill down the results by political party g
 Usage info: [here](webapp/README.md)
 
 
-## Deploy
+## Server
 We are using _npm_, _bower_ and _gulp_ to automate the optimization and deployment process.
 
 The deployment takes care of minimizing, uglifying and versioning the static files so that it plays nice with the newsroom http cache configuration.
 
-Usage info: [here](deploy/README.md)
+Usage info: [here](server/README.md)
 
 ## Technologies && Libraries
 * Backend:
